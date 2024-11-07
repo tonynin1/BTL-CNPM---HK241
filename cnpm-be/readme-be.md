@@ -19,3 +19,7 @@ npx prisma studio
 ### Chạy dự án
 npm run start:dev
 ### Chú ý: Không thay đổi nội dung file .env
+### Tạo module để làm việc (Thay customer thành tên mong muốn)
+npx nest generate module customer
+npx nest generate service customer
+npx nest generate controller customer
