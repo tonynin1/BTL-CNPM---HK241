@@ -1,19 +1,50 @@
-version: '3.8'
-services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: postgresql://postgres:hk241cnpm123@db.pzuroahtqhhdwdkrxxnq.supabase.co:5432/postgres
-    depends_on:
-      - db
+# version: '3.8'
+# services:
+#   app:
+#     build: .
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       DATABASE_URL: postgresql://postgres:hk241cnpm123@db.pzuroahtqhhdwdkrxxnq.supabase.co:5432/postgres
+#     depends_on:
+#       - db
 
-  db:
+#   db:
+#     image: postgres:13
+#     environment:
+#       POSTGRES_USER: user
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: mydatabase
+#     ports:
+#       - "5432:5432"
+
+
+
+version: '3.8'
+
+services:
+  dev-cnpm:
     image: postgres:13
+    container_name: cnpm_db
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
+      POSTGRES_USER: tonynin1
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: nest
     ports:
-      - "5432:5432"
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  test-db:
+    image: postgres:test_13
+    container_name: postgres_test_db
+    environment:
+      POSTGRES_USER: tonynin1
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: nest
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
