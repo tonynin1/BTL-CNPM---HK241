@@ -27,10 +27,10 @@ model User {
   usageHistory   String?
   password       String
   role           String
+  adminEmail     String
+  admin          Admin       @relation(fields: [adminEmail], references: [adminEmail])
   spsomembers    SPSOMember[]
   customers      Customer[]
-  adminEmail     String
-  admin          Admin        @relation(fields: [adminEmail], references: [adminEmail])
 }
 
 model SPSOMember {

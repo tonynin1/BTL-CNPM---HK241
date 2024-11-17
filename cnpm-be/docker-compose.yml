@@ -20,7 +20,7 @@
 
 
 
-version: '3.8'
+# version: '3.8'
 
 services:
   dev-cnpm:
@@ -34,17 +34,17 @@ services:
       - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  test-db:
-    image: postgres:test_13
-    container_name: postgres_test_db
-    environment:
-      POSTGRES_USER: tonynin1
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: nest
-    ports:
-      - "5435:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  # test-db:
+  #   image: postgres:test_13
+  #   container_name: postgres_test_db
+  #   environment:
+  #     POSTGRES_USER: tonynin1
+  #     POSTGRES_PASSWORD: 123456
+  #     POSTGRES_DB: nest
+  #   ports:
+  #     - "5435:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
