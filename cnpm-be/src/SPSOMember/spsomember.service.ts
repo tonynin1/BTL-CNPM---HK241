@@ -17,17 +17,17 @@ export class SpsomemberService {
                 sosoMemberId: spsoId
             }
         });
-        const user = await this.prismaService.user.findUnique({
-            where: {
-                userId: spsoMember.userId
-            }
-        })
         if (!spsoMember) {
             return {
                 message: 'SPSO member not found',
                 status: 404
             }
         }
+        const user = await this.prismaService.user.findUnique({
+            where: {
+                userId: spsoMember.userId
+            }
+        })
 
         return {
             data: {
@@ -87,7 +87,6 @@ export class SpsomemberService {
             }
         }
 
-        let spsoMemberExist = await this.findSPSOMemberBySPSOId(createSPSOMemberDto.spsoId);
 
         if (getUser.role !== 'SPSO') {
             return {
@@ -95,13 +94,14 @@ export class SpsomemberService {
                 status: 400
             }
         }
-        if (spsoMemberExist) {
+        const checkSPSOMember = await this.findSPSOMemberByUserId(userId);
+        console.log(checkSPSOMember)
+        if (checkSPSOMember.status !== 404) {
             return {
                 message: 'SPSO member already exist',
                 status: 400
             }
         }
-
         const dob = new Date(createSPSOMemberDto.dob);
         const createSPSOMember = await this.prismaService.sPSOMember.create({
             data: {
@@ -111,7 +111,12 @@ export class SpsomemberService {
             sosoMemberId: createSPSOMemberDto.spsoId
             }
         });
-
+        if (!createSPSOMember) {
+            return {
+                message: 'SPSO member not created',
+                status: 400
+            }
+        }
         return {
             message: 'SPSO member created',
             status: 201

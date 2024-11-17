@@ -54,4 +54,7 @@ export class SpsomemberController {
     ){
         return this.spsomemberService.updateSPSOMember(user.userId, updateSPSOMemberDto);
     }
+
+
+
 }

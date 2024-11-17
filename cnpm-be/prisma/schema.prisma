@@ -13,6 +13,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admin {
+  adminEmail  String    @id @unique
+  password    String
+  User        User[]
+}
 model User {
   userId         Int         @id @default(autoincrement())
   fname          String
@@ -24,6 +29,8 @@ model User {
   role           String
   spsomembers    SPSOMember[]
   customers      Customer[]
+  adminEmail     String
+  admin          Admin        @relation(fields: [adminEmail], references: [adminEmail])
 }
 
 model SPSOMember {

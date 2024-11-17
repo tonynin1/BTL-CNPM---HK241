@@ -25,8 +25,8 @@ export class AuthService{
                     fname: createDto.fname,
                     phone: createDto.phone,
                     role: createDto.role,
-                    lname: createDto.lname
-
+                    lname: createDto.lname,
+                    adminEmail: 'admin@hcmut.edu.vn'
                 }
             })
     
