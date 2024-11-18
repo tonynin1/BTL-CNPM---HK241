@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CustomerService } from './customer.service';
-import { craeteCustomerDto } from './dto';
+import { createCustomerDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
 import { GetUser } from 'src/auth/decorator';
 import { User } from '@prisma/client';
@@ -35,8 +35,19 @@ export class CustomerController {
     @Post('create')
     createCustomer(
         @GetUser('id') user: User,
-        @Body() createDto: craeteCustomerDto
+        @Body() createDto: createCustomerDto
     ){
+        console.log(user.userId);
         return this.customerService.createCustomer(user.userId,createDto);
     }
+
+    @UseGuards(JwtGuard)
+    @Patch('update')
+    updateCustomer(
+        @GetUser('id') user: User,
+        @Body() createDto: createCustomerDto
+    ){
+        return this.customerService.updateCustomer(user.userId,createDto);
+    }
+
 }

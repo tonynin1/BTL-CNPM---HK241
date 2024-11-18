@@ -50,7 +50,7 @@ model Customer {
   accBalance         Float          @default(0)
   summary            String?
   remainPages        Int            @default(0)
-  userId             Int?
+  userId             Int
   user               User?          @relation(fields: [userId], references: [userId])
   spsoMemberId       Int?
   spsomember         SPSOMember?    @relation(fields: [spsoMemberId], references: [sosoMemberId])

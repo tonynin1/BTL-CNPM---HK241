@@ -52,6 +52,7 @@ export class UserService {
     if(!findUser){
       return { message: 'User not found' , status: 404};
     }
+
     if (findUser.role === 'SPSO'){
       const deleteSPSO = await this.spsoService.deleteSPSOMember(Number(userId));
       if(deleteSPSO.status !== 200){
@@ -60,13 +61,15 @@ export class UserService {
     }
     else{
       const deleteCustomer = await this.customerService.deleteCustomer(Number(userId));
-    }
-    const user = await this.prisma.user.delete({
-      where: {
-        userId: Number(userId)
+      if(deleteCustomer.status !== 200){
+        return { message: 'Error deleting Customer: ' + deleteCustomer.message , status: 500};
       }
-    });
-
+    }
+  const user = await this.prisma.user.delete({
+    where: {
+      userId: Number(userId)
+    }
+  });
     // return 
     return { message: 'User successfully deleted' , status: 200};
   }

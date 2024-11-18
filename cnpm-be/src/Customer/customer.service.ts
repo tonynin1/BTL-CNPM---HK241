@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { craeteCustomerDto } from './dto';
+import {createCustomerDto , updateCustomerDto} from './dto';
 
 @Injectable()
 export class CustomerService {
@@ -50,7 +50,7 @@ export class CustomerService {
         }
     }
 
-    async createCustomer(userId: number, createDto: craeteCustomerDto) {
+    async createCustomer(userId: number, createDto: createCustomerDto) {
         const findCustomer = await this.prisma.customer.findFirst({
             where: {
                 userId: userId
@@ -66,6 +66,7 @@ export class CustomerService {
         try {
             await this.prisma.customer.create({
                 data: {
+                    userId: userId,
                     ppHistory: createDto.ppHistory ? createDto.ppHistory.join(', ') : '',
                     accBalance: createDto.accBalance,
                     summary: createDto.summary,
@@ -84,25 +85,72 @@ export class CustomerService {
             }
         }
     }
+
+    async updateCustomer(userId: number, updateDto: updateCustomerDto) {
+        let findCustomer = await this.prisma.customer.findFirst({
+            where: {
+                userId: userId
+            }
+        });
+        if (!findCustomer) {
+            return {
+                message: 'Customer not found',
+                status: 404
+            }
+        }
+        try {
+            await this.prisma.customer.update({
+                where: {
+                    customerId: findCustomer.customerId
+                },
+                data: {
+                    ppHistory: updateDto.ppHistory ? updateDto.ppHistory.join(', ') : '',
+                    accBalance: updateDto.accBalance,
+                    summary: updateDto.summary,
+                    remainPages: updateDto.remainPages,
+                    spsoMemberId: updateDto.spsoMemberId
+                }
+            });
+            return {
+                message: 'Customer updated',
+                status: 200
+            }
+        } catch (error) {
+            return {
+                message: 'Error updating customer, error: ' + error.message,
+                status: 500
+            }
+        }
+    }
     async deleteCustomer(userId: number){
         let findCustomer = await this.prisma.customer.findFirst({
             where: {
                 userId: userId
             }
         });
-
-        if(!findCustomer){
-            return { message: 'Customer not found' , status: 404};
+        if (!findCustomer) {
+            return {
+                message: 'Customer not found',
+                status: 404
+            }
         }
+
         try {
             await this.prisma.customer.delete({
                 where: {
                     customerId: findCustomer.customerId
                 }
             });
-            return { message: 'Customer deleted' , status: 200};
+            return {
+                message: 'Customer deleted',
+                status: 200
+            }
         } catch (error) {
-            return { message: 'Error deleting customer' , status: 500};
+            return {
+                message: 'Error deleting customer, error: ' + error.message,
+                status: 500
+            }
         }
+
     }
 }

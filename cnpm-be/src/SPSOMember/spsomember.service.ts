@@ -204,7 +204,7 @@ export class SpsomemberService {
 
         if (!spsoMemberExist) {
             return {
-                message: 'SPSO member not found',
+                message: 'SPSO member not found ',
                 status: 404
             }
         }

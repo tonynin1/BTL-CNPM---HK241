@@ -1,9 +1,7 @@
-export class createCustomerDto {
-    customerId: number;
+export class updateCustomerDto {
     ppHistory?: string[];
     accBalance?: number;
     summary?: string;
     remainPages?: number;
-    userId?: number;
     spsoMemberId?: number;
 }
