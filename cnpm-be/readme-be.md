@@ -14,7 +14,7 @@ npx prisma generate
 npx prisma migrate dev --name init
 ### Khởi động docker (đảm bảo tải docker desktop và bật)
 docker-compose up -d
-### Xem và tương tác với databse 
+### Xem và tương tác với database 
 npx prisma studio
 ### Chạy dự án
 npm run start:dev
