@@ -3,6 +3,8 @@ import {
     Controller,
     Delete,
     Get,
+    HttpCode,
+    HttpStatus,
     Param,
     Patch,
     Post,
@@ -10,28 +12,23 @@ import {
     UseGuards,
   } from '@nestjs/common';
   import { User } from '@prisma/client';
-  import { GetUser } from '../auth/decorator';
-  import { JwtGuard } from '../auth/guard';
   import { EditUserDto } from './dto';
   import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { GetCurrentUser } from 'src/auth/common/decorators';
+import { AuthService } from 'src/auth/auth.service';
   
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
-  
-    // get by itself
-    @UseGuards(JwtGuard)
-    @Get('me')
-    getMe(@GetUser() user: User) {
-      return user;
-    }
+  constructor(
+    private userService: UserService,
+  ) {}
   
   // edit by itself
-    @UseGuards(JwtGuard)
-    @Patch('edit')
+  @HttpCode(HttpStatus.OK)
+  @Patch('edit')
     editUser(
-      @GetUser('id') user: User,
+      @GetCurrentUser() user: User,
       @Body() dto: EditUserDto,
     ) {
       return this.userService.editUser(user.userId, dto);

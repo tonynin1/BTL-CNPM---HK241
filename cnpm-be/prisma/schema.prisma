@@ -26,12 +26,15 @@ model User {
   email          String       @unique
   phone          String
   usageHistory   String?
-  password       String
+  hash           String
+  hashedRt       String?
   role           String
   adminEmail     String
   admin          Admin       @relation(fields: [adminEmail], references: [adminEmail])
   spsomembers    SPSOMember[]
   customers      Customer[]
+  createAt       DateTime @default(now())
+  updateAt       DateTime @updatedAt
 }
 
 model SPSOMember {

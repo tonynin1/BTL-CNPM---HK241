@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { SpsomemberService } from './spsomember.service';
-import { GetUser } from 'src/auth/decorator';
 import { createSPSOMember } from './dto';
 import { updateSPSOMember } from './dto';
-import { JwtGuard } from 'src/auth/guard';
 import { User } from '@prisma/client';
-import { create } from 'domain';
+import { GetCurrentUser, GetCurrentUserId } from 'src/auth/common/decorators';
+import { RtGuard } from 'src/auth/common/guards';
+
 
 @Controller('spsomember')
 export class SpsomemberController {
@@ -14,12 +14,14 @@ export class SpsomemberController {
 
     // Find all SPSO member
     // Remove Auth for this route
-
+    @HttpCode(HttpStatus.OK)
     @Get()
     async findAllSPSOMember() {
         return this.spsomemberService.findAllSPSOMember();
     }
 
+    // Remove Auth for this route
+    @HttpCode(HttpStatus.OK)
     @Get('userId')
     async findSPSOMemberByUserId(
         @Query('userId') userId: string
@@ -36,20 +38,19 @@ export class SpsomemberController {
         return this.spsomemberService.findSPSOMemberBySPSOId(spsoIdNumber);
     }
     // Create SPSO member from userId
-    @UseGuards(JwtGuard)
+    @HttpCode(HttpStatus.OK)
     @Post('create')
     async createSPSOMember(
-        @GetUser('id') user: User,
+        @GetCurrentUserId() userId: number,
         @Body() createSPSOMemberDto: createSPSOMember
     ) {
         
-        return this.spsomemberService.createSPSOMember(user.userId, createSPSOMemberDto);
+        return this.spsomemberService.createSPSOMember(userId, createSPSOMemberDto);
     }
 
-    @UseGuards(JwtGuard)
     @Patch('update')
     async updateSPSOMember(
-        @GetUser('id') user: User,
+        @GetCurrentUser() user: User,
         @Body() updateSPSOMemberDto: updateSPSOMember 
     ){
         return this.spsomemberService.updateSPSOMember(user.userId, updateSPSOMemberDto);

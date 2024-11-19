@@ -39,7 +39,7 @@ export class UserService {
       },
     });
 
-    delete user.password;
+    delete user.hash;
 
     return user;
   }
