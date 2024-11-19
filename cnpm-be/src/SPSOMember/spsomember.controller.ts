@@ -50,10 +50,10 @@ export class SpsomemberController {
 
     @Patch('update')
     async updateSPSOMember(
-        @GetCurrentUser() user: User,
+        @GetCurrentUserId() userId: number,
         @Body() updateSPSOMemberDto: updateSPSOMember 
     ){
-        return this.spsomemberService.updateSPSOMember(user.userId, updateSPSOMemberDto);
+        return this.spsomemberService.updateSPSOMember(userId, updateSPSOMemberDto);
     }
 
 

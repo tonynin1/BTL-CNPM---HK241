@@ -42,10 +42,10 @@ export class CustomerController {
 
     @Patch('update')
     updateCustomer(
-        @GetCurrentUser() user: User,
+        @GetCurrentUserId() userId: number,
         @Body() createDto: createCustomerDto
     ){
-        return this.customerService.updateCustomer(user.userId,createDto);
+        return this.customerService.updateCustomer(userId,createDto);
     }
 
 }
