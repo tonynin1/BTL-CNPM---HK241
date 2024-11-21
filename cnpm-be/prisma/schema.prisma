@@ -83,21 +83,19 @@ model Printer {
   room              String
   spsomemberId      Int
   spsomember        SPSOMember         @relation(fields: [spsomemberId], references: [sosoMemberId])
-  pagePurchaseOrders PagePurchaseOrder[]
   documents         Document[]
 }
 
+
 model PagePurchaseOrder {
-  ppoId          Int            @id @default(autoincrement())
+  ppoId          Int             @default(autoincrement())
   purchaseTime   DateTime
-  customerId     Int
+  customerId     Int             @id   
   customer       Customer        @relation(fields: [customerId], references: [customerId])
   ppoStatus      String          @default("Pending")
-  pQuantity      Int
-  paperType      String
-  printerId      Int
-  printer        Printer         @relation(fields: [printerId], references: [printerId])
+  pageOrder      Json
   price          Float
+  paymentMethod  String
 }
 
 model PrintOrder {
