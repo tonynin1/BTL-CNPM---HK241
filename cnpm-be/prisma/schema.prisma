@@ -88,12 +88,12 @@ model Printer {
 
 
 model PagePurchaseOrder {
-  ppoId          Int             @default(autoincrement())
+  ppoId          Int             @id @default(autoincrement()) 
   purchaseTime   DateTime
-  customerId     Int             @id   
+  customerId     Int             
   customer       Customer        @relation(fields: [customerId], references: [customerId])
   ppoStatus      String          @default("Pending")
-  pageOrder      Json
+  pageNum        Int             @default(0)  
   price          Float
   paymentMethod  String
 }

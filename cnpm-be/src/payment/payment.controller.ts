@@ -1,28 +1,30 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
-import { PaymentDto } from './dtos/payment.dto';
-import { PrismaService } from './services/database/database.service';
-
+import { PaymentOrderDto } from './dtos/payment-order.dto';
+import { PaymentOrderService } from './services/database/payment-order/order.service';
+import { PaymentOfficeUpdateDto } from './dtos/payment.office-update.dto';
 
 @Controller('payment')
 export class PaymentController {
-    constructor(private prisma : PrismaService) {}
+    constructor(private payment_order : PaymentOrderService) {}
 
-    @Get(':customerID')
-    displayRecords(@Param('customerID') customerID : number,
-                    @Param('purchaseTime') purchaseTime : Date) {
-        return this.prisma.display(customerID, purchaseTime)
+    @Get('customerId=:customerId/purchaseTime=:purchaseTime')
+    displayRecords(@Param('customerId') customerId : number, @Param('purchaseTime') purchaseTime : string) {
+        return this.payment_order.display(+customerId, new Date(purchaseTime))
     }
 
-    @Post()
-    createRecord(@Body() data : PaymentDto) {
-        this.prisma.createRecord(data)
+    @Post('method=office')
+    createRecordOffice(@Body() order_data : PaymentOrderDto) {
+        return this.payment_order.createRecord(order_data, +order_data.customerId, "Office")
     }
 
-    @Post(':customerID')
-    updateStatus(@Param('customerID') customerID : number,
-                @Body() data : PaymentDto) {
-        
-        this.prisma.updateRecord(customerID, data)           
+    @Post('method=office/update-status')
+    updateRecordOffice(@Body() data : PaymentOfficeUpdateDto) {
+        return this.payment_order.updateRecord(data)
+    }
+
+    @Post('method=on-site')
+    createRecordOnsite(@Body() order_data : PaymentOrderDto) {
+        return this.payment_order.createRecord(order_data, +order_data.customerId, "Onsite")
     }
 }

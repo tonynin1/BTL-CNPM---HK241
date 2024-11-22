@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from './services/database/database.service';
+import { PaymentOrderService } from './services/database/payment-order/order.service';
 
 @Injectable()
 export class PaymentService {
-    constructor(private prisma : PrismaService) {}
+    constructor(private prisma : PaymentOrderService) {}
 }
