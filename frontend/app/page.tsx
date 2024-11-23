@@ -6,29 +6,6 @@ import React from 'react';
 import Script from 'next/script';
 
 export default function Home() {
-  const [file, setFile] = useState<File | null>(null); // Khởi tạo với null
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!file) return;
-
-    try {
-      const data = new FormData();
-      data.set('file', file);
-
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: data,
-      });
-
-      // Xử lý lỗi
-      if (!res.ok) throw new Error(await res.text());
-      // Có thể thêm logic để xử lý phản hồi thành công ở đây
-    } catch (e: any) {
-      console.error(e);
-    }
-  };
-
   return (
     <main>
       <div className="inner_container container">
@@ -60,7 +37,6 @@ export default function Home() {
                 <a href="">c</a>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -73,10 +49,8 @@ export default function Home() {
               </div>
               <span>Drag & Drop your files here</span>
               <span>OR</span>
-              <button type="button" className="file-selector" onClick={() => document.querySelector('.file-selector-input')?.click()}>
-                Browse Files
-              </button>
-              <input type="file" className="file-selector-input" onClick={() => document.querySelector('.file-selector-input')?.click() } multiple/>
+              <button type="button" className="file-selector">Browse Files</button>
+              <input type="file" className="file-selector-input" multiple />
             </div>
             <div className="col">
               <div className="drop-here">Drop Here</div>
@@ -140,11 +114,123 @@ export default function Home() {
             </div>
           </div>
       </div>
-      <script src="script.js"></script>
-      <script src="scroll.js"></script>
+      <Script id="upload-script" strategy="lazyOnload">
+      {`
+        const dropArea = document.querySelector('.drop-section')
+        const listSection = document.querySelector('.list-section')
+        const listContainer = document.querySelector('.list')
+        const fileSelector = document.querySelector('.file-selector')
+        const fileSelectorInput = document.querySelector('.file-selector-input')
+
+        // upload files with browse button
+        fileSelector.onclick = () => fileSelectorInput.click()
+        fileSelectorInput.onchange = () => {
+            [...fileSelectorInput.files].forEach((file) => {
+                if(typeValidation(file.type)){
+                    uploadFile(file)
+                }
+            })
+        }
+
+        // when file is over the drag area
+        dropArea.ondragover = (e) => {
+            e.preventDefault();
+            [...e.dataTransfer.items].forEach((item) => {
+                if(typeValidation(item.type)){
+                    dropArea.classList.add('drag-over-effect')
+                }
+            })
+        }
+        // when file leave the drag area
+        dropArea.ondragleave = () => {
+            dropArea.classList.remove('drag-over-effect')
+        }
+        // when file drop on the drag area
+        dropArea.ondrop = (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('drag-over-effect')
+            if(e.dataTransfer.items){
+                [...e.dataTransfer.items].forEach((item) => {
+                    if(item.kind === 'file'){
+                        const file = item.getAsFile();
+                        if(typeValidation(file.type)){
+                            uploadFile(file)
+                        }
+                    }
+                })
+            }else{
+                [...e.dataTransfer.files].forEach((file) => {
+                    if(typeValidation(file.type)){
+                        uploadFile(file)
+                    }
+                })
+            }
+        }
+
+
+        // check the file type
+        function typeValidation(type){
+            var splitType = type.split('/')[0]
+            if(type == 'application/pdf' || splitType == 'image' || splitType == 'video'){
+                return true
+            }
+        }
+
+        // upload file function
+        function uploadFile(file){
+            listSection.style.display = 'block'
+            var li = document.createElement('li')
+            li.classList.add('in-prog')
+            li.innerHTML = \`
+                <div className="col" style="display: flex; flex: .15; text-align: center; align-items: center; justify-content: center;">
+                    <img className="logo" src="\${iconSelector(file.type)}" alt="">
+                </div>
+                <div className="col" style="flex: .75;  text-align: left; font-size: 0.9rem; color: white; padding: 8px 10px;">
+                    <div className="file-name">
+                        <div className="name">\${file.name}</div>
+                        <span style="color: white; float: right;">0%</span>
+                    </div>
+                    <div className="file-progress" style="width: 100%; height: 5px; margin-top: 8px; border-radius: 8px; background-color: #dee6fd;">
+                        <span style="display: block; width: 0%; height: 100%; border-radius: 8px; background-image: linear-gradient(120deg, #6b99fd, #9385ff); transition-duration: 0.4s;"></span>
+                    </div>
+                    <div className="file-size" style="font-size: 0.75rem; margin-top: 3px; color: white;">\${(file.size / (1024 * 1024)).toFixed(2)} MB</div>
+                </div>
+                <div className="col" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 250px; display: inline-block;">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #8694d2; background-color: #dee6fd; position: relative; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%;" class="cross" height="20" width="20">
+                        <path d="m5.979 14.917-.854-.896 4-4.021-4-4.062.854-.896 4.042 4.062 4-4.062.854.896-4 4.062 4 4.021-.854.896-4-4.063Z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #8694d2; background-color: #dee6fd; position: relative; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%; fill: #50a156; background-color: transparent;" class="tick" height="20" width="20">
+                        <path d="m8.229 14.438-3.896-3.917 1.438-1.438 2.458 2.459 6-6L15.667 7Z"/>
+                    </svg>
+                </div>
+            \`;
+            listContainer.prepend(li)
+            var http = new XMLHttpRequest()
+            var data = new FormData()
+            data.append('file', file)
+            http.onload = () => {
+                li.classList.add('complete')
+                li.classList.remove('in-prog')
+            }
+            http.upload.onprogress = (e) => {
+                var percent_complete = (e.loaded / e.total)*100
+                li.querySelectorAll('span')[0].innerHTML = Math.round(percent_complete) + '%'
+                li.querySelectorAll('span')[1].style.width = percent_complete + '%'
+            }
+            http.open('POST', '/app/sender.php', true)
+            http.send(data)
+            li.querySelector('.cross').onclick = () => http.abort()
+            http.onabort = () => li.remove()
+        }
+        // find icon for file
+        function iconSelector(type){
+            var splitType = (type.split('/')[0] == 'application') ? type.split('/')[1] : type.split('/')[0];
+            return splitType + '.png'
+        }
+      `}
+    </Script>
       <Script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" />
       <Script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"/>
     </main>
-    
   );
 }
