@@ -33,8 +33,8 @@ export default function Login() {
 
     // In dữ liệu ra console hoặc xử lý tiếp
     console.log("Form Submitted:", formData);
-    signup(formData);
-    // alert("Đăng ký thành công!");
+    let data = signup(formData);
+
   };
 
   return (

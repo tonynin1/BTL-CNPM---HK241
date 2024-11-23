@@ -19,9 +19,11 @@ export const signup = async (data : any) => {
         }).then((res) => {
             accessToken = res.access_token;
             refreshToken = res.refresh_token;
-        }).then(() => {
+            return res;
+        }).then((res) => {
 
             createDto(data.userType)
+            return res;
         })
 
         return response
@@ -47,12 +49,16 @@ async function createDto(userType: string) {
             },
         })
         .then((res) => {
-            console.log(res);
             return res;
         })
         .catch((error) => {
             console.error(error);
         });
+
+        if (response.status === 201) {
+            alert("Signup successfully")
+            window.location.href = "/signin"
+        }
     }
     else {
         // http://localhost:8080/student/create
@@ -69,7 +75,11 @@ async function createDto(userType: string) {
         .catch((error) => {
             console.error(error);
         });
-    
+        
+        if (response.status === 201) {
+            alert("Signup successfully")
+            window.location.href = "/signin"
+        }
     }
 }
 
