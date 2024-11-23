@@ -111,7 +111,12 @@ export default function Home() {
                 <option value="ngang">Ngang</option>
               </select>
             </div>
+            
             </div>
+            <div className="inner_submit">
+              <button className="submit">SUBMIT</button>
+            </div>
+            
           </div>
       </div>
       <Script id="upload-script" strategy="lazyOnload">
