@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
+import '@/app/globals.css'
 
 
 export default function StudentHeader() {
@@ -51,7 +52,7 @@ export default function StudentHeader() {
           <div className="student_dropdown w-[150px] absolute top-7 left-0 hidden"
           >
             <ul className="text-black rounded bg-white overflow-hidden">
-              <li className="pl-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm"
+              <li className="px-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm text-center"
                 onClick={handleLogout}
               >
                 Đăng xuất

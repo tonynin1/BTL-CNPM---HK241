@@ -8,12 +8,12 @@
 
 /* Thiết lập kiểu cho body */
 body {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #f1f1f1;
-  padding: 10px;
+  padding: 10px; */
 }
 
 /* Container chính */
