@@ -168,12 +168,8 @@ export default function Home() {
         }
 
 
-        // check the file type
         function typeValidation(type){
-            var splitType = type.split('/')[0]
-            if(type == 'application/pdf' || splitType == 'image' || splitType == 'video'){
-                return true
-            }
+            return true
         }
 
         // upload file function
@@ -183,7 +179,7 @@ export default function Home() {
             li.classList.add('in-prog')
             li.innerHTML = \`
                 <div className="col" style="display: flex; flex: .15; text-align: center; align-items: center; justify-content: center;">
-                    <img className="logo" src="\${iconSelector(file.type)}" alt="">
+                    <img className="logo" src="\${iconSelector(file.type)}"  style="height="40px" width="40px"" alt="">
                 </div>
                 <div className="col" style="flex: .75;  text-align: left; font-size: 0.9rem; color: white; padding: 8px 10px;">
                     <div className="file-name">
@@ -222,10 +218,23 @@ export default function Home() {
             li.querySelector('.cross').onclick = () => http.abort()
             http.onabort = () => li.remove()
         }
-        // find icon for file
-        function iconSelector(type){
-            var splitType = (type.split('/')[0] == 'application') ? type.split('/')[1] : type.split('/')[0];
-            return splitType + '.png'
+
+        function iconSelector(type) {
+            const iconMap = {
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx.png',
+                'application/pdf': 'pdf.png',
+                'image/jpeg': 'image.png',
+                'image/png': 'image.png',
+                'text/plain': 'text.png',
+
+            };
+
+            if (iconMap[type]) {
+                return iconMap[type];
+            }
+
+            var splitType = type.split('/')[0];
+            return splitType + '.png'; // default icon based on type
         }
       `}
     </Script>
