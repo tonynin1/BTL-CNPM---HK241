@@ -1,0 +1,197 @@
+/* Thiết lập các thuộc tính mặc định */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Thiết lập kiểu cho body */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+/* Container chính */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Giới hạn chiều rộng container */
+}
+
+/* Hộp chính (form đăng ký) */
+.login-box {
+  width: 100%;
+  max-width: 360px; /* Thu nhỏ hộp */
+  padding: 20px; /* Giảm padding */
+  background-color: #ffffff;
+  border-radius: 15px; /* Bán kính góc nhỏ hơn */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+/* Logo và dòng chữ */
+.logo {
+  width: 36px; /* Nhỏ hơn một chút */
+  height: auto;
+  margin-bottom: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  font-size: 18px; /* Giảm kích thước chữ */
+  font-weight: bold;
+  color: #003D73;
+  margin-bottom: 15px;
+  display: block;
+}
+
+/* Tiêu đề */
+h2 {
+  text-align: left;
+  font-size: 18px; /* Thu nhỏ chữ */
+  color: #333;
+  margin-bottom: 15px; /* Giảm khoảng cách bên dưới */
+  font-weight: 600;
+}
+
+/* Nhóm trường nhập liệu */
+.input-row {
+  display: flex;
+  gap: 10px; /* Giảm khoảng cách giữa các trường */
+}
+
+.input-row .input-group {
+  flex: 1;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 15px; /* Giảm khoảng cách giữa các nhóm nhập liệu */
+}
+
+.input-group label {
+  font-size: 14px; /* Giữ kích thước chữ nhỏ gọn */
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px; /* Giảm padding */
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #007bff;
+}
+
+/* Vùng chứa biểu tượng mắt */
+.eye-wrapper {
+  text-align: right;
+  margin-bottom: 15px; /* Giảm khoảng cách */
+}
+
+.eye-toggle {
+  font-size: 18px; /* Nhỏ hơn một chút */
+  cursor: pointer;
+  color: #333;
+}
+
+.eye-toggle:hover i {
+  color: #007bff;
+}
+
+/* Nút bấm */
+.btn {
+  width: 100%;
+  padding: 10px; /* Thu nhỏ padding */
+  margin-top: 15px; /* Giảm khoảng cách trên */
+  font-size: 15px;
+  color: #fff;
+  border: none;
+  border-radius: 6px; /* Giảm bán kính góc */
+  background-color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.02);
+}
+
+/* Thông báo lỗi */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px; /* Giảm khoảng cách trên */
+}
+
+/* Footer */
+.footer-text {
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px; /* Nhỏ hơn một chút */
+  color: #333;
+  opacity: 0.6;
+  font-weight: 300;
+}
+
+/* Container cho toggle buttons */
+.toggle-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Thu nhỏ khoảng cách */
+}
+
+/* Label hiển thị toggle */
+.toggle-option {
+  flex: 1;
+  text-align: center;
+  padding: 8px 10px; /* Giảm padding */
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px; /* Giảm kích thước chữ */
+  color: #333;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.toggle-option:hover {
+  background-color: #e6f7ff;
+  border-color: #007bff;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+}
+
+/* Chọn trạng thái active */
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + .toggle-option {
+  background-color: #007bfe;
+  color: #fff;
+  border-color: #007bff;
+  font-weight: bold;
+  transform: scale(1.02);
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+}
