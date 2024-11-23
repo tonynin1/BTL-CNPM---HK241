@@ -1,101 +1,151 @@
+'use client'; // Sửa lại thành "use client"
+
+import { useState } from "react";
 import Image from "next/image";
+import React from 'react';
+import Script from 'next/script';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [file, setFile] = useState<File | null>(null); // Khởi tạo với null
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!file) return;
+
+    try {
+      const data = new FormData();
+      data.set('file', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: data,
+      });
+
+      // Xử lý lỗi
+      if (!res.ok) throw new Error(await res.text());
+      // Có thể thêm logic để xử lý phản hồi thành công ở đây
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
+
+  return (
+    <main>
+      <div className="inner_container container">
+        <div className="line"></div>
+        <div className="navbar container narrow">
+          <div className="header">
+            <a href="">
+              <Image className="logo" src="/HCMUT_official_logo.png" width={50} height={50} alt="Logo" />
+            </a>
+            <div className="HCMUT row">
+              <a className="Home" href="Trang Chu">HCMUT SSPS</a>
+            </div>
+            <div className="text-center">
+              <div className="inner_row row align-items-start">
+                <a className="col" href="Trang Chu">TRANG CHỦ</a>
+                <a className="col" href="Trang Chu">IN TÀI LIỆU</a>
+                <a className="col" href="Trang Chu">MUA TRANG IN</a>
+                <a className="col" href="Trang Chu">LỊCH SỬ IN</a>
+              </div>
+            </div>
+            <div className="dropdown1">
+              <button  className="inner_user">
+                <ion-icon className="User" name="person-circle-outline"></ion-icon>
+                <ion-icon name="chevron-down-outline"></ion-icon>
+              </button>
+              <div className="content">
+                <a href="">A</a>
+                <a href="">b</a>
+                <a href="">c</a>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+      <div className="inner_wrap container">
+        <div className="container upload_container">
+          <div className="drop-section container">
+            <div className="col">
+              <div className="cloud-icon">
+                <Image className="cloud" src="/cloud.png" width={50} height={50} alt="Cloud" />
+              </div>
+              <span>Drag & Drop your files here</span>
+              <span>OR</span>
+              <button type="button" className="file-selector" onClick={() => document.querySelector('.file-selector-input')?.click()}>
+                Browse Files
+              </button>
+              <input type="file" className="file-selector-input" onClick={() => document.querySelector('.file-selector-input')?.click() } multiple/>
+            </div>
+            <div className="col">
+              <div className="drop-here">Drop Here</div>
+            </div>
+          </div>
+          <div className="list-section">
+            <div className="list-title">Uploaded Files</div>
+            <div className="list"></div>
+          </div>
+          <div className="header-section row align-items-start">
+              <input type="radio" id="PDF" name="fav_language" value="PDF" />
+              <label className="col" htmlFor="PDF">PDF</label>
+
+              <input type="radio" id="DOCx" name="fav_language" value="DOCx" />
+              <label className="col" htmlFor="DOCx">DOCx</label>
+
+              <input type="radio" id="TXT" name="fav_language" value="TXT" />
+              <label className="col" htmlFor="TXT">TXT</label>
+
+              <label className="col">&lt; 50 MB</label>
+          </div>
+        </div>
+
+        <div className="section">
+          <div className="row align-items-start"> 
+              <div className="form-group col">
+                <p className="p">Số bản</p>
+                <input type="number" className="form-control" id="so-ban" placeholder="Nhập số bản"/>
+              </div>
+              
+              <div className="form-group col">
+                <p className="p">Khổ giấy</p>
+                <select className="form-control" id="kho-giay">
+                  <option value="">Chọn khổ giấy</option>
+                  <option value="a4">A4</option>
+                  <option value="a3">A3</option>
+                  <option value="a5">A5</option>
+                </select>
+              </div>
+              </div>
+            <br/>
+            <div className="row align-items-start"> 
+              <div className="form-group col">
+                <p className="p">Kiểu in</p>
+                <select className="form-control" id="kieu-in">
+                  <option value="">Chọn kiểu in</option>
+                  <option value="in-mau">In màu</option>
+                  <option value="in-den-trang">In đen trắng</option>
+                  <option value="in-2-mat">In 2 mặt</option>
+                </select>
+              </div>
+            
+            <div className="form-group col">
+              <p className="p">Hướng giấy</p>
+              <select className="form-control" id="huong-giay">
+                <option value="">Chọn hướng giấy</option>
+                <option value="doc">Dọc</option>
+                <option value="ngang">Ngang</option>
+              </select>
+            </div>
+            </div>
+          </div>
+      </div>
+      <script src="script.js"></script>
+      <script src="scroll.js"></script>
+      <Script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" />
+      <Script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"/>
+    </main>
+    
   );
 }
