@@ -1,10 +1,9 @@
-'use client'; // Sửa lại thành "use client"
+'use client';
 
 import { useState } from "react";
 import Image from "next/image";
 import React from 'react';
 import Script from 'next/script';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null); // Khởi tạo với null
