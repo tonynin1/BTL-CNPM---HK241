@@ -9,7 +9,7 @@
 #     depends_on:
 #       - db
 
-#   db:
+#   d b:
 #     image: postgres:13
 #     environment:
 #       POSTGRES_USER: user

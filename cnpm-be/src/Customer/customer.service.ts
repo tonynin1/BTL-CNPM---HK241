@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {createCustomerDto , updateCustomerDto} from './dto';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class CustomerService {
@@ -87,6 +88,24 @@ export class CustomerService {
     }
 
     async updateCustomer(userId: number, updateDto: updateCustomerDto) {
+
+        // check user's role
+        const findUser = await this.prisma.user.findUnique({
+            where: {
+                userId: userId
+            }
+        });
+
+        if (findUser.role === 'SPSO') {
+            return {
+                message: 'THIS USER\'s ROLE IS SPSO, CANNOT UPDATE CUSTOMER',
+                status: 403
+            }
+        }
+
+
+
+        
         let findCustomer = await this.prisma.customer.findFirst({
             where: {
                 userId: userId
