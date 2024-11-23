@@ -1,9 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { createCustomerDto } from './dto';
-import { JwtGuard } from 'src/auth/guard';
-import { GetUser } from 'src/auth/decorator';
 import { User } from '@prisma/client';
+import { GetCurrentUser, GetCurrentUserId } from 'src/auth/common/decorators';
 
 @Controller('customer')
 export class CustomerController {
@@ -31,23 +30,22 @@ export class CustomerController {
         return this.customerService.getCustomerByCustomerId(customerId);
     }
 
-    @UseGuards(JwtGuard)
+    @HttpCode(HttpStatus.OK)
     @Post('create')
     createCustomer(
-        @GetUser('id') user: User,
+        @GetCurrentUserId() userId: number,
         @Body() createDto: createCustomerDto
     ){
-        console.log(user.userId);
-        return this.customerService.createCustomer(user.userId,createDto);
+        console.log(userId);
+        return this.customerService.createCustomer(userId,createDto);
     }
 
-    @UseGuards(JwtGuard)
     @Patch('update')
     updateCustomer(
-        @GetUser('id') user: User,
+        @GetCurrentUserId() userId: number,
         @Body() createDto: createCustomerDto
     ){
-        return this.customerService.updateCustomer(user.userId,createDto);
+        return this.customerService.updateCustomer(userId,createDto);
     }
 
 }
