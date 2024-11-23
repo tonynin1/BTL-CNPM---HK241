@@ -1,8 +1,4 @@
-'use client';
-
-import { useState } from "react";
 import Image from "next/image";
-
 import Link from "next/link";
 import MyHeader from "./ui/MyHeader";
 import ImageSlider from "./ui/ImageSlider";
