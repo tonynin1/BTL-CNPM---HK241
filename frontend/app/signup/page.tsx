@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import React from "react";
+import { signup } from "../API/signup";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -32,7 +33,8 @@ export default function Login() {
 
     // In dữ liệu ra console hoặc xử lý tiếp
     console.log("Form Submitted:", formData);
-    alert("Đăng ký thành công!");
+    signup(formData);
+    // alert("Đăng ký thành công!");
   };
 
   return (

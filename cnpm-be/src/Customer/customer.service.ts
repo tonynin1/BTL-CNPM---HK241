@@ -52,6 +52,17 @@ export class CustomerService {
     }
 
     async createCustomer(userId: number, createDto: createCustomerDto) {
+        const findUser = await this.prisma.user.findUnique({
+            where: {
+                userId: userId
+            }
+        });
+        if (findUser.role === 'SPSO') {
+            return {
+                message: 'THIS USER\'s ROLE IS SPSO, CANNOT CREATE CUSTOMER',
+                status: 403
+            }
+        }
         const findCustomer = await this.prisma.customer.findFirst({
             where: {
                 userId: userId
