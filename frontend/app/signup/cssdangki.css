@@ -8,12 +8,12 @@
 
 /* Thiết lập kiểu cho body */
 body {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #f1f1f1;
-  padding: 10px;
+  padding: 10px; */
 }
 
 /* Container chính */
@@ -22,13 +22,14 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 400px; /* Giới hạn chiều rộng container */
+  min-width: 500px; /* Giới hạn chiều rộng container */
 }
 
 /* Hộp chính (form đăng ký) */
 .login-box {
   width: 100%;
-  max-width: 360px; /* Thu nhỏ hộp */
+  /* min-width: 500px; */
+  max-width: 500px; 
   padding: 20px; /* Giảm padding */
   background-color: #ffffff;
   border-radius: 15px; /* Bán kính góc nhỏ hơn */

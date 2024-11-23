@@ -38,15 +38,17 @@ export default function Login() {
   return (
     <main>
       <div className="login-container">
-        <div className="login-box">
-          <Image
-            src="/HCMUT_official_logo.png"
-            alt="Logo"
-            width={60}
-            height={60}
-            className="logo"
-          />
-          <span className="logo-text">HCMUT SPSS</span>
+        <div className="login-box mt-[5%]">
+          <div className="flex items-center mb-4 mt-2 justify-center gap-2">
+            <Image
+              src="/HCMUT_official_logo.png"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="logo my-0"
+            />
+            <span className="logo-text my-0">HCMUT SPSS</span>
+          </div>
           <h2>Tạo tài khoản mới</h2>
           <form id="registerForm" onSubmit={handleSubmit}>
             <div className="input-row">
@@ -123,9 +125,9 @@ export default function Login() {
                 required
               />
             </div>
-            <div className="input-group">
+            <div className="input-group flex flex-col">
               <label>Đối tượng</label>
-              <div className="toggle-group">
+              <div className="toggle-group flex">
                 <input
                   type="radio"
                   id="student"
@@ -134,8 +136,8 @@ export default function Login() {
                   onChange={handleChange}
                   required
                 />
-                <label htmlFor="student" className="toggle-option">
-                  Sinh viên
+                <label htmlFor="student" className="toggle-option content-center">
+                  <span>Sinh viên</span>
                 </label>
                 <input
                   type="radio"
@@ -144,8 +146,8 @@ export default function Login() {
                   value="manager"
                   onChange={handleChange}
                 />
-                <label htmlFor="manager" className="toggle-option">
-                  Quản lý hệ thống
+                <label htmlFor="manager" className="toggle-option content-center">
+                  <span>Quản lý hệ thống</span>
                 </label>
               </div>
             </div>

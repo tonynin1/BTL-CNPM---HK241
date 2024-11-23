@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
-
+import '@/app/globals.css'
 
 export default function StudentHeader() {
   const [time, setTime] = useState(900) 
