@@ -13,12 +13,12 @@ a {
 
 /* Thiết lập kiểu cho body */
 body {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #f1f1f1;
-    overflow: hidden; /* Tránh cuộn không cần thiết */
+    overflow: hidden; Tránh cuộn không cần thiết */
 }
 
 /* Thiết lập kiểu cho container chứa đăng nhập */
@@ -33,7 +33,7 @@ body {
 /* Thiết lập kiểu cho hộp đăng nhập */
 .login-box {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     padding: 30px;
     background-color: #ffffff;
     border-radius: 10px;
@@ -111,7 +111,7 @@ h2 {
 
 /* Input cho tài khoản và mật khẩu */
 input[type="text"], input[type="password"] {
-    width: 100%;
+    /* width: 100%; */
     padding: 12px;
     margin: 10px 0;
     font-size: 16px;
@@ -193,7 +193,7 @@ input[type="text"], input[type="password"] {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.sign_up:hover {
+.signup-button:hover {
     background-color: #0056b3;
     transform: scale(1.02);
 }
