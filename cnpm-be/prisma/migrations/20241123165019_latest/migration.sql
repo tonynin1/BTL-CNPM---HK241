@@ -79,10 +79,9 @@ CREATE TABLE "PagePurchaseOrder" (
     "purchaseTime" TIMESTAMP(3) NOT NULL,
     "customerId" INTEGER NOT NULL,
     "ppoStatus" TEXT NOT NULL DEFAULT 'Pending',
-    "pQuantity" INTEGER NOT NULL,
-    "paperType" TEXT NOT NULL,
-    "printerId" INTEGER NOT NULL,
+    "pageNum" INTEGER NOT NULL DEFAULT 0,
     "price" DOUBLE PRECISION NOT NULL,
+    "paymentMethod" TEXT NOT NULL,
 
     CONSTRAINT "PagePurchaseOrder_pkey" PRIMARY KEY ("ppoId")
 );
@@ -149,9 +148,6 @@ ALTER TABLE "Printer" ADD CONSTRAINT "Printer_spsomemberId_fkey" FOREIGN KEY ("s
 
 -- AddForeignKey
 ALTER TABLE "PagePurchaseOrder" ADD CONSTRAINT "PagePurchaseOrder_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("customerId") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "PagePurchaseOrder" ADD CONSTRAINT "PagePurchaseOrder_printerId_fkey" FOREIGN KEY ("printerId") REFERENCES "Printer"("printerId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PrintOrder" ADD CONSTRAINT "PrintOrder_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("customerId") ON DELETE RESTRICT ON UPDATE CASCADE;
