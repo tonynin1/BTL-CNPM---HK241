@@ -26,12 +26,15 @@ model User {
   email          String       @unique
   phone          String
   usageHistory   String?
-  password       String
+  hash           String
+  hashedRt       String?
   role           String
   adminEmail     String
   admin          Admin       @relation(fields: [adminEmail], references: [adminEmail])
   spsomembers    SPSOMember[]
   customers      Customer[]
+  createAt       DateTime @default(now())
+  updateAt       DateTime @updatedAt
 }
 
 model SPSOMember {
@@ -82,21 +85,19 @@ model Printer {
   room              String
   spsomemberId      Int
   spsomember        SPSOMember         @relation(fields: [spsomemberId], references: [sosoMemberId])
-  pagePurchaseOrders PagePurchaseOrder[]
   documents         Document[]
 }
 
+
 model PagePurchaseOrder {
-  ppoId          Int            @id @default(autoincrement())
+  ppoId          Int             @id @default(autoincrement()) 
   purchaseTime   DateTime
-  customerId     Int
+  customerId     Int             
   customer       Customer        @relation(fields: [customerId], references: [customerId])
   ppoStatus      String          @default("Pending")
-  pQuantity      Int
-  paperType      String
-  printerId      Int
-  printer        Printer         @relation(fields: [printerId], references: [printerId])
+  pageNum        Int             @default(0)  
   price          Float
+  paymentMethod  String
 }
 
 model PrintOrder {

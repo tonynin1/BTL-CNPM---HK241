@@ -3,38 +3,35 @@ import {
     Controller,
     Delete,
     Get,
-    Param,
+    HttpCode,
+    HttpStatus,
     Patch,
-    Post,
     Query,
-    UseGuards,
   } from '@nestjs/common';
-  import { User } from '@prisma/client';
-  import { GetUser } from '../auth/decorator';
-  import { JwtGuard } from '../auth/guard';
   import { EditUserDto } from './dto';
   import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { GetCurrentUserId } from 'src/auth/common/decorators';
   
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+  ) {}
   
-    // get by itself
-    @UseGuards(JwtGuard)
-    @Get('me')
-    getMe(@GetUser() user: User) {
-      return user;
-    }
-  
+  // get all users
+  @Get()
+  async getAllUsers() {
+    return this.userService.getAllUsers();
+  }
+
   // edit by itself
-    @UseGuards(JwtGuard)
-    @Patch('edit')
+  @HttpCode(HttpStatus.OK)
+  @Patch('edit')
     editUser(
-      @GetUser('id') user: User,
+      @GetCurrentUserId() userId: number,
       @Body() dto: EditUserDto,
     ) {
-      return this.userService.editUser(user.userId, dto);
+      return this.userService.editUser(userId, dto);
     }
 
     // delete by admin

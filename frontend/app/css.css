@@ -18,12 +18,12 @@ a{
 
 /* Thiết lập kiểu cho body */
 body {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #f1f1f1;
-    overflow: hidden; /* Tránh cuộn không cần thiết */
+    overflow: hidden; Tránh cuộn không cần thiết */
 }
 
 /* Thiết lập kiểu cho container chứa đăng nhập */
