@@ -2,70 +2,48 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import React from 'react';
-import Script from 'next/script';
-import Link from 'next/link';
 
-// export default function Home() {
-//   return (
-//     <main>
-//       <div className="login-container">
-//         <div className="login-box">
-//             <div className="logo-container">
-//                 <Image src="/HCMUT_official_logo.png" alt="Logo" width={60} height={60} className="logo"/>
-//                 <span className="logo-text">HCMUT SPSS</span>
-//             </div>
-//             <h2>Đăng nhập dành cho</h2>
-//             <button className="account-option">
-//                 <i className="icon-admin"></i> 
-//                 <a href="../Login_BTL/index.html">Administrator</a>
-//             </button>
-//             <button className="account-option">
-//                 <i className="icon-admin"></i> 
-//                 <a href="../Login_BTL/index.html">Quản lý hệ thống (SPSO)</a>
-//             </button>
-//             <button className="account-option">
-//                 <i className="icon-user"></i> 
-//                 <a href="../Login_BTL/index.html">Sinh viên Trường đại học Bách khoa</a>
-//             </button>
-//             <div className="register-row">
-//                 <a href="../Sign_up/index.html" className="sign_up">Đăng ký tài khoản mới</a>
-//             </div>
-//         </div>
-//     </div>
-//   </main>
-//   );
-// }
+import Link from "next/link";
+import MyHeader from "./ui/MyHeader";
+import ImageSlider from "./ui/ImageSlider";
+
 export default function Home() {
-    return (
-      <main>
-        <div className="login-container">
-          <div className="login-box">
-            <div className="logo-container">
-              <Image src="/HCMUT_official_logo.png" alt="Logo" width={60} height={60} className="logo" />
-              <span className="logo-text">HCMUT SPSS</span>
-            </div>
-            <h2>Đăng nhập dành cho</h2>
-            <button className="account-option">
-              <i className="icon-admin"></i>
-              <Link href="/folder_login">Administrator</Link>
-            </button>
-            <button className="account-option">
-              <i className="icon-admin"></i>
-              <Link href="/folder_login">Quản lý hệ thống (SPSO)</Link>
-            </button>
-            <button className="account-option">
-              <i className="icon-user"></i>
-              <Link href="/folder_login">Sinh viên Trường đại học Bách khoa</Link>
-            </button>
-            <div className="register-row">
-              <Link href="/folder_signup" className="sign_up">
-                Đăng ký tài khoản mới
-              </Link>
-            </div>
-          </div>
+  return (
+    <div className="">
+      <MyHeader />
+      <ImageSlider />
+      <div className="py-20">
+        <div className="container mx-auto font-mono">
+          <p className="uppercase text-center text-4xl mb-8">
+            dịch vụ
+          </p>
+          <p className="text-center text-xl">
+            Dịch vụ in ấn trực tuyến dành cho sinh viên Bách khoa Hồ Chí Minh là giải pháp tiện lợi, nhanh chóng và tiết kiệm. Với giao diện thân thiện, sinh viên có thể dễ dàng tải lên tài liệu, lựa chọn định dạng, số lượng trang và các tùy chỉnh khác chỉ trong vài bước. Dịch vụ hỗ trợ in ấn đa dạng như tài liệu học tập, luận văn, đồ án và cả tài liệu màu. Đặc biệt, hệ thống giao hàng nhanh chóng, giúp sinh viên nhận tài liệu tận nơi mà không cần mất thời gian chờ đợi. Với mức giá ưu đãi và chất lượng in sắc nét, dịch vụ này là trợ thủ đắc lực cho các bạn sinh viên trong việc học tập và nghiên cứu. 
+          </p>
         </div>
-      </main>
-    );
-  }
-  
+      </div>
+
+      <div className="py-20 bg-gray-100">
+        <div className="container mx-auto font-mono">
+          <p className="uppercase text-center text-4xl mb-8">
+            về chúng tôi
+          </p>
+          <p className="text-center text-xl">
+            Nhóm sinh viên thực hiện dự án dịch vụ in ấn trực tuyến là tập hợp những bạn trẻ năng động, sáng tạo và đam mê công nghệ đến từ Đại học Bách khoa Hồ Chí Minh. Với mong muốn mang đến giải pháp in ấn tiện lợi và tối ưu cho cộng đồng sinh viên, nhóm đã kết hợp các kỹ năng lập trình, thiết kế và quản lý để xây dựng nền tảng trực tuyến hiện đại. Tinh thần làm việc nhóm, sự kiên trì và khả năng giải quyết vấn đề là những yếu tố giúp họ vượt qua thách thức. Không chỉ hướng đến việc cải thiện trải nghiệm in ấn, nhóm còn mong muốn tạo ra một môi trường học tập và làm việc hiệu quả, tiết kiệm thời gian và chi phí cho các bạn sinh viên.
+          </p>
+        </div>
+      </div>
+
+      <div className="py-20">
+        <div className="container mx-auto font-mono">
+          <p className="uppercase text-center text-4xl mb-8">
+            Liên hệ
+          </p>
+          <p className="text-center text-xl">
+            Nhóm sinh viên thực hiện dự án dịch vụ in ấn trực tuyến là tập hợp những bạn trẻ năng động, sáng tạo và đam mê công nghệ đến từ Đại học Bách khoa Hồ Chí Minh. Với mong muốn mang đến giải pháp in ấn tiện lợi và tối ưu cho cộng đồng sinh viên, nhóm đã kết hợp các kỹ năng lập trình, thiết kế và quản lý để xây dựng nền tảng trực tuyến hiện đại. Tinh thần làm việc nhóm, sự kiên trì và khả năng giải quyết vấn đề là những yếu tố giúp họ vượt qua thách thức. Không chỉ hướng đến việc cải thiện trải nghiệm in ấn, nhóm còn mong muốn tạo ra một môi trường học tập và làm việc hiệu quả, tiết kiệm thời gian và chi phí cho các bạn sinh viên.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
