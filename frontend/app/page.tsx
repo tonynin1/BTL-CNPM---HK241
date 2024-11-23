@@ -89,13 +89,13 @@ export default function Home() {
           </div>
           <div className="header-section row align-items-start">
               <input type="radio" id="PDF" name="fav_language" value="PDF" />
-              <label className="col" htmlFor="PDF">PDF</label>
+              <label className="col ishover" htmlFor="PDF">PDF</label>
 
               <input type="radio" id="DOCx" name="fav_language" value="DOCx" />
-              <label className="col" htmlFor="DOCx">DOCx</label>
+              <label className="col ishover" htmlFor="DOCx">DOCx</label>
 
               <input type="radio" id="TXT" name="fav_language" value="TXT" />
-              <label className="col" htmlFor="TXT">TXT</label>
+              <label className="col ishover" htmlFor="TXT">TXT</label>
 
               <label className="col">&lt; 50 MB</label>
           </div>

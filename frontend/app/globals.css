@@ -158,6 +158,8 @@ main{
 
 .inner_wrap{
   margin: 100px 100px 0px 100px;
+  background-color: #3e3e3e;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   padding: 50px;
   border: 1px solid black;
   border-radius: 20px;
@@ -202,7 +204,7 @@ main{
   color: white; /* Change text color when selected */
 }
 
-.header-section label:hover {
+.header-section label.ishover:hover {
   background-color: #868686; /* Change background on hover */
 }
 
