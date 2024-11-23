@@ -36,6 +36,12 @@ export default function Login() {
               <button type="submit" className="login-button">
                 Đăng nhập
               </button>
+
+              <button type="button" className="signup-button text-white">
+                <Link href={"signup"}>
+                  Đăng ký
+                </Link>
+              </button>
             </form>
           </div>
         </div>
