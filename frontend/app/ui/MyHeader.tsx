@@ -35,7 +35,7 @@ export default function MyHeader() {
       </div>
 
       <Link
-        href="/signin"
+        href="/print_pages"
         className="flex items-center justify-center no-underline w-32 h-12 text-sm sm:text-base text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 transition duration-300 rounded"
       >
         Đăng nhập
