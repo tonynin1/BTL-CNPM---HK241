@@ -139,6 +139,7 @@ main{
 
 .dropdown1:hover .content{
   display: block;
+  margin-top: 10px;
 }
 
 .dropdown1 .content{
