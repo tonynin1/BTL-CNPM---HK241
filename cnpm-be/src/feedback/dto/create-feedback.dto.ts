@@ -1,6 +1,6 @@
 export class createFeedbackDto {
     customerId: number;
-    sosomemberId: number;
+    spsomemberId: number;
     createdAt: Date;
     rating: number;
     contentByCustomer?: string;

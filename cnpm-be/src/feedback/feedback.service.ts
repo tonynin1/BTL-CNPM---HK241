@@ -24,6 +24,7 @@ export class FeedbackService {
         }
 
         return {
+            data: feedback,
             status: 200,
             message: 'Feedback found',
         }
@@ -35,7 +36,7 @@ export class FeedbackService {
             const feedback = await this.prismaService.feedback.create({
                 data: {
                     feedTime: new Date(),
-                    rating: createFeedbackDto.rating,
+                    rating: createFeedbackDto.rating? createFeedbackDto.rating : 0,
                     contentByCustomer: "",
                     contentBySPSO: "",
                     customer: {
@@ -45,7 +46,7 @@ export class FeedbackService {
                     },
                     spsomember: {
                         connect: {
-                            sosoMemberId: createFeedbackDto.sosomemberId,
+                            sosoMemberId: createFeedbackDto.spsomemberId,
                         },
                     },
     
@@ -60,34 +61,31 @@ export class FeedbackService {
         catch(error){
             return {
                 status: 500,
-                message: 'Internal server error',
+                message: 'Internal server error: ' + error.message,
             }
         }
 
     }
 
     async updateFeedback(feedbackId: number, updateFeedbackDto: updateFeedbackDto) {
-        const feedback = await this.prismaService.feedback.findUnique({
-            where: {
-                feedbackId: feedbackId,
-            },
-        });
-        if (!feedback) {
-            return {
-                status: 404,
-                message: 'Feedback not found',
-            }
-        }
-
         try{
-            await this.prismaService.feedback.update({
+            const feedback = await this.getFeedbackById(feedbackId)
+
+            if (feedback.status !== 200) {
+                return {
+                    status: 404,
+                    message: 'Feedback not found',
+                }
+            }
+        
+            const response = await this.prismaService.feedback.update({
                 where: {
                     feedbackId: feedbackId,
                 },
                 data: {
-                    rating: updateFeedbackDto.rating,
-                    contentByCustomer: updateFeedbackDto.contentByCustomer,
-                    contentBySPSO: updateFeedbackDto.contentBySPSO,
+                    rating: updateFeedbackDto.rating? updateFeedbackDto.rating : feedback.data.rating,
+                    contentByCustomer: updateFeedbackDto.contentByCustomer? updateFeedbackDto.contentByCustomer : feedback.data.contentByCustomer,
+                    contentBySPSO: updateFeedbackDto.contentBySPSO? updateFeedbackDto.contentBySPSO : feedback.data.contentBySPSO,
                 },
             });
 
@@ -99,7 +97,7 @@ export class FeedbackService {
         catch(error){
             return {
                 status: 500,
-                message: 'Internal server error',
+                message: 'Internal server error ' + error.message,
             }
         }
     }

@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { FeedbackService } from './feedback.service';
 import { createFeedbackDto, updateFeedbackDto } from './dto';
 
@@ -12,22 +12,23 @@ export class FeedbackController {
     }
 
     @Get(':feedbackId')
-    async getFeedbackById(@Param('feedbackId') feedbackId: number) {
+    async getFeedbackById(@Param('feedbackId', ParseIntPipe) feedbackId: number) {
         return this.feedbackService.getFeedbackById(feedbackId);
     }
 
     @Post('create')
-    async createFeedback(createFeedbackDto: createFeedbackDto) {
+    async createFeedback(
+        @Body() createFeedbackDto: createFeedbackDto ) {
         return this.feedbackService.createFeedback(createFeedbackDto);
     }
 
     @Patch('update/:feedbackId')
-    async updateFeedback(@Param('feedbackId') feedbackId: number, updateFeedbackDto: updateFeedbackDto) {
+    async updateFeedback(@Param('feedbackId', ParseIntPipe) feedbackId: number,@Body() updateFeedbackDto: updateFeedbackDto) {
         return this.feedbackService.updateFeedback(feedbackId, updateFeedbackDto);
     }
 
     @Delete('delete/:feedbackId')
-    async deleteFeedback(@Param('feedbackId') feedbackId: number) {
+    async deleteFeedback(@Param('feedbackId', ParseIntPipe) feedbackId: number) {
         return this.feedbackService.deleteFeedback(feedbackId);
     }
 }
