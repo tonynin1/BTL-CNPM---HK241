@@ -260,8 +260,12 @@ main{
     transform: scale(1);
 }
 .drop-section .cloud-icon{
-    margin-top: 25px;
-    margin-bottom: 20px;
+  display: flex;
+  position: relative;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
 }
 .drop-section span,
 .drop-section button{
