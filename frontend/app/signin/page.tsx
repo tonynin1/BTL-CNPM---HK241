@@ -6,13 +6,74 @@ import React from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
 
+// export default function Login() {
+//   const [showPassword, setShowPassword] = useState(false);
+
+//   const togglePasswordVisibility = () => {
+//     console.log("Eye icon clicked!"); // Kiểm tra log
+//     setShowPassword((prevState) => !prevState);
+//   };
+//   return (
+//     <main>
+//       <div className="login-container">
+//         <div className="login-box">
+//           <div className="logo-container">
+//             <Image src="/HCMUT_official_logo.png" alt="Logo" width={60} height={60} className="logo" />
+//             <span className="logo-text">HCMUT SPSS</span>
+//           </div>
+//           <div className="login-form">
+//             <form action="#" method="POST">
+//               <input
+//                 type="text"
+//                 id="username"
+//                 name="username"
+//                 placeholder="Tài khoản"
+//                 required
+//               />
+//               <div className="password-container">
+//                 <input
+//                   type="password"
+//                   id="password"
+//                   name="password"
+//                   placeholder="Mật khẩu"
+//                   required
+//                 />
+//                 <span id="eye" onClick={togglePasswordVisibility}>
+//                   {showPassword ? "🙈" : "👁️"}
+//                 </span>
+//               </div>
+//               <button type="submit" className="login-button">
+//                 Đăng nhập
+//               </button>
+//             </form>
+//           </div>
+//         </div>
+//       </div>
+//     </main>
+//   );
+// }
+
+
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    console.log("Eye icon clicked!"); // Kiểm tra log
+    setShowPassword((prevState) => !prevState);
+  };
+
   return (
     <main>
-      <div className="login-container container mt-[10%]">
+      <div className="login-container">
         <div className="login-box">
-          <div className="logo-container mb-8">
-            <Image src="/HCMUT_official_logo.png" alt="Logo" width={60} height={60} className="logo" />
+          <div className="logo-container">
+            <Image
+              src="/HCMUT_official_logo.png"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="logo"
+            />
             <span className="logo-text">HCMUT SPSS</span>
           </div>
           <div className="login-form">
@@ -23,27 +84,29 @@ export default function Login() {
                 name="username"
                 placeholder="Tài khoản"
                 required
-                className="w-[100%]"
               />
-              <div className="password-container mb-8">
+              <div className="password-container">
+                {/* Liên kết trạng thái showPassword với type của input */}
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
                   placeholder="Mật khẩu"
                   required
-                  className="w-[100%]"
                 />
+                {/* Biểu tượng mắt */}
+                <span id="eye" onClick={togglePasswordVisibility}>
+                {showPassword ? "🔓" : "🔒"}
+                </span>
               </div>
               <button type="submit" className="login-button">
                 Đăng nhập
               </button>
-
-              <button type="button" className="signup-button text-white">
-                <Link href={"signup"} className="text-white">
-                  Đăng ký
+              <button type="submit" className="login-button">
+                <Link href="/signup" className="sign_up">
+                  Đăng ký tài khoản mới
                 </Link>
-              </button>
+            </button>
             </form>
           </div>
         </div>
@@ -51,5 +114,3 @@ export default function Login() {
     </main>
   );
 }
-
-

@@ -2,7 +2,6 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -11,29 +10,16 @@ a {
     color: black;
 }
 
-/* Thiết lập kiểu cho body */
-body {
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f1f1f1;
-    overflow: hidden; Tránh cuộn không cần thiết */
-}
-
-/* Thiết lập kiểu cho container chứa đăng nhập */
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 1300px;
     padding: 20px;
 }
 
 /* Thiết lập kiểu cho hộp đăng nhập */
-.login-box {
-    width: 100%;
-    max-width: 500px;
+.login-container .login-box {
     padding: 30px;
     background-color: #ffffff;
     border-radius: 10px;
@@ -45,7 +31,6 @@ body {
 
 /* Container cho hàng chứa logo */
 .logo-container {
-    display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
@@ -111,7 +96,7 @@ h2 {
 
 /* Input cho tài khoản và mật khẩu */
 input[type="text"], input[type="password"] {
-    /* width: 100%; */
+    width: 100%;
     padding: 12px;
     margin: 10px 0;
     font-size: 16px;
@@ -135,18 +120,6 @@ input[type="text"], input[type="password"] {
 
 /* Nút đăng nhập */
 .login-button {
-    width: 100%;
-    padding: 12px 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.signup-button {
-    margin-top: 10px;
     width: 100%;
     padding: 12px 20px;
     font-size: 16px;
@@ -193,7 +166,22 @@ input[type="text"], input[type="password"] {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.signup-button:hover {
+.sign_up:hover {
     background-color: #0056b3;
     transform: scale(1.02);
 }
+
+#eye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+  }
+
+  #eye {
+    z-index: 10;
+  }
+  
