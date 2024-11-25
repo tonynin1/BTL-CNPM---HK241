@@ -7,6 +7,7 @@ import { SpsomemberModule } from './spsomember/spsomember.module';
 import { ConfigModule } from '@nestjs/config';
 import { AtGuard } from './auth/common/guards';
 import { APP_GUARD } from '@nestjs/core';
+import { PrintHistoryModule } from './print_history/print_history.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { APP_GUARD } from '@nestjs/core';
     SpsomemberModule,
     ConfigModule.forRoot({
       isGlobal: true, 
-    })
+    }),
+    PrintHistoryModule
   ],
   providers: [
     {
