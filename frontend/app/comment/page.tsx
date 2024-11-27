@@ -423,8 +423,6 @@ export default function Home() {
                       <div className="col-lg-12">
                         <textarea 
                           name="message" 
-                          cols="30" 
-                          rows="10" 
                           placeholder="Your message" 
                           className="form-control" 
                           required 
