@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./style.css";
-import "./bootstrap/dist/css/bootstrap.css";
+import "../bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.css";
 import Script from 'next/script';
 import ReactDOM from 'react-dom';
 
