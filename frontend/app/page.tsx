@@ -7,7 +7,6 @@ export default function Home() {
   return (
     <div className="">
       <MyHeader />
-      <div className="container">
       <ImageSlider />
       <div className="py-20">
         <div className="container mx-auto font-mono">
@@ -42,81 +41,80 @@ export default function Home() {
         </div>
       </div>    
       <section id="contact">
-      <div className="contact container-fluid">
-        <h2 className="text-center">Contact Us</h2>
-        <div className="inner-wrap">
-          <div className="row">
-            <div className="col-lg-6">
-              <form action="#" method="POST">
-                <div className="row">
-                  <div className="col-lg-6">
-                    <input 
-                      type="text" 
-                      name="name" 
-                      placeholder="Your name" 
-                      className="form-control" 
-                      required 
-                    />
-                  </div>
-                  <div className="col-lg-6">
-                    <input 
-                      type="email" 
-                      name="email" 
-                      placeholder="Your email" 
-                      className="form-control" 
-                      required 
-                    />
-                  </div>
-                  <div className="col-lg-12">
-                    <textarea 
-                      name="message" 
-                      placeholder="Your message" 
-                      className="form-control" 
-                      required 
-                    ></textarea>
-                  </div>
-                  <div className="col-lg-12 text-right">
-                    <button type="submit">SUBMIT</button>
-                  </div>
+          <div className="contact container">
+            <h2 className="text-center">Contact Us</h2>
+            <div className="inner-wrap">
+              <div className="row">
+                <div className="col-lg-6">
+                  <form action="#" method="POST">
+                    <div className="row">
+                      <div className="col-lg-6">
+                        <input 
+                          type="text" 
+                          name="name" 
+                          placeholder="Your name" 
+                          className="form-control" 
+                          required 
+                        />
+                      </div>
+                      <div className="col-lg-6">
+                        <input 
+                          type="email" 
+                          name="email" 
+                          placeholder="Your email" 
+                          className="form-control" 
+                          required 
+                        />
+                      </div>
+                      <div className="col-lg-12">
+                        <textarea 
+                          name="message" 
+                          placeholder="Your message" 
+                          className="form-control" 
+                          required 
+                        ></textarea>
+                      </div>
+                      <div className="col-lg-12 text-right">
+                        <button type="submit">SUBMIT</button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
-            <div className="col-lg-4 INFORMATION">
-              <h3>INFORMATION</h3>
-              <address>
-                <i className="fas fa-map-marker-alt"></i>
-                <p>
-                  Đại học Bách Khoa thành phố Hồ Chí Minh <br />
-                  Nhà H6, Bách Khoa cơ sở 2<br />
-                  Đông Hoà, Dĩ An, Bình Dương
-                </p>
-              </address>
-              <p>
-                <i className="fas fa-phone-square-alt"></i>
-                +444 (Phone) 123456
-              </p>
-              <p>
-                <i className="fas fa-print"></i>
-                +123 (FAX) 0011223
-              </p>
-              <p>
-                <i className="far fa-envelope"></i>
-                info@bak-onecompany.com
-              </p>
+                <div className="col-lg-4 INFORMATION">
+                  <h3>INFORMATION</h3>
+                  <address>
+                    <i className="fas fa-map-marker-alt"></i>
+                    <p>
+                      Đại học Bách Khoa thành phố Hồ Chí Minh <br />
+                      Nhà H6, Bách Khoa cơ sở 2<br />
+                      Đông Hoà, Dĩ An, Bình Dương
+                    </p>
+                  </address>
+                  <p>
+                    <i className="fas fa-phone-square-alt"></i>
+                    +444 (Phone) 123456
+                  </p>
+                  <p>
+                    <i className="fas fa-print"></i>
+                    +123 (FAX) 0011223
+                  </p>
+                  <p>
+                    <i className="far fa-envelope"></i>
+                    info@bak-onecompany.com
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <footer>
-        <div className="container-fluid">
-          <p></p>
-        </div>
-        <a href="#" className="back-to-top">
-          <i className="fas fa-chevron-up"></i>
-        </a>
-      </footer>
-    </section>
-    </div>
+          <footer>
+            <div className="container-fluid">
+              <p></p>
+            </div>
+            <a href="#" className="back-to-top">
+              <i className="fas fa-chevron-up"></i>
+            </a>
+          </footer>
+        </section>
     </div>
   );
 }

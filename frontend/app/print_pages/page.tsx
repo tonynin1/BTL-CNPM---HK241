@@ -4,42 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import React from 'react';
 import Script from 'next/script';
+import StudentHeader from "@/app/ui/StudentHeader"
 
 export default function Home() {
   return (
-    <main>
-      <div className="inner_container container">
-        <div className="line"></div>
-        <div className="navbar container narrow">
-          <div className="header">
-            <a href="">
-              <Image className="logo" src="/HCMUT_official_logo.png" width={50} height={50} alt="Logo" />
-            </a>
-            <div className="HCMUT row">
-              <a className="Home" href="Trang Chu">HCMUT SSPS</a>
-            </div>
-            <div className="text-center">
-              <div className="inner_row row align-items-start">
-                <a className="col" href="Trang Chu">TRANG CHỦ</a>
-                <a className="col" href="Trang Chu">IN TÀI LIỆU</a>
-                <a className="col" href="Trang Chu">MUA TRANG IN</a>
-                <a className="col" href="Trang Chu">LỊCH SỬ IN</a>
-              </div>
-            </div>
-            <div className="dropdown1">
-              <button  className="inner_user">
-                <ion-icon className="User" name="person-circle-outline"></ion-icon>
-                <ion-icon name="chevron-down-outline"></ion-icon>
-              </button>
-              <div className="content">
-                <a href="">A</a>
-                <a href="">b</a>
-                <a href="">c</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <main className="bg-[#353535] pb-[100px]">
+      <StudentHeader />
       <div className="inner_wrap container">
         <div className="container upload_container">
           <div className="drop-section container">
