@@ -38,7 +38,7 @@ export default function StudentHeader() {
     },
     {
       name: 'Xem thông tin các sinh viên',
-      href: '/all-students',
+      href: '/spso/all-students',
     },
     {
       name: 'Xem báo cáo hệ thống',

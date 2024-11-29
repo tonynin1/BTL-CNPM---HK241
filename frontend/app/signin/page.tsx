@@ -40,7 +40,7 @@ export default function Login() {
               </button>
 
               <button type="button" className="signup-button text-white">
-                <Link href={"signup"} className="text-white">
+                <Link href={"/signup"} className="text-white">
                   Đăng ký
                 </Link>
               </button>
