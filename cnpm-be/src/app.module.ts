@@ -8,6 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AtGuard } from './auth/common/guards';
 import { APP_GUARD } from '@nestjs/core';
 import { PrintHistoryModule } from './print_history/print_history.module';
+import { FeedbackService } from './feedback/feedback.service';
+import { FeedbackModule } from './feedback/feedback.module';
 
 @Module({
   imports: [
@@ -20,12 +22,14 @@ import { PrintHistoryModule } from './print_history/print_history.module';
       isGlobal: true, 
     }),
     PrintHistoryModule
+    FeedbackModule
   ],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AtGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AtGuard,
+    // },
+    FeedbackService,
   ],
 })
 export class AppModule {}
