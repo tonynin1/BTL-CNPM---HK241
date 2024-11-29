@@ -1,7 +1,15 @@
+'use client';
+import { getAllStudents } from "@/app/API/spso_allStudent";
 import MyFooter from "@/app/ui/MyFooter";
 import SPSOHeader from "@/app/ui/SPSOHeader";
+import { useEffect } from "react";
+import { parseCookies } from "nookies"; // Thư viện đọc cookie
+import { refreshAccessToken } from "@/app/API/authService";
+import { useRouter } from "next/navigation"; // Để điều hướng
 
-export default function page() {
+export default function Page() {
+  const router = useRouter();
+
   const students = [
     {
       name: 'Nguyen Van A',
@@ -34,7 +42,53 @@ export default function page() {
       id: '2213987',
     },
   ];
-  
+
+  // Kiểm tra và làm mới accessToken nếu cần
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const cookies = parseCookies();
+      const accessToken = cookies.accessToken;
+
+      if (!accessToken) {
+        await refreshAccessToken();
+      }
+    }, 14 * 60 * 1000); // Kiểm tra mỗi 14 phút
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Kiểm tra trạng thái đăng nhập và chuyển hướng nếu chưa đăng nhập
+  useEffect(() => {
+    const cookies = parseCookies();
+    const accessToken = cookies.accessToken;
+
+    if (!accessToken) {
+      router.push('/signin'); // Điều hướng về trang signin
+    }
+  }, [router]);
+
+  async function fetchStudents() {
+    const cookies = parseCookies();
+    const accessToken = cookies.accessToken;
+
+    if (!accessToken) {
+      console.log("Access token not found in cookies");
+      return;
+    }
+
+    console.log("Access Token:", accessToken);
+
+    try {
+      const response = await getAllStudents(); // Truyền accessToken vào API nếu cần
+      console.log("Students Data:", response);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
 
   return (
     <div className="h-screen">
@@ -69,5 +123,5 @@ export default function page() {
       </div>
       <MyFooter />
     </div>
-  )
+  );
 }

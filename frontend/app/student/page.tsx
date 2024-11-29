@@ -8,6 +8,7 @@ import tutorial_img from "@/public/Home/tutorial.jpg"
 import new_system_img from "@/public/Home/new-system.jpg"
 import error_img from "@/public/Home/error.png"
 import buy_pages_img from "@/public/Home/buy-pages.jpg"
+import MyFooter from "../ui/MyFooter";
 
 export default function page() {
   return (
@@ -22,8 +23,8 @@ export default function page() {
             className="w-1/2 max-h-[700px]"
           />
           <div className="w-1/2 text-center content-center font-mono">
-            <p className="text-5xl mb-8">Hướng dẫn sử dụng hệ thống</p>
-            <p className="text-xl text-justify">
+            <p className="text-5xl mb-8 text-wrap-style-2">Hướng dẫn sử dụng hệ thống</p>
+            <p className="text-xl text-justify text-wrap-style-5">
               Hướng dẫn sử dụng dịch vụ in ấn trực tuyến rất đơn giản và dễ thực hiện. Đầu tiên, người dùng truy cập vào trang web hoặc ứng dụng, đăng nhập bằng tài khoản sinh viên. Sau đó, tải lên tệp tài liệu cần in, chọn các tùy chỉnh như khổ giấy, loại in (một mặt hoặc hai mặt), số lượng và chất lượng màu sắc. Cuối cùng, thanh toán trực tuyến qua các phương thức được hỗ trợ. Sau khi hoàn tất, hệ thống sẽ xác nhận đơn hàng và tiến hành in, đảm bảo giao đúng thời hạn với chất lượng cao.
             </p>
             <button className="flex gap-2 items-center mt-8 ml-auto hover:text-blue-500 transition-all p-4">
@@ -42,8 +43,8 @@ export default function page() {
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
-              <p className="text-3xl my-8">Làm sao để mua thêm trang in</p>
-              <p className="text-base text-justify">
+              <p className="text-3xl my-8 h-[72px] leading-[36px] text-wrap-style-2">Làm sao để mua thêm trang in</p>
+              <p className="text-base text-justify text-wrap-style-5">
                 Hướng dẫn sử dụng dịch vụ in ấn trực tuyến rất đơn giản và dễ thực hiện. Đầu tiên, người dùng truy cập vào trang web hoặc ứng dụng, đăng nhập bằng tài khoản sinh viên. Sau đó, tải lên tệp tài liệu cần in, chọn các tùy chỉnh như khổ giấy, loại in (một mặt hoặc hai mặt), số lượng và chất lượng màu sắc. Cuối cùng, thanh toán trực tuyến qua các phương thức được hỗ trợ. Sau khi hoàn tất, hệ thống sẽ xác nhận đơn hàng và tiến hành in, đảm bảo giao đúng thời hạn với chất lượng cao.
               </p>
               <button className="flex gap-2 items-center mt-8 ml-auto hover:text-blue-500 transition-all p-4">
@@ -61,8 +62,8 @@ export default function page() {
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
-              <p className="text-3xl my-8">Thông báo lỗi</p>
-              <p className="text-base text-justify">
+              <p className="text-3xl my-8 h-[72px] leading-[36px] text-wrap-style">Thông báo lỗi</p>
+              <p className="text-base text-justify text-wrap-style-5">
                 Hướng dẫn sử dụng dịch vụ in ấn trực tuyến rất đơn giản và dễ thực hiện. Đầu tiên, người dùng truy cập vào trang web hoặc ứng dụng, đăng nhập bằng tài khoản sinh viên. Sau đó, tải lên tệp tài liệu cần in, chọn các tùy chỉnh như khổ giấy, loại in (một mặt hoặc hai mặt), số lượng và chất lượng màu sắc. Cuối cùng, thanh toán trực tuyến qua các phương thức được hỗ trợ. Sau khi hoàn tất, hệ thống sẽ xác nhận đơn hàng và tiến hành in, đảm bảo giao đúng thời hạn với chất lượng cao.
               </p>
               <button className="flex gap-2 items-center mt-8 ml-auto hover:text-blue-500 transition-all p-4">
@@ -80,8 +81,8 @@ export default function page() {
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
-              <p className="text-3xl my-8">Ra mắt hệ thống SPSS</p>
-              <p className="text-base text-justify">
+              <p className="text-3xl my-8 h-[72px] leading-[36px] text-wrap-style">Ra mắt hệ thống SPSS</p>
+              <p className="text-base text-justify text-wrap-style-5">
                 Hướng dẫn sử dụng dịch vụ in ấn trực tuyến rất đơn giản và dễ thực hiện. Đầu tiên, người dùng truy cập vào trang web hoặc ứng dụng, đăng nhập bằng tài khoản sinh viên. Sau đó, tải lên tệp tài liệu cần in, chọn các tùy chỉnh như khổ giấy, loại in (một mặt hoặc hai mặt), số lượng và chất lượng màu sắc. Cuối cùng, thanh toán trực tuyến qua các phương thức được hỗ trợ. Sau khi hoàn tất, hệ thống sẽ xác nhận đơn hàng và tiến hành in, đảm bảo giao đúng thời hạn với chất lượng cao.
               </p>
               <button className="flex gap-2 items-center mt-8 ml-auto hover:text-blue-500 transition-all p-4">
@@ -92,6 +93,7 @@ export default function page() {
           </div>
         </div>
       </div>
+      <MyFooter />
     </div>
   )
 }

@@ -29,10 +29,10 @@ import { FeedbackModule } from './feedback/feedback.module';
     FeedbackModule
   ],
   providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AtGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: AtGuard,
+    },
     FeedbackService,
   ],
 })
