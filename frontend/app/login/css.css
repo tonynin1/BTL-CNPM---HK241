@@ -1,0 +1,148 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilitie;
+
+/* Thiết lập các thuộc tính mặc định cho tất cả các phần tử */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+/* Thiết lập kiểu cho body */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f1f1f1;
+    overflow: hidden; /* Tránh cuộn không cần thiết */
+}
+
+/* Thiết lập kiểu cho container chứa đăng nhập */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px; /* Đảm bảo không bị tràn trên màn hình nhỏ */
+}
+
+/* Thiết lập kiểu cho hộp đăng nhập */
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    position: relative; /* Đặt vị trí tương đối cho nút đăng ký */
+    margin-bottom: 20px; /* Đảm bảo khoảng cách hợp lý */
+}
+
+/* Container cho hàng chứa logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Thiết lập kiểu cho logo */
+.logo {
+    width: 60px;
+    height: auto;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Dòng chữ bên cạnh logo */
+.logo-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #003D73;
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Tiêu đề */
+h2 {
+    text-align: left;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* Các nút tài khoản */
+.account-option {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+/* Biểu tượng trong nút tài khoản */
+.account-option i {
+    margin-right: 10px;
+}
+
+/* Hiệu ứng hover cho nút tài khoản */
+.account-option:hover {
+    background-color: #e0e0e0;
+}
+
+/* Container cho nút đăng ký */
+.register-row {
+    margin-top: 20px; /* Khoảng cách từ nút đến khung đăng nhập */
+    display: flex;
+    width: 100%; /* Căn chỉnh nút phù hợp với container */
+    justify-content: right;
+}
+
+/* Định dạng footer */
+.footer-text {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #333;
+    opacity: 0.6;
+    font-weight: 300;
+    text-align: center;
+}
+
+.login-container .sign_up{
+    padding: 5px 15px ;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-container .sign_up:hover{
+    background-color: #0056b3;
+    transform: scale(1.02);
+}

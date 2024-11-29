@@ -19,6 +19,7 @@ model Admin {
   password    String
   User        User[]
 }
+
 model User {
   userId         Int         @id @default(autoincrement())
   fname          String
@@ -72,7 +73,8 @@ model Feedback {
   spsomember      SPSOMember      @relation(fields: [spsomemberId], references: [sosoMemberId])
   feedTime        DateTime
   rating          Int
-  content         String
+  contentByCustomer         String
+  contentBySPSO             String
 }
 
 model Printer {

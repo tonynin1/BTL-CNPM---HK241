@@ -1,0 +1,109 @@
+:root {
+	--primary-color: #444;
+	--second-color: #fff;
+	--third-color: #1bbc9b;
+	--fourth-color: #16a086;
+	scroll-behavior: smooth;
+}
+
+section{
+	background-color: #ecf0f1;
+}
+
+.contact {
+	padding-top: 49px;
+	padding-bottom: 18px; /*60px - 42px*/ 
+	
+}
+
+.contact.container-fluid{
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+.contact h2 {
+	font-size: 28px;
+	margin-bottom: 11px;
+}
+
+.contact > p {
+	font-size: 14px;
+	margin-bottom: 51px;
+}
+
+.contact input, 
+.contact textarea {
+	border: 2px solid #bec3c7;
+	border-radius: 0;
+	margin-bottom: 22px;
+}
+
+.contact input {
+	height: 47px;
+}
+
+.contact textarea {
+	height: 153px;
+}
+
+.contact ::placeholder {
+	font-size: 14px;
+	font-family: Lato-Italic;
+	color: #999;
+}
+
+.contact button {
+	padding: 10px 30px;
+    background-color: var(--fourth-color);
+    color: white;
+}
+
+.contact h3 {
+	font-size: 14px;
+	margin-bottom: 21px;
+}
+
+.contact address {
+	font-size: 14px;
+	line-height: 21px;
+	margin-bottom: 24px;
+	display: flex;
+}
+
+.contact address p {
+	padding-left:5px;
+	margin-bottom: 0;
+	margin-top:-4px;
+}
+
+.contact address ~ p {
+	font-size: 14px;
+	margin-bottom: 17px;
+}
+
+/*footer*/
+footer {
+	/*line-height: 87px;*/
+	display: flex;
+	height: 87px;
+	/*center theo chiều dọc*/
+	align-items: center;
+
+	background-color: #2d3e50;
+	color: var(--second-color);
+}
+
+footer p {
+	margin-bottom: 0;
+}
+
+footer .back-to-top {
+	line-height: 44px;
+	width: 44px;
+	background-color: var(--third-color);
+	color: var(--second-color);
+	text-align: center;
+	position: fixed;
+	bottom: 20px;
+	right: 40px;
+}
