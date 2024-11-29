@@ -34,19 +34,19 @@ export default function StudentHeader() {
     },
     {
       name: 'In tài liệu',
-      href: '/print-documents',
+      href: '/student/print-documents',
     },
     {
       name: 'Mua trang in',
-      href: '/buy-prints',
+      href: '/student/buy-prints',
     },
     {
       name: 'Lịch sử in',
-      href: '/print-history',
+      href: '/student/print-history',
     },
     {
       name: 'Thông tin sinh viên',
-      href: '/infor',
+      href: '/student/information',
     },
   ]
 

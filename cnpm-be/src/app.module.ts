@@ -26,7 +26,7 @@ import { FeedbackModule } from './feedback/feedback.module';
     ConfigModule.forRoot({
       isGlobal: true, 
     }),
-    PrintHistoryModule
+    PrintHistoryModule,
     FeedbackModule
   ],
   controllers: [AppController],

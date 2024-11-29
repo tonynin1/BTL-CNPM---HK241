@@ -34,15 +34,15 @@ export default function StudentHeader() {
     },
     {
       name: 'Quản lý máy in',
-      href: '/manage-printers',
+      href: '/spso/manage-printers',
     },
     {
       name: 'Xem thông tin các sinh viên',
-      href: '/all-students',
+      href: '/spso/all-students',
     },
     {
       name: 'Xem báo cáo hệ thống',
-      href: '/system-report',
+      href: '/spso/system-report',
     },
   ]
 
