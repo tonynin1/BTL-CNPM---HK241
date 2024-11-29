@@ -7,6 +7,7 @@ import { SpsomemberModule } from './spsomember/spsomember.module';
 import { ConfigModule } from '@nestjs/config';
 import { AtGuard } from './auth/common/guards';
 import { APP_GUARD } from '@nestjs/core';
+import { PrintHistoryModule } from './print_history/print_history.module';
 import { FeedbackService } from './feedback/feedback.service';
 import { FeedbackModule } from './feedback/feedback.module';
 
@@ -20,6 +21,7 @@ import { FeedbackModule } from './feedback/feedback.module';
     ConfigModule.forRoot({
       isGlobal: true, 
     }),
+    PrintHistoryModule
     FeedbackModule
   ],
   providers: [
