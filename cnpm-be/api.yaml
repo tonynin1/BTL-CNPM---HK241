@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Authentication API
+  description: API for user authentication
+
+paths:
+  /auth/signup:
+    post:
+      summary: User Signup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fname:
+                  type: string
+                  example: "Vo"
+                lname:
+                  type: string
+                  example: "Viet"
+                email:
+                  type: string
+                  example: "daivietvonin1@gmail.com"
+                password:
+                  type: string
+                  example: "123123"
+                role:
+                  type: string
+                  example: "SPSO"
+                phone:
+                  type: string
+                  example: "0355916621"
+      responses:
+        '200':
+          description: Successful signup
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+  /spsomember/create:
+    post:
+      summary: Create SPSO Member
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                spsoId:
+                  type: integer
+                  example: 2213954
+                dob:
+                  type: string
+                  format: date
+                  example: "2022-09-27"
+                address:
+                  type: string
+                  example: "233/3, Linh Xuan, Thu Duc"
+      responses:
+        '200':
+          description: Successful creation
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /customer/create:
+    post:
+      summary: Create Customer
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerId:
+                  type: integer
+                  example: 2213954
+                ppHistory:
+                  type: array
+                  items:
+                    type: string
+                  format: date
+                  example: ["2022-09-27", "2022-09-28"]
+                accBalance:
+                  type: number
+                  example: 10003
+                summary:
+                  type: string
+                  example: "Good"
+                remainPages:
+                  type: integer
+                  example: 100
+                
+                
+      responses:
+        '200':
+          description: Successful creation
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

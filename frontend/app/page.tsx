@@ -1,101 +1,120 @@
 import Image from "next/image";
+import Link from "next/link";
+import MyHeader from "./ui/MyHeader";
+import ImageSlider from "./ui/ImageSlider";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="">
+      <MyHeader />
+      <ImageSlider />
+      <div className="py-20">
+        <div className="container mx-auto font-mono">
+          <p className="uppercase text-center text-4xl mb-8">
+            dịch vụ
+          </p>
+          <p className="text-center text-xl">
+            Dịch vụ in ấn trực tuyến dành cho sinh viên Bách khoa Hồ Chí Minh là giải pháp tiện lợi, nhanh chóng và tiết kiệm. Với giao diện thân thiện, sinh viên có thể dễ dàng tải lên tài liệu, lựa chọn định dạng, số lượng trang và các tùy chỉnh khác chỉ trong vài bước. Dịch vụ hỗ trợ in ấn đa dạng như tài liệu học tập, luận văn, đồ án và cả tài liệu màu. Đặc biệt, hệ thống giao hàng nhanh chóng, giúp sinh viên nhận tài liệu tận nơi mà không cần mất thời gian chờ đợi. Với mức giá ưu đãi và chất lượng in sắc nét, dịch vụ này là trợ thủ đắc lực cho các bạn sinh viên trong việc học tập và nghiên cứu. 
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      <div className="py-20 bg-gray-100">
+        <div className="container mx-auto font-mono">
+          <p className="uppercase text-center text-4xl mb-8">
+            về chúng tôi
+          </p>
+          <p className="text-center text-xl">
+            Nhóm sinh viên thực hiện dự án dịch vụ in ấn trực tuyến là tập hợp những bạn trẻ năng động, sáng tạo và đam mê công nghệ đến từ Đại học Bách khoa Hồ Chí Minh. Với mong muốn mang đến giải pháp in ấn tiện lợi và tối ưu cho cộng đồng sinh viên, nhóm đã kết hợp các kỹ năng lập trình, thiết kế và quản lý để xây dựng nền tảng trực tuyến hiện đại. Tinh thần làm việc nhóm, sự kiên trì và khả năng giải quyết vấn đề là những yếu tố giúp họ vượt qua thách thức. Không chỉ hướng đến việc cải thiện trải nghiệm in ấn, nhóm còn mong muốn tạo ra một môi trường học tập và làm việc hiệu quả, tiết kiệm thời gian và chi phí cho các bạn sinh viên.
+          </p>
+        </div>
+      </div>
+
+      <div className="py-20">
+        <div className="container mx-auto font-mono">
+          <p className="uppercase text-center text-4xl mb-8">
+            Liên hệ
+          </p>
+          <p className="text-center text-xl">
+            Nhóm sinh viên thực hiện dự án dịch vụ in ấn trực tuyến là tập hợp những bạn trẻ năng động, sáng tạo và đam mê công nghệ đến từ Đại học Bách khoa Hồ Chí Minh. Với mong muốn mang đến giải pháp in ấn tiện lợi và tối ưu cho cộng đồng sinh viên, nhóm đã kết hợp các kỹ năng lập trình, thiết kế và quản lý để xây dựng nền tảng trực tuyến hiện đại. Tinh thần làm việc nhóm, sự kiên trì và khả năng giải quyết vấn đề là những yếu tố giúp họ vượt qua thách thức. Không chỉ hướng đến việc cải thiện trải nghiệm in ấn, nhóm còn mong muốn tạo ra một môi trường học tập và làm việc hiệu quả, tiết kiệm thời gian và chi phí cho các bạn sinh viên.
+          </p>
+        </div>
+      </div>    
+      <section id="contact">
+          <div className="contact container">
+            <h2 className="text-center">Contact Us</h2>
+            <div className="inner-wrap">
+              <div className="row">
+                <div className="col-lg-6">
+                  <form action="#" method="POST">
+                    <div className="row">
+                      <div className="col-lg-6">
+                        <input 
+                          type="text" 
+                          name="name" 
+                          placeholder="Your name" 
+                          className="form-control" 
+                          required 
+                        />
+                      </div>
+                      <div className="col-lg-6">
+                        <input 
+                          type="email" 
+                          name="email" 
+                          placeholder="Your email" 
+                          className="form-control" 
+                          required 
+                        />
+                      </div>
+                      <div className="col-lg-12">
+                        <textarea 
+                          name="message" 
+                          placeholder="Your message" 
+                          className="form-control" 
+                          required 
+                        ></textarea>
+                      </div>
+                      <div className="col-lg-12 text-right">
+                        <button type="submit">SUBMIT</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div className="col-lg-4 INFORMATION">
+                  <h3>INFORMATION</h3>
+                  <address>
+                    <i className="fas fa-map-marker-alt"></i>
+                    <p>
+                      Đại học Bách Khoa thành phố Hồ Chí Minh <br />
+                      Nhà H6, Bách Khoa cơ sở 2<br />
+                      Đông Hoà, Dĩ An, Bình Dương
+                    </p>
+                  </address>
+                  <p>
+                    <i className="fas fa-phone-square-alt"></i>
+                    +444 (Phone) 123456
+                  </p>
+                  <p>
+                    <i className="fas fa-print"></i>
+                    +123 (FAX) 0011223
+                  </p>
+                  <p>
+                    <i className="far fa-envelope"></i>
+                    info@bak-onecompany.com
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer>
+            <div className="container-fluid">
+              <p></p>
+            </div>
+            <a href="#" className="back-to-top">
+              <i className="fas fa-chevron-up"></i>
+            </a>
+          </footer>
+        </section>
     </div>
   );
 }

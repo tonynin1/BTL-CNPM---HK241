@@ -15,9 +15,9 @@ datasource db {
 }
 
 model Admin {
-  adminEmail   String     @unique
-  password     String
-  user        User[]
+  adminEmail  String    @id @unique
+  password    String
+  User        User[]
 }
 
 model User {
@@ -27,12 +27,15 @@ model User {
   email          String       @unique
   phone          String
   usageHistory   String?
-  password       String
+  hash           String
+  hashedRt       String?
   role           String
+  adminEmail     String
+  admin          Admin       @relation(fields: [adminEmail], references: [adminEmail])
   spsomembers    SPSOMember[]
   customers      Customer[]
-  adminEmail     String
-  admin          Admin        @relation(fields: [adminEmail], references: [adminEmail])
+  createAt       DateTime @default(now())
+  updateAt       DateTime @updatedAt
 }
 
 model SPSOMember {
@@ -52,7 +55,7 @@ model Customer {
   accBalance         Float          @default(0)
   summary            String?
   remainPages        Int            @default(0)
-  userId             Int?
+  userId             Int
   user               User?          @relation(fields: [userId], references: [userId])
   spsoMemberId       Int?
   spsomember         SPSOMember?    @relation(fields: [spsoMemberId], references: [sosoMemberId])
@@ -70,7 +73,8 @@ model Feedback {
   spsomember      SPSOMember      @relation(fields: [spsomemberId], references: [sosoMemberId])
   feedTime        DateTime
   rating          Int
-  content         String
+  contentByCustomer         String
+  contentBySPSO             String
 }
 
 model Printer {
