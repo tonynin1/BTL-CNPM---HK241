@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
+import { PaymentModule } from './payment/payment.module';
+import { TransactionAccountsModule } from './transaction-accounts/transaction-accounts.module';
+
 import { AuthModule } from './auth/auth.module';
 import { CustomerModule } from './customer/customer.module';
 import { SpsomemberModule } from './spsomember/spsomember.module';
@@ -16,7 +19,9 @@ import { FeedbackModule } from './feedback/feedback.module';
     PrismaModule, 
     UserModule, 
     AuthModule, 
-    CustomerModule, 
+    CustomerModule,
+    PaymentModule,
+    TransactionAccountsModule,
     SpsomemberModule,
     ConfigModule.forRoot({
       isGlobal: true, 
@@ -24,12 +29,14 @@ import { FeedbackModule } from './feedback/feedback.module';
     PrintHistoryModule
     FeedbackModule
   ],
+  controllers: [AppController],
   providers: [
     // {
     //   provide: APP_GUARD,
     //   useClass: AtGuard,
     // },
     FeedbackService,
+    AppService
   ],
 })
 export class AppModule {}

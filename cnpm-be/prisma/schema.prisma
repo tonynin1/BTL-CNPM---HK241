@@ -19,6 +19,7 @@ model Admin {
   password    String
   User        User[]
 }
+
 model User {
   userId         Int         @id @default(autoincrement())
   fname          String
