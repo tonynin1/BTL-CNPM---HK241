@@ -39,7 +39,8 @@ export default function Home() {
             Nhóm sinh viên thực hiện dự án dịch vụ in ấn trực tuyến là tập hợp những bạn trẻ năng động, sáng tạo và đam mê công nghệ đến từ Đại học Bách khoa Hồ Chí Minh. Với mong muốn mang đến giải pháp in ấn tiện lợi và tối ưu cho cộng đồng sinh viên, nhóm đã kết hợp các kỹ năng lập trình, thiết kế và quản lý để xây dựng nền tảng trực tuyến hiện đại. Tinh thần làm việc nhóm, sự kiên trì và khả năng giải quyết vấn đề là những yếu tố giúp họ vượt qua thách thức. Không chỉ hướng đến việc cải thiện trải nghiệm in ấn, nhóm còn mong muốn tạo ra một môi trường học tập và làm việc hiệu quả, tiết kiệm thời gian và chi phí cho các bạn sinh viên.
           </p>
         </div>
-        <section id="contact">
+      </div>    
+      <section id="contact">
           <div className="contact container">
             <h2 className="text-center">Contact Us</h2>
             <div className="inner-wrap">
@@ -114,8 +115,6 @@ export default function Home() {
             </a>
           </footer>
         </section>
-      </div>   
     </div>
-    
   );
 }
