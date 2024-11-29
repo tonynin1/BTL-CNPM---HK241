@@ -8,6 +8,11 @@ import img3 from "@/public/Home/image3.jpg"
 import img4 from "@/public/Home/image4.jpg"
 import img5 from "@/public/Home/image5.jpg"
 import StudentHeader from "@/app/ui/StudentHeader"
+import tutorial_img from "@/public/Home/tutorial.jpg"
+import new_system_img from "@/public/Home/new-system.jpg"
+import error_img from "@/public/Home/error.png"
+import buy_pages_img from "@/public/Home/buy-pages.jpg"
+import MyFooter from "../ui/MyFooter";
 
 import person1 from "@/public/person1.jpg"
 import person2 from "@/public/person2.jpg"
@@ -15,79 +20,27 @@ import person3 from "@/public/person3.jpg"
 
 export default function Home() {
   return (
-    <main className="bg-[hsl(0,7%,92%)]">
-        <StudentHeader />
-        <section className="inner_container container" id="tin_tuc">
-        <div className="wrapper container">
-            <ul className="list">
-              <li>
-                <div className="bg">
-                    <Image 
-                      src={img1}
-                      alt="Tutorial"
-                      objectFit="contain"
-                      className="w-1/2 max-h-[700px]"
-                    />
-                    <div className="detail">
-                        <div className="desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, tempore asperiores voluptates sunt deleniti quisquam cumque alias voluptatem quaerat, officia impedit nobis culpa laborum, eos magni! Id expedita assumenda perspiciatis!
-                        </div>
-                    </div>
-                </div>
-            </li>
-              <li>
-                <div className="bg">
-                      <Image 
-                        src={img2}
-                        alt="Tutorial"
-                        objectFit="contain"
-                        className="w-1/2 max-h-[700px]"
-                      />           
-                    <div className="detail">
-                        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet tenetur accusamus voluptatibus ab laborum cumque, corporis eius porro iusto et molestiae, ex, distinctio quasi dolorem omnis aliquam ipsum pariatur! Fugit!</h2>                      
-                    </div>
-                </div>
-            </li>
-            <li>
-              <div className="bg">
-                    <Image 
-                      src={img3}
-                      alt="Tutorial"
-                      objectFit="contain"
-                      className="w-1/2 max-h-[700px]"
-                    />                  
-                  <div className="detail">
-                        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut animi voluptates, ex deleniti impedit facere rem at dolore, voluptatum atque, veniam rerum odit consequatur nostrum iure nisi beatae enim quibusdam.</h2>
-                  </div>
-              </div>
-          </li>
-        <li>
-            <div className="bg">
-                  <Image 
-                    src={img4}
-                    alt="Tutorial"
-                    objectFit="contain"
-                    className="w-1/2 max-h-[700px]"
-                  />                  
-                <div className="detail">
-                    <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero corporis quis et obcaecati sed debitis dolores sunt repellendus a! Nostrum magni nihil, adipisci voluptatem mollitia consectetur id eligendi impedit ratione.</h2>
-                </div>
-            </div>
-        </li>
-      <li>
-                  <div className="bg">
-                        <Image 
-                          src={img5}
-                          alt="Tutorial"
-                          objectFit="contain"
-                          className="w-1/2 max-h-[700px]"
-                        />                       
-                        <div className="detail">
-                            <h2>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur minima sit praesentium maiores culpa sunt necessitatibus suscipit enim rem tempore non perferendis, consectetur accusantium. Tenetur non distinctio libero temporibus eveniet.</h2>
-                        </div>
-                  </div>
-              </li>
-            </ul>
+    <div>
+      <StudentHeader />
+      <div className="container mx-auto">
+        <div className="column-1s flex">
+          <Image 
+            src={tutorial_img}
+            alt="Tutorial"
+            objectFit="contain"
+            className="w-1/2 max-h-[700px]"
+          />
+          <div className="w-1/2 text-center content-center font-mono">
+            <p className="text-5xl mb-8 text-wrap-style-2">Hướng dẫn sử dụng hệ thống</p>
+            <p className="text-xl text-justify text-wrap-style-5">
+              Hướng dẫn sử dụng dịch vụ in ấn trực tuyến rất đơn giản và dễ thực hiện. Đầu tiên, người dùng truy cập vào trang web hoặc ứng dụng, đăng nhập bằng tài khoản sinh viên. Sau đó, tải lên tệp tài liệu cần in, chọn các tùy chỉnh như khổ giấy, loại in (một mặt hoặc hai mặt), số lượng và chất lượng màu sắc. Cuối cùng, thanh toán trực tuyến qua các phương thức được hỗ trợ. Sau khi hoàn tất, hệ thống sẽ xác nhận đơn hàng và tiến hành in, đảm bảo giao đúng thời hạn với chất lượng cao.
+            </p>
+            <button className="flex gap-2 items-center mt-8 ml-auto hover:text-blue-500 transition-all p-4">
+              <FaLongArrowAltRight />
+              Xem thêm
+            </button>
+          </div>
+
         </div>
       </section>
       <div className="comment container">
@@ -128,251 +81,65 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, impedit itaque
                                           className="w-1/2 max-h-[700px]"
                                         />  
 
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <Image 
-                                          src={person3}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <a href="">
-                                        <Image 
-                                          src={person1}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                        </a>
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
+        <div className="columns-3 gap-8">
+          <div className="">
+            <Image 
+              src={buy_pages_img}
+              alt="Tutorial"
+              objectFit="contain"
+              className="h-[325px]"
+            />
+            <div className="text-center content-center font-mono">
+              <p className="text-3xl my-8 h-[72px] leading-[36px] text-wrap-style-2">Làm sao để mua thêm trang in</p>
+              <p className="text-base text-justify text-wrap-style-5">
+                Hướng dẫn sử dụng dịch vụ in ấn trực tuyến rất đơn giản và dễ thực hiện. Đầu tiên, người dùng truy cập vào trang web hoặc ứng dụng, đăng nhập bằng tài khoản sinh viên. Sau đó, tải lên tệp tài liệu cần in, chọn các tùy chỉnh như khổ giấy, loại in (một mặt hoặc hai mặt), số lượng và chất lượng màu sắc. Cuối cùng, thanh toán trực tuyến qua các phương thức được hỗ trợ. Sau khi hoàn tất, hệ thống sẽ xác nhận đơn hàng và tiến hành in, đảm bảo giao đúng thời hạn với chất lượng cao.
+              </p>
+              <button className="flex gap-2 items-center mt-8 ml-auto hover:text-blue-500 transition-all p-4">
+                <FaLongArrowAltRight />
+                Xem thêm
+              </button>
+            </div>
+          </div>
 
+          <div className="">
+            <Image 
+              src={error_img}
+              alt="Tutorial"
+              objectFit="contain"
+              className="h-[325px]"
+            />
+            <div className="text-center content-center font-mono">
+              <p className="text-3xl my-8 h-[72px] leading-[36px] text-wrap-style">Thông báo lỗi</p>
+              <p className="text-base text-justify text-wrap-style-5">
+                Hướng dẫn sử dụng dịch vụ in ấn trực tuyến rất đơn giản và dễ thực hiện. Đầu tiên, người dùng truy cập vào trang web hoặc ứng dụng, đăng nhập bằng tài khoản sinh viên. Sau đó, tải lên tệp tài liệu cần in, chọn các tùy chỉnh như khổ giấy, loại in (một mặt hoặc hai mặt), số lượng và chất lượng màu sắc. Cuối cùng, thanh toán trực tuyến qua các phương thức được hỗ trợ. Sau khi hoàn tất, hệ thống sẽ xác nhận đơn hàng và tiến hành in, đảm bảo giao đúng thời hạn với chất lượng cao.
+              </p>
+              <button className="flex gap-2 items-center mt-8 ml-auto hover:text-blue-500 transition-all p-4">
+                <FaLongArrowAltRight />
+                Xem thêm
+              </button>
+            </div>
+          </div>
 
-                    </div>
-                </div>
-                <div className="item">
-                    <div className="row">
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <Image 
-                                          src={person2}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                          <Image 
-                                            src={person3}
-                                            alt="Tutorial"
-                                            objectFit="contain"
-                                            className="w-1/2 max-h-[700px]"
-                                          />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <Image 
-                                          src={person1}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <Image 
-                                          src={person2}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-                <div className="item">
-                    <div className="row">
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <Image 
-                                          src={person3}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <Image 
-                                          src={person1}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam tempora accusamus dolorum voluptatem voluptate! Quis, in ad! Sequi fugiat inventore eligendi, voluptates, asperiores fuga laboriosam reiciendis velit explicabo qui debitis?
-                                            </a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam tempora accusamus dolorum voluptatem voluptate! Quis, in ad! Sequi fugiat inventore eligendi, voluptates, asperiores fuga laboriosam reiciendis velit explicabo qui debitis?
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <Image 
-                                          src={person2}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xs-6 col-sm-3">
-                                <div className="tcb-product-item">
-                                    <div className="tcb-product-photo">
-                                        <Image 
-                                          src={person3}
-                                          alt="Tutorial"
-                                          objectFit="contain"
-                                          className="w-1/2 max-h-[700px]"
-                                        />  
-                                    </div>
-                                    <div className="tcb-product-info">
-                                        <div className="tcb-product-title">
-                                            <a href="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
-                                        </div>
-                                        <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
-                                        </div>
-                                        <div className="tcb-hline"></div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                </div>
+          <div className="">
+            <Image 
+              src={new_system_img}
+              alt="Tutorial"
+              objectFit="contain"
+              className="h-[325px]"
+            />
+            <div className="text-center content-center font-mono">
+              <p className="text-3xl my-8 h-[72px] leading-[36px] text-wrap-style">Ra mắt hệ thống SPSS</p>
+              <p className="text-base text-justify text-wrap-style-5">
+                Hướng dẫn sử dụng dịch vụ in ấn trực tuyến rất đơn giản và dễ thực hiện. Đầu tiên, người dùng truy cập vào trang web hoặc ứng dụng, đăng nhập bằng tài khoản sinh viên. Sau đó, tải lên tệp tài liệu cần in, chọn các tùy chỉnh như khổ giấy, loại in (một mặt hoặc hai mặt), số lượng và chất lượng màu sắc. Cuối cùng, thanh toán trực tuyến qua các phương thức được hỗ trợ. Sau khi hoàn tất, hệ thống sẽ xác nhận đơn hàng và tiến hành in, đảm bảo giao đúng thời hạn với chất lượng cao.
+              </p>
+              <button className="flex gap-2 items-center mt-8 ml-auto hover:text-blue-500 transition-all p-4">
+                <FaLongArrowAltRight />
+                Xem thêm
+              </button>
             </div>
         </div>
-
-        <div className="xem_tatca" data-aos="zoom-in-down">
-            <a href="/vi/tin-tuc">
-                <span>
-                    Xem thêm &gt;&gt;
-                </span>
-            </a>
-        </div>
+      </div>
+      <MyFooter />
     </div>
     <section id="contact">
           <div className="contact container">
