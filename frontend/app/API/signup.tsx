@@ -55,6 +55,7 @@ async function createDto(userType: string) {
             console.error(error);
         });
 
+        console.log(response)
         if (response.status === 201) {
             alert("Signup successfully")
             window.location.href = "/signin"
@@ -81,6 +82,12 @@ async function createDto(userType: string) {
             window.location.href = "/signin"
         }
     }
+}
+
+
+export function logout() {
+    accessToken = "";
+    refreshToken= "";
 }
 
 // confirmPassword

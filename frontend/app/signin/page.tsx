@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import React from 'react';
 import Script from 'next/script';
@@ -36,11 +37,12 @@ export default function Login() {
                 Đăng nhập
               </button>
 
-              <button type="button" className="signup-button text-white">
-                <Link href={"/signup"} className="text-white">
-                  Đăng ký
-                </Link>
-              </button>
+                  <button type="button" className="signup-button text-white" onClick={() => {
+                    // link to href = "http://localhost:3000/signup"
+                    window.location.href = "http://localhost:3000/signup";
+                  }}>
+                      Đăng ký
+                  </button>
             </form>
           </div>
         </div>

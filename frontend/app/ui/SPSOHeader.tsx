@@ -8,8 +8,9 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
 import '@/app/globals.css'
+import { logout } from "../API/signup";
 
-export default function StudentHeader() {
+export default function SPSOHeader() {
   const [time, setTime] = useState(900) 
   const [minute, setMinute] = useState(Math.floor(time/60))
   const [second, setSecond] = useState(Number(time%60))
@@ -48,6 +49,7 @@ export default function StudentHeader() {
 
   const handleLogout = () => {
     // localStorage.removeItem('token')
+    logout();
     window.location.href = '/'
   }
 
@@ -61,7 +63,7 @@ export default function StudentHeader() {
           height={60}
           priority
         />
-        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SSPS</h1>
+        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>
 
 

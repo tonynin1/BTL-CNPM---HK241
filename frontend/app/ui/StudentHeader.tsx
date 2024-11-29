@@ -65,7 +65,7 @@ export default function StudentHeader() {
           height={60}
           priority
         />
-        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SSPS</h1>
+        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>
 
 

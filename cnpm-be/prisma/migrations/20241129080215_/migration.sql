@@ -54,7 +54,8 @@ CREATE TABLE "Feedback" (
     "spsomemberId" INTEGER NOT NULL,
     "feedTime" TIMESTAMP(3) NOT NULL,
     "rating" INTEGER NOT NULL,
-    "content" TEXT NOT NULL,
+    "contentByCustomer" TEXT NOT NULL,
+    "contentBySPSO" TEXT NOT NULL,
 
     CONSTRAINT "Feedback_pkey" PRIMARY KEY ("feedbackId")
 );
