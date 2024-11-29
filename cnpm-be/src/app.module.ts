@@ -9,6 +9,7 @@ import { AtGuard } from './auth/common/guards';
 import { APP_GUARD } from '@nestjs/core';
 import { FeedbackService } from './feedback/feedback.service';
 import { FeedbackModule } from './feedback/feedback.module';
+import { PrinterModule } from './printer/printer.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { FeedbackModule } from './feedback/feedback.module';
     ConfigModule.forRoot({
       isGlobal: true, 
     }),
-    FeedbackModule
+    FeedbackModule,
+    PrinterModule
   ],
   providers: [
     // {
