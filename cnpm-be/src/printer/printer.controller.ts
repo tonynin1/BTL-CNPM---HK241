@@ -15,7 +15,7 @@ export class PrinterController {
 
     @Get('printerId')
     getPrinterbyId(
-        @Query('printerId') printerId: number
+        @Query('printerId', ParseIntPipe) printerId: number
     ){
         return this.printerService.getPrinterById(printerId);
     }

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
 import { PaymentOrderDto } from './dtos/payment-order.dto';
 import { PaymentOrderService } from './services/database/payment-order/order.service';
 import { PaymentOfficeUpdateDto } from './dtos/payment.office-update.dto';
@@ -18,7 +18,7 @@ export class PaymentController {
         return this.payment_order.createRecord(order_data, +order_data.customerId, "Office")
     }
 
-    @Post('update-status/method/office')
+    @Patch('update-status/method/office')
     updateRecordOffice(@Body() data : PaymentOfficeUpdateDto) {
         return this.payment_order.updateRecord(data)
     }
