@@ -88,7 +88,7 @@ async function createDto(userType: string) {
 }
 
 // Hàm lấy accessToken từ cookie
-function getAccessTokenFromCookie(): string | null {
+export function getAccessTokenFromCookie(): string | null {
     if (typeof window !== 'undefined') {
         const cookies = document.cookie
             .split('; ')

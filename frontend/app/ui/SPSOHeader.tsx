@@ -2,29 +2,54 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
 import '@/app/globals.css'
 import { logout } from "../API/signup";
+import { getUserInfo } from "../API/userInfo";
 
-export default function SPSOHeader() {
+export interface SPSOHeaderProps {
+  fname: string;
+}
+export default function SPSOHeader(
+  {header}: {header: SPSOHeaderProps}
+) {
+  const router = useRouter()
   const [time, setTime] = useState(900) 
   const [minute, setMinute] = useState(Math.floor(time/60))
   const [second, setSecond] = useState(Number(time%60))
+  const [loggedIn, setLoggedIn] = useState(true)
+  interface UserInfo {
+    fname: string;
+    // add other properties as needed
+  }
 
-  useEffect(() => {
-    if(time < 0) return
-    const timer = setTimeout(() => {
-      setTime(prev => prev-1)
-      setMinute(Math.floor(time/60))
-      setSecond(time%60)
-    }, 1000)
+  // const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
-    return () => clearTimeout(timer)
-  })
+  // const getUser = async () => {
+  //   let data = await getUserInfo();
+  //   console.log(data);
+  //   if (!data){
+  //     setLoggedIn(false);
+  //   }
+  //   setUserInfo(data)
+  // }
+  // useEffect(() => {
+  //   getUser();
+  // },[])
+  // useEffect(() => {
+  //   if(time < 0) return
+  //   const timer = setTimeout(() => {
+  //     setTime(prev => prev-1)
+  //     setMinute(Math.floor(time/60))
+  //     setSecond(time%60)
+  //   }, 1000)
+
+  //   return () => clearTimeout(timer)
+  // })
 
   const pathName = usePathname();
 
@@ -52,7 +77,10 @@ export default function SPSOHeader() {
     logout();
     window.location.href = '/'
   }
-
+  if (!loggedIn){
+    // return <div>Please Login</div>
+    router.replace('http://localhost:3000/')
+  }
   return (
     <header className="sticky top-0 left-0 w-full flex items-center justify-between p-4 sm:p-6 bg-gray-100 dark:bg-gray-900 shadow-md transition-colors duration-300 z-10">
       <div className="flex items-center gap-2">
@@ -89,7 +117,7 @@ export default function SPSOHeader() {
         <div className="student_account relative flex items-center gap-2 items-center transition-all hover:cursor-pointer"
             
         >
-          <span className="uppercase">q.vinh</span>
+          <span className="uppercase">{header.fname}</span>
           <VscAccount className="text-xl"/>
           <FaAngleDown />
 

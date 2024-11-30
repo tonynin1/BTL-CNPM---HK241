@@ -27,7 +27,7 @@ import { PrinterModule } from './printer/printer.module';
     ConfigModule.forRoot({
       isGlobal: true, 
     }),
-    PrinterModule
+    PrinterModule,
     PrintHistoryModule,
     FeedbackModule
   ],

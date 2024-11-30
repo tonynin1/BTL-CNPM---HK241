@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { parseCookies } from "nookies"; // Thư viện đọc cookie
 import { refreshAccessToken } from "@/app/API/authService";
 import { useRouter } from "next/navigation"; // Để điều hướng
+import { getUserInfo } from "@/app/API/userInfo";
 
 export default function Page() {
   const router = useRouter();
@@ -43,51 +44,64 @@ export default function Page() {
     },
   ];
 
-  // Kiểm tra và làm mới accessToken nếu cần
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      const cookies = parseCookies();
-      const accessToken = cookies.accessToken;
+  // // Kiểm tra và làm mới accessToken nếu cần
+  // useEffect(() => {
+  //   const interval = setInterval(async () => {
+  //     const cookies = parseCookies();
+  //     const accessToken = cookies.accessToken;
 
-      if (!accessToken) {
-        await refreshAccessToken();
-      }
-    }, 14 * 60 * 1000); // Kiểm tra mỗi 14 phút
+  //     if (!accessToken) {
+  //       await refreshAccessToken();
+  //     }
+  //   }, 14 * 60 * 1000); // Kiểm tra mỗi 14 phút
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   // Kiểm tra trạng thái đăng nhập và chuyển hướng nếu chưa đăng nhập
-  useEffect(() => {
-    const cookies = parseCookies();
-    const accessToken = cookies.accessToken;
+  // useEffect(() => {
+  //   const cookies = parseCookies();
+  //   const accessToken = cookies.accessToken;
 
-    if (!accessToken) {
-      router.push('/signin'); // Điều hướng về trang signin
+  //   if (!accessToken) {
+  //     router.push('/signin'); // Điều hướng về trang signin
+  //   }
+  // }, [router]);
+
+  // async function fetchStudents() {
+  //   const cookies = parseCookies();
+  //   const accessToken = cookies.accessToken;
+
+  //   if (!accessToken) {
+  //     console.log("Access token not found in cookies");
+  //     return;
+  //   }
+
+  //   console.log("Access Token:", accessToken);
+
+  //   try {
+  //     const response = await getAllStudents(); // Truyền accessToken vào API nếu cần
+  //     console.log("Students Data:", response);
+  //   } catch (error) {
+  //     console.error("Error fetching students:", error);
+  //   }
+  // }
+  const doSomething = async () => {
+    let res = await getUserInfo();
+    if (!res){
+      // router.push
+      router.replace('/signin');
+      console.log(router);
+      // adjust the router to localhost:8080/singin
+
     }
-  }, [router]);
-
-  async function fetchStudents() {
-    const cookies = parseCookies();
-    const accessToken = cookies.accessToken;
-
-    if (!accessToken) {
-      console.log("Access token not found in cookies");
-      return;
-    }
-
-    console.log("Access Token:", accessToken);
-
-    try {
-      const response = await getAllStudents(); // Truyền accessToken vào API nếu cần
-      console.log("Students Data:", response);
-    } catch (error) {
-      console.error("Error fetching students:", error);
+    else {
+      console.log(res);
     }
   }
-
   useEffect(() => {
-    fetchStudents();
+    // fetchStudents();
+    doSomething();
   }, []);
 
   return (
