@@ -1,7 +1,6 @@
 'use client'
 import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
-
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import tutorial_img from "@/public/Home/tutorial.jpg";
 import new_system_img from "@/public/Home/new-system.jpg";
@@ -15,29 +14,30 @@ import { redirect } from "next/navigation";
 export default function page() {
   const [userInfo, setUserInfo] = useState<StudentHeaderProps | null>(null);
   const [loggedIn, setLoggedIn] = useState(true)
-  const getUser = async () => {
-    let data = await getUserInfo();
-    console.log(data);
-    if (!data){
-      setLoggedIn(false);
-    }
-    setUserInfo(data)
-  }
   useEffect(() => {
-    getUser();
-  },[])
+    const initializeSession = async () => {
+      try {
+        const data = await getUserInfo();
+        if (!data) {
+          setLoggedIn(false);
+          return;
+        }
+        setUserInfo(data);
+      } catch (error) {
+        setLoggedIn(false);
+      }
+    };
+    // print out the access token
+    initializeSession();
+  }, []);
 
-  if (!loggedIn){
-    // router.replace('http://localhost:8080')
-    redirect('/')
+  if (!loggedIn) {
+    redirect('/signin'); // Redirect to signin page if not logged in
+    return null;
   }
-  if (!userInfo){
-    // waiting to render
-    return <>Reloading</>
-  }
-  if (userInfo.role === 'SPSO'){
-    // router.replace('http://localhost:8080')
-    redirect('/spso')
+
+  if (!userInfo) {
+    return <>Reloading...</>; // Hiển thị khi chờ thông tin user
   }
   return (
     <div>
