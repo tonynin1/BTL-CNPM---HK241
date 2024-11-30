@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import React from "react";
+import { signup } from "../API/signup";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -10,52 +11,45 @@ export default function Login() {
     lastname: "",
     email: "",
     phone: "",
-    dob: "", // Thêm trường ngày sinh
     password: "",
     confirmPassword: "",
-    userType: "",
+    userType: ""
   });
 
-  const [showPassword, setShowPassword] = useState({
-    password: false,
-    confirmPassword: false,
-  });
-
+  // Cập nhật kiểu dữ liệu cho sự kiện
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Cập nhật kiểu dữ liệu cho sự kiện submit
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Kiểm tra logic mật khẩu
     if (formData.password !== formData.confirmPassword) {
       alert("Mật khẩu xác nhận không khớp!");
       return;
     }
-    console.log("Form Submitted:", formData);
-    alert("Đăng ký thành công!");
-  };
 
-  const togglePasswordVisibility = (field: "password" | "confirmPassword") => {
-    setShowPassword((prevState) => ({
-      ...prevState,
-      [field]: !prevState[field],
-    }));
-    console.log(`Toggle ${field}:`, showPassword[field]); // Kiểm tra trạng thái
+    // In dữ liệu ra console hoặc xử lý tiếp
+    console.log("Form Submitted:", formData);
+    signup(formData);
+    alert("Nhấn để xác nhận đăng ký!");
   };
 
   return (
     <main>
       <div className="login-container">
-        <div className="login-box">
-          <div className="logo-text">
+        <div className="login-box mt-[5%]">
+          <div className="flex items-center mb-4 mt-2 justify-center gap-2">
             <Image
               src="/HCMUT_official_logo.png"
               alt="Logo"
               width={60}
               height={60}
-              className="logo"
+              className="logo my-0"
             />
-            HCMUT SPSS
+            <span className="logo-text my-0">HCMUT SPSS</span>
           </div>
           <h2>Tạo tài khoản mới</h2>
           <form id="registerForm" onSubmit={handleSubmit}>
@@ -109,66 +103,33 @@ export default function Login() {
                 required
               />
             </div>
-
-            {/* Trường ngày tháng năm sinh */}
             <div className="input-group">
-              <label htmlFor="dob">Ngày tháng năm sinh</label>
+              <label htmlFor="password">Mật khẩu</label>
               <input
-                type="date"
-                id="dob"
-                name="dob"
-                placeholder="Chọn ngày tháng năm sinh"
-                value={formData.dob}
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Nhập mật khẩu"
+                value={formData.password}
                 onChange={handleChange}
                 required
               />
             </div>
-
-            <div className="input-group">
-              <label htmlFor="password">Mật khẩu</label>
-              <div className="password-container">
-                <input
-                  type={showPassword.password ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  placeholder="Nhập mật khẩu"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <span
-                  id="eye-password"
-                  onClick={() => togglePasswordVisibility("password")}
-                >
-                  {showPassword.password ? "🔓" : "🔒"}
-                </span>
-              </div>
-            </div>
-
             <div className="input-group">
               <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
-              <div className="password-container">
-                <input
-                  type={showPassword.confirmPassword ? "text" : "password"}
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder="Xác nhận mật khẩu"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                />
-                <span
-                  id="eye-confirm-password"
-                  onClick={() => togglePasswordVisibility("confirmPassword")}
-                >
-                  {showPassword.confirmPassword ? "🔓" : "🔒"}
-                </span>
-              </div>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Xác nhận mật khẩu"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
             </div>
-
-            <div className="input-group">
+            <div className="input-group flex flex-col">
               <label>Đối tượng</label>
-              <div className="toggle-group">
+              <div className="toggle-group flex">
                 <input
                   type="radio"
                   id="student"
@@ -177,8 +138,8 @@ export default function Login() {
                   onChange={handleChange}
                   required
                 />
-                <label htmlFor="student" className="toggle-option">
-                  Sinh viên
+                <label htmlFor="student" className="toggle-option content-center">
+                  <span>Sinh viên</span>
                 </label>
                 <input
                   type="radio"
@@ -187,8 +148,8 @@ export default function Login() {
                   value="manager"
                   onChange={handleChange}
                 />
-                <label htmlFor="manager" className="toggle-option">
-                  Quản lý hệ thống
+                <label htmlFor="manager" className="toggle-option content-center">
+                  <span>Quản lý hệ thống</span>
                 </label>
               </div>
             </div>

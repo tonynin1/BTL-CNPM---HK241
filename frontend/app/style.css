@@ -6,10 +6,14 @@
 	scroll-behavior: smooth;
 }
 
+section{
+	background-color: #ecf0f1;
+}
+
 .contact {
 	padding-top: 49px;
-	padding-bottom: 18px; /*60px - 42px*/
-	background-color: #ecf0f1;
+	padding-bottom: 18px; /*60px - 42px*/ 
+	
 }
 
 .contact.container-fluid{
@@ -50,9 +54,8 @@
 
 .contact button {
 	padding: 10px 30px;
-    background-color: rgba(31, 84, 242, 0.986);
+    background-color: var(--fourth-color);
     color: white;
-	border-radius: 8px;
 }
 
 .contact h3 {

@@ -38,18 +38,11 @@ export class FeedbackService {
                     feedTime: new Date(),
                     rating: createFeedbackDto.rating? createFeedbackDto.rating : 0,
                     contentByCustomer: "",
-                    contentBySPSO: "",
                     customer: {
                         connect: {
                             customerId: createFeedbackDto.customerId,
                         },
                     },
-                    spsomember: {
-                        connect: {
-                            sosoMemberId: createFeedbackDto.spsomemberId,
-                        },
-                    },
-    
                 }
             });
 
@@ -85,7 +78,6 @@ export class FeedbackService {
                 data: {
                     rating: updateFeedbackDto.rating? updateFeedbackDto.rating : feedback.data.rating,
                     contentByCustomer: updateFeedbackDto.contentByCustomer? updateFeedbackDto.contentByCustomer : feedback.data.contentByCustomer,
-                    contentBySPSO: updateFeedbackDto.contentBySPSO? updateFeedbackDto.contentBySPSO : feedback.data.contentBySPSO,
                 },
             });
 
