@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
-
+import { logout } from "../API/authService";
 
 export default function StudentHeader() {
   const [time, setTime] = useState(900) 
@@ -50,11 +50,6 @@ export default function StudentHeader() {
     },
   ]
 
-  const handleLogout = () => {
-    // localStorage.removeItem('token')
-    window.location.href = '/'
-  }
-
   return (
     <header className="sticky top-0 left-0 w-full flex items-center justify-between p-4 sm:p-6 bg-gray-100 dark:bg-gray-900 shadow-md transition-colors duration-300 z-10">
       <div className="flex items-center gap-2">
@@ -65,7 +60,7 @@ export default function StudentHeader() {
           height={60}
           priority
         />
-        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SSPS</h1>
+        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>
 
 
@@ -99,7 +94,7 @@ export default function StudentHeader() {
           >
             <ul className="text-black rounded bg-white overflow-hidden pl-0 text-center">
               <li className="px-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm"
-                onClick={handleLogout}
+                onClick={logout}
               >
                 Đăng xuất
               </li>

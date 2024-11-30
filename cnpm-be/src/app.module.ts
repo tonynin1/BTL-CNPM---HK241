@@ -13,7 +13,6 @@ import { APP_GUARD } from '@nestjs/core';
 import { PrintHistoryModule } from './print_history/print_history.module';
 import { FeedbackService } from './feedback/feedback.service';
 import { FeedbackModule } from './feedback/feedback.module';
-
 @Module({
   imports: [
     PrismaModule, 
@@ -29,14 +28,12 @@ import { FeedbackModule } from './feedback/feedback.module';
     PrintHistoryModule,
     FeedbackModule
   ],
-  controllers: [AppController],
   providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AtGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: AtGuard,
+    },
     FeedbackService,
-    AppService
   ],
 })
 export class AppModule {}

@@ -7,16 +7,16 @@ import img2 from "@/public/Home/image2.png"
 import img3 from "@/public/Home/image3.jpg"
 import img4 from "@/public/Home/image4.jpg"
 import img5 from "@/public/Home/image5.jpg"
-import StudentHeader from "@/app/ui/StudentHeader"
 
 import person1 from "@/public/person1.jpg"
 import person2 from "@/public/person2.jpg"
 import person3 from "@/public/person3.jpg"
+import SPSOHeader from "@/app/ui/SPSOHeader";
 
 export default function Home() {
   return (
     <main className="bg-[hsl(0,7%,92%)]">
-        <StudentHeader />
+        <SPSOHeader />
         <section className="inner_container container" id="tin_tuc">
         <div className="wrapper container">
             <ul className="list">
