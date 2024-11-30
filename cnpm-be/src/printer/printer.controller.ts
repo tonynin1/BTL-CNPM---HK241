@@ -9,14 +9,12 @@ export class PrinterController {
     ){}
 
     @Get()
-    getAllPrinters(){
+    async getAllPrinters(){
         return this.printerService.getAllPrinter(); 
     }
 
-    @Get('printerId')
-    getPrinterbyId(
-        @Query('printerId') printerId: number
-    ){
+    @Get('printerId/:Id')
+    async getPrinterbyId(@Param('Id', ParseIntPipe) printerId: number){
         return this.printerService.getPrinterById(printerId);
     }
 
