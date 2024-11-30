@@ -9,12 +9,14 @@ import { AtGuard } from './auth/common/guards';
 import { APP_GUARD } from '@nestjs/core';
 import { FeedbackService } from './feedback/feedback.service';
 import { FeedbackModule } from './feedback/feedback.module';
+import { FileUploadModule } from './uploadfile/upload.module';
 
 @Module({
   imports: [
     PrismaModule, 
     UserModule, 
     AuthModule, 
+    FileUploadModule,
     CustomerModule, 
     SpsomemberModule,
     ConfigModule.forRoot({
