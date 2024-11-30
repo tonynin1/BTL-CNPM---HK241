@@ -18,7 +18,7 @@ export async function getUserInfo() {
     try {
       const cookies = parseCookies();
       let accessToken = cookies.accessToken;
-  
+      
       if (!accessToken) {
         // Nếu không có accessToken, thử làm mới
         accessToken = await refreshAccessToken();
@@ -33,7 +33,7 @@ export async function getUserInfo() {
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error("Error fetching user info:", error);
+      console.log("Error fetching user info:", error);
       return null;
     }
   }

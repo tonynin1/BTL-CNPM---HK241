@@ -23,34 +23,17 @@ export default function SPSOHeader(
   const [minute, setMinute] = useState(Math.floor(time/60))
   const [second, setSecond] = useState(Number(time%60))
   const [loggedIn, setLoggedIn] = useState(true)
-  interface UserInfo {
-    fname: string;
-    // add other properties as needed
-  }
+  
+  useEffect(() => {
+    if(time < 0) return
+    const timer = setTimeout(() => {
+      setTime(prev => prev-1)
+      setMinute(Math.floor(time/60))
+      setSecond(time%60)
+    }, 1000)
 
-  // const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-
-  // const getUser = async () => {
-  //   let data = await getUserInfo();
-  //   console.log(data);
-  //   if (!data){
-  //     setLoggedIn(false);
-  //   }
-  //   setUserInfo(data)
-  // }
-  // useEffect(() => {
-  //   getUser();
-  // },[])
-  // useEffect(() => {
-  //   if(time < 0) return
-  //   const timer = setTimeout(() => {
-  //     setTime(prev => prev-1)
-  //     setMinute(Math.floor(time/60))
-  //     setSecond(time%60)
-  //   }, 1000)
-
-  //   return () => clearTimeout(timer)
-  // })
+    return () => clearTimeout(timer)
+  })
 
   const pathName = usePathname();
 
