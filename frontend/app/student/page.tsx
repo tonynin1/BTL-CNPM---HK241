@@ -157,6 +157,35 @@ export default function page() {
           </div>
         </div>
       </div>
+      <section id="contact">
+        <div className="contact container-fluid">
+          <h2 className="text-center">Contact Us</h2>
+          <p className="text-center">Hãy đóng góp ý kiến của bạn về trải nghiệm sử dụng sản phẩm của chúng tôi.</p>
+          <div className="row">
+            <div className="col-lg-6">
+              <form action="#" method="POST">
+                <div className="row">
+                  <div className="col-lg-6">
+                    <input type="text" name="name" placeholder="Your name" className="form-control" />
+                  </div>
+                  <div className="col-lg-6">
+                    <input type="email" name="email" placeholder="Your email" className="form-control" />
+                  </div>
+                  <div className="col-lg-12">
+                    <textarea name="message" placeholder="Your message" className="form-control"></textarea>
+                  </div>
+                  <div className="col-lg-12 text-right">
+                    <button type="submit">SUBMIT</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <a href="#" className="back-to-top">
+            <i className="fas fa-chevron-up"></i>
+          </a>
+        </div>
+      </section>
       <MyFooter />
     </div>
   );

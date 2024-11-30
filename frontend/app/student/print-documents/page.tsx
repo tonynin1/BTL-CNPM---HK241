@@ -187,7 +187,7 @@ export default function Home() {
             li.classList.add('in-prog')
             li.innerHTML = \`
               <div className="col" style="display: flex; flex: .15; text-align: center; align-items: center; justify-content: center;">
-                <img className="logo" src="\${iconSelector(file.type)}" style="height="40px" width="40px"" alt="">
+                <img src="../\${iconSelector(file.type)}" style="height="40px" width="40px"" alt="">
               </div>
               <div className="col" style="flex: .75; text-align: left; font-size: 0.9rem; color: white; padding: 8px 10px;">
                 <div className="file-name">
