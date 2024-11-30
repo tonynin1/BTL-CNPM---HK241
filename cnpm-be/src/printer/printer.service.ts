@@ -56,7 +56,8 @@ export class PrinterService {
                     facility: createPrinterDto.facility,
                     building: createPrinterDto.building,
                     room: createPrinterDto.room,
-                    spsomemberId: createPrinterDto.spsomemberId
+                    spsomemberId: createPrinterDto.spsomemberId,
+                    status: createPrinterDto.status
                 }
             });
 
@@ -96,7 +97,8 @@ export class PrinterService {
                     building: updateDto.building,
                     facility: updateDto.facility,
                     room: updateDto.room,
-                    spsomemberId: updateDto.spsomemberId
+                    spsomemberId: updateDto.spsomemberId,
+                    status: updateDto.status
                 }
             });
             return {

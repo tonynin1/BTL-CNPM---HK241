@@ -70,7 +70,8 @@ CREATE TABLE "Printer" (
     "building" TEXT NOT NULL,
     "room" TEXT NOT NULL,
     "spsomemberId" INTEGER NOT NULL,
-
+    "status" TEXT NOT NULL, 
+    
     CONSTRAINT "Printer_pkey" PRIMARY KEY ("printerId")
 );
 
