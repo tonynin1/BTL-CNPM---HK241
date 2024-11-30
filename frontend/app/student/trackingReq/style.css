@@ -1,0 +1,35 @@
+h1{
+    color: bisque;
+}
+table {
+    margin-top: 20px;
+}
+input[type="checkbox"] {
+    transform: scale(1.5); /* Thay đổi kích thước checkbox */
+    cursor: pointer; /* Thay đổi con trỏ khi hover */
+    margin: 0; /* Loại bỏ margin mặc định */
+}
+.align-middle {
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+a {
+    color: #1e90ff;
+}
+a:hover {
+    text-decoration: underline;
+}
+.Button{
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 30px; 
+}
+.btn{
+    margin-left: 30px;
+}
+.inner_wrap.container{
+    padding-bottom: 0px;
+}
+.container.upload_container{
+    padding-bottom: 0px;
+    min-height: 300px;
+}
