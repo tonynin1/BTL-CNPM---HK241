@@ -3,34 +3,13 @@ import React, { useEffect, useState } from "react";
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
+import { useUserSession } from "@/app/API/getMe";
 
 export default function page() {
-  const [userInfo, setUserInfo] = useState<StudentHeaderProps | null>(null);
-  const [loggedIn, setLoggedIn] = useState(true)
-  useEffect(() => {
-    const initializeSession = async () => {
-      try {
-        const data = await getUserInfo();
-        if (!data) {
-          setLoggedIn(false);
-          return;
-        }
-        setUserInfo(data);
-      } catch (error) {
-        setLoggedIn(false);
-      }
-    };
-    // print out the access token
-    initializeSession();
-  }, []);
+  const { userInfo, loggedIn } = useUserSession();
 
-  if (!loggedIn){
-    // router.replace('http://localhost:8080')
-    redirect('/')
-  }
-  if (!userInfo){
-    // waiting to render
-    return <>Reloading</>
+  if (!userInfo) {
+    return <div>Loading</div>;
   }
   if (userInfo.role === 'SPSO'){
     // router.replace('http://localhost:8080')

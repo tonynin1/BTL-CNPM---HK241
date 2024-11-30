@@ -12,6 +12,7 @@ import { logout } from "../API/authService";
 export interface StudentHeaderProps {
   fname: string;
   role: string;
+  customerId: number;
 }
 export default function StudentHeader(
   {header}: {header: StudentHeaderProps}
@@ -45,6 +46,14 @@ export default function StudentHeader(
     {
       name: 'Mua trang in',
       href: '/student/buy-prints',
+    },
+    {
+      name: 'Nạp tiền',
+      href: '/student/deposit',
+    },
+    {
+      name: "Các đơn chờ in",
+      href: '/student/trackingReq'
     },
     {
       name: 'Lịch sử in',

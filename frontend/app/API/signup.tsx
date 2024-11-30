@@ -10,7 +10,6 @@ const COOKIE_OPTIONS = {
 
 // Hàm đăng ký
 export const signup = async (data: any) => {
-    console.log(data.email);
     try {
         const response = await request.post('/auth/signup', {
             email: data.email,

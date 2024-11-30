@@ -153,12 +153,35 @@ export class AuthService {
       where: {
         userId: userId,
       },
-    });
+      
+    })
+
+    let returnVal2 = null;
+    if (returnVal.role === 'STUDENT') {
+      returnVal2 = await this.prisma.customer.findFirst({
+        where: {
+          userId: userId,
+        }
+      })
+    }
+    else {
+      returnVal2 = await this.prisma.sPSOMember.findFirst({
+        where: {
+          userId: userId,
+        }
+      })
+    }
+
+
+
 
     if (returnVal?.hashedRt === null) {
       throw new ForbiddenException('Access Denied');
     }
 
-    return returnVal;
+    return {
+      ...returnVal,
+      ...returnVal2
+    }
   }
 }

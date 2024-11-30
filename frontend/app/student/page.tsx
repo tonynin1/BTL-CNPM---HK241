@@ -10,34 +10,17 @@ import MyFooter from "../ui/MyFooter";
 import { useEffect, useState } from "react";
 import { getUserInfo } from "../API/userInfo";
 import { redirect } from "next/navigation";
+import { useUserSession } from "../API/getMe";
 
 export default function page() {
-  const [userInfo, setUserInfo] = useState<StudentHeaderProps | null>(null);
-  const [loggedIn, setLoggedIn] = useState(true)
-  useEffect(() => {
-    const initializeSession = async () => {
-      try {
-        const data = await getUserInfo();
-        if (!data) {
-          setLoggedIn(false);
-          return;
-        }
-        setUserInfo(data);
-      } catch (error) {
-        setLoggedIn(false);
-      }
-    };
-    // print out the access token
-    initializeSession();
-  }, []);
-
-  if (!loggedIn) {
-    redirect('/signin'); // Redirect to signin page if not logged in
-    return null;
-  }
+  const { userInfo, loggedIn } = useUserSession();
 
   if (!userInfo) {
-    return <>Reloading...</>; // Hiển thị khi chờ thông tin user
+    return <div>Loading</div>;
+  }
+
+  if (userInfo.role === 'SPSO'){
+    redirect('/spso')
   }
   return (
     <div>

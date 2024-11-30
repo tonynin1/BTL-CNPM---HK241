@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
+import { useUserSession } from "@/app/API/getMe";
 
 export default function Page() {
-  const [userInfo, setUserInfo] = useState<StudentHeaderProps | null>(null);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const { userInfo, loggedIn } = useUserSession();
   const [money, setMoney] = useState(0);
   const moneyOfA4 = 1000;
   const moneyOfA3 = 2000;
@@ -19,22 +19,16 @@ export default function Page() {
     paperType: "null",
   });
 
+  // Handle redirect logic with state
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+
   useEffect(() => {
-    const initializeSession = async () => {
-      try {
-        const data = await getUserInfo();
-        if (!data) {
-          setLoggedIn(false);
-          return;
-        }
-        setUserInfo(data);
-      } catch (error) {
-        setLoggedIn(false);
-      }
-    };
-    // print out the access token
-    initializeSession();
-  }, []);
+    if (!loggedIn) {
+      setShouldRedirect(true);
+    } else if (userInfo && userInfo.role === "SPSO") {
+      setShouldRedirect(true);
+    }
+  }, [loggedIn, userInfo]);
 
   useEffect(() => {
     if (totalPages > 0) {
@@ -43,16 +37,15 @@ export default function Page() {
     }
   }, [currType, totalPages]);
 
-  if (!loggedIn) {
-    redirect("/");
+  // Handle redirect after state update
+  if (shouldRedirect) {
+    if (!loggedIn) redirect("/");
+    if (userInfo?.role === "SPSO") redirect("/spso");
+    return null; // Return null while redirecting
   }
 
   if (!userInfo) {
-    return <>Reloading</>;
-  }
-
-  if (userInfo.role === "SPSO") {
-    redirect("/spso");
+    return <div>Reloading...</div>;
   }
 
   // Step 2: Handle input changes
@@ -78,24 +71,6 @@ export default function Page() {
   const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent default form submission behavior
     console.log("Form data:", formData);
-    // try {
-    //   const response = await fetch("/api/submitForm", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
-
-    //   if (response.ok) {
-    //     alert("Form submitted successfully!");
-    //   } else {
-    //     alert("There was an error submitting the form");
-    //   }
-    // } catch (error) {
-    //   console.error("Error submitting form:", error);
-    //   alert("Error occurred while submitting the form");
-    // }
   };
 
   return (

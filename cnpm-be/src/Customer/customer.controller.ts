@@ -16,6 +16,11 @@ export class CustomerController {
         return this.customerService.getAllCustomers(); 
     }
 
+    @Get('user')
+    getAllCustomersWithUser(){
+        return this.customerService.getAllCustomersWithUser();
+    }
+
     @Get('userId')
     getCustomerByUserId(
         @Query('userId', ParseIntPipe) userId: number
