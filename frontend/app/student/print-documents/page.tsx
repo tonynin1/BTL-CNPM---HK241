@@ -1,15 +1,43 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import React from 'react';
 import Script from 'next/script';
-import StudentHeader from "@/app/ui/StudentHeader"
+import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader"
+import { redirect } from "next/navigation";
+import { getUserInfo } from "@/app/API/userInfo";
 
 export default function Home() {
+  const [userInfo, setUserInfo] = useState<StudentHeaderProps | null>(null);
+  const [loggedIn, setLoggedIn] = useState(true)
+  const getUser = async () => {
+    let data = await getUserInfo();
+    console.log(data);
+    if (!data){
+      setLoggedIn(false);
+    }
+    setUserInfo(data)
+  }
+  useEffect(() => {
+    getUser();
+  },[])
+
+  if (!loggedIn){
+    // router.replace('http://localhost:8080')
+    redirect('/')
+  }
+  if (!userInfo){
+    // waiting to render
+    return <>Reloading</>
+  }
+  if (userInfo.role === 'SPSO'){
+    // router.replace('http://localhost:8080')
+    redirect('/spso')
+  }
   return (
     <main className="bg-[#353535] pb-[100px]">
-      <StudentHeader />
+      <StudentHeader header={userInfo as StudentHeaderProps} />
       <div className="inner_wrap container">
         <div className="container upload_container">
           <div className="drop-section container">

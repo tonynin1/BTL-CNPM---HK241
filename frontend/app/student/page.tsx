@@ -1,17 +1,47 @@
+'use client'
 import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
-import StudentHeader from "@/app/ui/StudentHeader";
+import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import tutorial_img from "@/public/Home/tutorial.jpg";
 import new_system_img from "@/public/Home/new-system.jpg";
 import error_img from "@/public/Home/error.png";
 import buy_pages_img from "@/public/Home/buy-pages.jpg";
 import MyFooter from "../ui/MyFooter";
+import { useEffect, useState } from "react";
+import { getUserInfo } from "../API/userInfo";
+import { redirect } from "next/navigation";
 
 export default function page() {
+  const [userInfo, setUserInfo] = useState<StudentHeaderProps | null>(null);
+  const [loggedIn, setLoggedIn] = useState(true)
+  const getUser = async () => {
+    let data = await getUserInfo();
+    console.log(data);
+    if (!data){
+      setLoggedIn(false);
+    }
+    setUserInfo(data)
+  }
+  useEffect(() => {
+    getUser();
+  },[])
+
+  if (!loggedIn){
+    // router.replace('http://localhost:8080')
+    redirect('/')
+  }
+  if (!userInfo){
+    // waiting to render
+    return <>Reloading</>
+  }
+  if (userInfo.role === 'SPSO'){
+    // router.replace('http://localhost:8080')
+    redirect('/spso')
+  }
   return (
     <div>
-      <StudentHeader />
+      <StudentHeader header={userInfo as StudentHeaderProps}/>
       <div className="container mx-auto">
         <div className="column-1s flex">
           <Image

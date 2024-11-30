@@ -34,9 +34,12 @@ export default function page() {
     redirect('/')
   }
   if (!userInfo){
-    // router.replace('http://localhost:8080')
-    // redirect('/')
+    // waiting to render
     return <>Reloading</>
+  }
+  if (userInfo.role === 'STUDENT'){
+    // router.replace('http://localhost:8080')
+    redirect('/student')
   }
   return (
     <div>

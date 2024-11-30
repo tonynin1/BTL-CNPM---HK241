@@ -8,22 +8,22 @@ import { PaymentOfficeUpdateDto } from './dtos/payment.office-update.dto';
 export class PaymentController {
     constructor(private payment_order : PaymentOrderService) {}
 
-    @Get('customerId=:customerId/purchaseTime=:purchaseTime')
+    @Get('history/customerId/:customerId/purchaseTime/:purchaseTime')
     displayRecords(@Param('customerId') customerId : number, @Param('purchaseTime') purchaseTime : string) {
         return this.payment_order.display(+customerId, new Date(purchaseTime))
     }
 
-    @Post('method=office')
+    @Post('method/office')
     createRecordOffice(@Body() order_data : PaymentOrderDto) {
         return this.payment_order.createRecord(order_data, +order_data.customerId, "Office")
     }
 
-    @Post('method=office/update-status')
+    @Post('update-status/method/office')
     updateRecordOffice(@Body() data : PaymentOfficeUpdateDto) {
         return this.payment_order.updateRecord(data)
     }
 
-    @Post('method=on-site')
+    @Post('method/on-site')
     createRecordOnsite(@Body() order_data : PaymentOrderDto) {
         return this.payment_order.createRecord(order_data, +order_data.customerId, "Onsite")
     }

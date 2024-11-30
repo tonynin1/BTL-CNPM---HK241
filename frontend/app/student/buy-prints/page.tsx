@@ -1,18 +1,37 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import StudentHeader from "@/app/ui/StudentHeader";
+import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
+import { getUserInfo } from "@/app/API/userInfo";
+import { redirect } from "next/navigation";
 
-export default function page() {
+export default function Page() {
+  const [userInfo, setUserInfo] = useState<StudentHeaderProps | null>(null);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [money, setMoney] = useState(0);
   const moneyOfA4 = 1000;
   const moneyOfA3 = 2000;
   const [currType, setCurrType] = useState("null");
   const [totalPages, setTotalPages] = useState(NaN);
+
   // Step 1: Define state to hold form data
   const [formData, setFormData] = useState({
     totalPages: NaN,
     paperType: "null",
   });
+
+  const getUser = async () => {
+    let data = await getUserInfo();
+    console.log(data);
+    if (!data) {
+      setLoggedIn(false);
+    }
+    setUserInfo(data);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   useEffect(() => {
     if (totalPages > 0) {
       if (currType === "a4") setMoney(totalPages * moneyOfA4);
@@ -20,8 +39,20 @@ export default function page() {
     }
   }, [currType, totalPages]);
 
+  if (!loggedIn) {
+    redirect("/");
+  }
+
+  if (!userInfo) {
+    return <>Reloading</>;
+  }
+
+  if (userInfo.role === "SPSO") {
+    redirect("/spso");
+  }
+
   // Step 2: Handle input changes
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -40,7 +71,7 @@ export default function page() {
   };
 
   // Step 3: Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent default form submission behavior
     console.log("Form data:", formData);
     // try {
@@ -62,9 +93,10 @@ export default function page() {
     //   alert("Error occurred while submitting the form");
     // }
   };
+
   return (
     <div className="bg-[#353535] h-[100vh] overflow-hidden">
-      <StudentHeader />
+      <StudentHeader header={userInfo as StudentHeaderProps} />
       <div className="flex justify-center p-6 h-[100vh]">
         <div className="w-1/2 bg-white h-fit rounded-lg p-4 shadow-lg shadow-slate-200">
           <div>

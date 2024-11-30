@@ -1,11 +1,11 @@
 'use client';
 import { getAllStudents } from "@/app/API/spso_allStudent";
 import MyFooter from "@/app/ui/MyFooter";
-import SPSOHeader from "@/app/ui/SPSOHeader";
-import { useEffect } from "react";
+import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
+import { useEffect, useState } from "react";
 import { parseCookies } from "nookies"; // Thư viện đọc cookie
 import { refreshAccessToken } from "@/app/API/authService";
-import { useRouter } from "next/navigation"; // Để điều hướng
+import { redirect, useRouter } from "next/navigation"; // Để điều hướng
 import { getUserInfo } from "@/app/API/userInfo";
 
 export default function Page() {
@@ -44,69 +44,37 @@ export default function Page() {
     },
   ];
 
-  // // Kiểm tra và làm mới accessToken nếu cần
-  // useEffect(() => {
-  //   const interval = setInterval(async () => {
-  //     const cookies = parseCookies();
-  //     const accessToken = cookies.accessToken;
-
-  //     if (!accessToken) {
-  //       await refreshAccessToken();
-  //     }
-  //   }, 14 * 60 * 1000); // Kiểm tra mỗi 14 phút
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // Kiểm tra trạng thái đăng nhập và chuyển hướng nếu chưa đăng nhập
-  // useEffect(() => {
-  //   const cookies = parseCookies();
-  //   const accessToken = cookies.accessToken;
-
-  //   if (!accessToken) {
-  //     router.push('/signin'); // Điều hướng về trang signin
-  //   }
-  // }, [router]);
-
-  // async function fetchStudents() {
-  //   const cookies = parseCookies();
-  //   const accessToken = cookies.accessToken;
-
-  //   if (!accessToken) {
-  //     console.log("Access token not found in cookies");
-  //     return;
-  //   }
-
-  //   console.log("Access Token:", accessToken);
-
-  //   try {
-  //     const response = await getAllStudents(); // Truyền accessToken vào API nếu cần
-  //     console.log("Students Data:", response);
-  //   } catch (error) {
-  //     console.error("Error fetching students:", error);
-  //   }
-  // }
-  const doSomething = async () => {
-    let res = await getUserInfo();
-    if (!res){
-      // router.push
-      router.replace('/signin');
-      console.log(router);
-      // adjust the router to localhost:8080/singin
-
+  const [userInfo, setUserInfo] = useState<SPSOHeaderProps | null>(null);
+  const [loggedIn, setLoggedIn] = useState(true)
+  const getUser = async () => {
+    let data = await getUserInfo();
+    console.log(data);
+    if (!data){
+      setLoggedIn(false);
     }
-    else {
-      console.log(res);
-    }
+    setUserInfo(data)
   }
   useEffect(() => {
-    // fetchStudents();
-    doSomething();
-  }, []);
+    getUser();
+  },[])
+
+  if (!loggedIn){
+    // router.replace('http://localhost:8080')
+    redirect('/')
+  }
+  if (!userInfo){
+    // router.replace('http://localhost:8080')
+    // redirect('/')
+    return <>Reloading</>
+  }
+  if (userInfo.role === 'STUDENT'){
+    // router.replace('http://localhost:8080')
+    redirect('/student')
+  }
 
   return (
     <div className="h-screen">
-      <SPSOHeader />
+      <SPSOHeader header = {userInfo as SPSOHeaderProps}/>
       <div className="h-full">
         <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4 ' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
           <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>

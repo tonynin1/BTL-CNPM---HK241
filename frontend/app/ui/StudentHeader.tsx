@@ -9,7 +9,13 @@ import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
 import { logout } from "../API/authService";
 
-export default function StudentHeader() {
+export interface StudentHeaderProps {
+  fname: string;
+  role: string;
+}
+export default function StudentHeader(
+  {header}: {header: StudentHeaderProps}
+) {
   const [time, setTime] = useState(900) 
   const [minute, setMinute] = useState(Math.floor(time/60))
   const [second, setSecond] = useState(Number(time%60))
@@ -86,7 +92,7 @@ export default function StudentHeader() {
         <div className="student_account relative flex items-center gap-2 items-center transition-all hover:cursor-pointer"
             
         >
-          <span className="uppercase">q.vinh</span>
+          <span className="uppercase">{header.fname}</span>
           <VscAccount className="text-xl"/>
           <FaAngleDown />
 

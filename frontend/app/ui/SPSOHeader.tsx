@@ -13,6 +13,7 @@ import { getUserInfo } from "../API/userInfo";
 
 export interface SPSOHeaderProps {
   fname: string;
+  role: string;
 }
 export default function SPSOHeader(
   {header}: {header: SPSOHeaderProps}
