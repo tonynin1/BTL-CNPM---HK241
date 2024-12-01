@@ -35,14 +35,14 @@ export async function uploadFiles(file: File, printerId: number, docQuantity: nu
             throw new Error("Access token not found.");
         }
 
-        const formData = new FormData();
-        formData.append('files', file);
-        formData.append('printerId', printerId.toString());
-        formData.append('docQuantity', docQuantity.toString());
-        formData.append('attribute', attribute);
-        formData.append('customerId', customerId.toString());
 
-        const response = await api.post(`upload`, formData, {
+        const response = await api.post(`upload`, {
+            files: file,
+            printerId: printerId,
+            docQuantity: docQuantity,
+            attribute: attribute,
+            customerId: customerId
+        }, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'multipart/form-data',

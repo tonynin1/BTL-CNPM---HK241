@@ -142,7 +142,7 @@ export default function Home() {
               
               <div className="form-group col">
                 <p className="p">Margin</p>
-                <input type="number" className="form-control" id="so-ban" placeholder="Default"/>
+                <input type="number" className="form-control" id="can-le" placeholder="Default"/>
               </div>
             </div>
             <div className="row align-items-start"> 
@@ -188,7 +188,7 @@ export default function Home() {
               className="submit"
               onClick={async () => {
                 console.log("Selected Printer ID:", printerId); // Log the printer ID
-                const margin = (document.getElementById('so-ban') as HTMLInputElement).value;
+                const margin = (document.getElementById('can-le') as HTMLInputElement).value;
                 const copies = parseInt((document.getElementById('so-ban') as HTMLInputElement).value, 10);
                 const paperSize = (document.getElementById('kho-giay') as HTMLSelectElement).value;
                 const printType = (document.getElementById('kieu-in') as HTMLSelectElement).value;
@@ -208,12 +208,16 @@ export default function Home() {
                   alert('Please enter the number of copies');
                   return;
                 }
+
+                if (copies < 1){
+                  alert('Number of copies must be greater than 0');
+                  return;
+                }
                 let res = await uploadFiles(file, printerId, copies, attribute, userInfo.customerId);
-                if (res){
-                  console.log('Upload successful');
-                  console.log('Response:', res);
+                if (res.status === 200){
+                  alert('Upload successful');
                 } else {
-                  alert('Upload failed');
+                  alert(res.message)
                 }
               }}
             >

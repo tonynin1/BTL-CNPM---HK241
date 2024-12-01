@@ -32,8 +32,6 @@ export class FileUploadController {
     if (!files || files.length === 0) {
       throw new BadRequestException('No files uploaded');
     }
-    console.log('fileUploadDto', fileUploadDto);
-    console.log('files', files);
     return await this.fileUploadService.uploadFiles(files, fileUploadDto.attribute, fileUploadDto.customerId, fileUploadDto.printerId, fileUploadDto.docQuantity);
   }
 }
