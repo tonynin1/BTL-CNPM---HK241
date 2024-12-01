@@ -51,11 +51,9 @@ CREATE TABLE "Customer" (
 CREATE TABLE "Feedback" (
     "feedbackId" SERIAL NOT NULL,
     "customerId" INTEGER NOT NULL,
-    "spsomemberId" INTEGER NOT NULL,
     "feedTime" TIMESTAMP(3) NOT NULL,
     "rating" INTEGER NOT NULL,
     "contentByCustomer" TEXT NOT NULL,
-    "contentBySPSO" TEXT NOT NULL,
 
     CONSTRAINT "Feedback_pkey" PRIMARY KEY ("feedbackId")
 );
@@ -96,6 +94,7 @@ CREATE TABLE "PrintOrder" (
     "poStatus" TEXT NOT NULL DEFAULT 'Pending',
     "numCopies" INTEGER NOT NULL,
     "customerId" INTEGER NOT NULL,
+    "docId" INTEGER NOT NULL,
 
     CONSTRAINT "PrintOrder_pkey" PRIMARY KEY ("printOrderId")
 );
@@ -107,6 +106,7 @@ CREATE TABLE "Document" (
     "customerId" INTEGER NOT NULL,
     "printerId" INTEGER NOT NULL,
     "docQuantity" INTEGER NOT NULL,
+    "docLink" TEXT,
 
     CONSTRAINT "Document_pkey" PRIMARY KEY ("documentId")
 );
@@ -142,9 +142,6 @@ ALTER TABLE "Customer" ADD CONSTRAINT "Customer_spsoMemberId_fkey" FOREIGN KEY (
 ALTER TABLE "Feedback" ADD CONSTRAINT "Feedback_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("customerId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Feedback" ADD CONSTRAINT "Feedback_spsomemberId_fkey" FOREIGN KEY ("spsomemberId") REFERENCES "SPSOMember"("sosoMemberId") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Printer" ADD CONSTRAINT "Printer_spsomemberId_fkey" FOREIGN KEY ("spsomemberId") REFERENCES "SPSOMember"("sosoMemberId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -152,6 +149,9 @@ ALTER TABLE "PagePurchaseOrder" ADD CONSTRAINT "PagePurchaseOrder_customerId_fke
 
 -- AddForeignKey
 ALTER TABLE "PrintOrder" ADD CONSTRAINT "PrintOrder_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("customerId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PrintOrder" ADD CONSTRAINT "PrintOrder_docId_fkey" FOREIGN KEY ("docId") REFERENCES "Document"("documentId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Document" ADD CONSTRAINT "Document_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("customerId") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -50,7 +50,6 @@ export class FileUploadService {
             docName: docName,  
             docLink: docLink,  
             customerId: Number(customerId),  
-            printerId: Number(printerId),  
             docQuantity: Number(docQuantity),  
           },
         });

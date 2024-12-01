@@ -4,4 +4,5 @@ export class createDocumentDto {
     customerId: number;
     printerId: number;
     docQuantity: number;
+    docLink: string;
 }

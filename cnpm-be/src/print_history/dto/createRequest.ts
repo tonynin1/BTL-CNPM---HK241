@@ -24,4 +24,8 @@ export class CreatePrintRequestDto {
   @IsInt()
   @IsNotEmpty()
   customerId: number; // ID khách hàng
+
+  @IsInt()
+  @IsNotEmpty()
+  docId: number; // ID tài liệu
 }
