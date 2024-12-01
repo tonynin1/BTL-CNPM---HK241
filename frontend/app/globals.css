@@ -41,7 +41,8 @@ body {
   }
 }
 
-.student_dropdown {
+.student_dropdown,
+.print_history_modal {
   animation: fade-in .3s ease-in-out;
 }
 

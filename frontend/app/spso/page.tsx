@@ -15,18 +15,20 @@ import LoadingPage from "../ui/LoadingPage";
 
 
 export default function page() {
+
   const { userInfo, loggedIn } = useUserSessionForSPSO();
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>
   }
 
+
   if (userInfo.role === 'STUDENT'){
     redirect('/student')
   }
   return (
     <div>
-      <SPSOHeader header={userInfo as SPSOHeaderProps} />
+      {/* <SPSOHeader header={userInfo as SPSOHeaderProps} /> */}
       <div className="container mx-auto">
         <div className="column-1s flex">
           <Image 
