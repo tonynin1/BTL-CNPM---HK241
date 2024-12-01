@@ -1,8 +1,7 @@
-import { useState } from "react";
+'use client'
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import React from 'react';
-import Script from 'next/script';
-import img1 from "@/public/Home/image1.png"
 import img2 from "@/public/Home/image2.png"
 import img3 from "@/public/Home/image3.jpg"
 import img4 from "@/public/Home/image4.jpg"
@@ -11,16 +10,28 @@ import img5 from "@/public/Home/image5.jpg"
 import person1 from "@/public/person1.jpg"
 import person2 from "@/public/person2.jpg"
 import person3 from "@/public/person3.jpg"
-import SPSOHeader from "@/app/ui/SPSOHeader";
+import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
+import { getUserInfo } from "@/app/API/userInfo";
+import { redirect } from "next/navigation";
+import { useUserSession } from "@/app/API/getMe";
 
 export default function Home() {
+  const { userInfo, loggedIn } = useUserSession();
+
+  if (!userInfo) {
+    return <div>Loading</div>;
+  }
+
+  if (userInfo.role === 'STUDENT'){
+    redirect('/student')
+  }
   return (
     <main className="bg-[hsl(0,7%,92%)]">
-        <SPSOHeader />
+        <SPSOHeader header={userInfo as SPSOHeaderProps} />
         <section className="inner_container container" id="tin_tuc">
         <div className="wrapper container">
             <ul className="list">
-              <li>
+              {/* <li>
                 <div className="bg">
                     <Image 
                       src={img1}
@@ -34,7 +45,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </li>
+            </li> */}
               <li>
                 <div className="bg">
                       <Image 
@@ -62,7 +73,7 @@ export default function Home() {
                   </div>
               </div>
           </li>
-        <li>
+          <li>
             <div className="bg">
                 <a href="/vi/tin-tuc/phan-mem-erp-thu-y-uv-su-dung" className="card-img-top">
                   <Image 

@@ -6,13 +6,20 @@ import { User } from '@prisma/client';
 @Injectable()
 export class CustomerService {
     constructor(
-        private prisma: PrismaService
+        private prisma: PrismaService,
     ) {}
 
     async getAllCustomers() {
         return await this.prisma.customer.findMany();
     }
 
+    async getAllCustomersWithUser() {
+        return await this.prisma.user.findMany({
+            where: {
+                role: 'STUDENT'
+            }
+        });
+    }
     async getCustomerByUserId(userId: number) {
         const cus = await this.prisma.customer.findFirst({
             where: {

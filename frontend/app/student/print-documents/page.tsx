@@ -1,15 +1,26 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import React from 'react';
 import Script from 'next/script';
-import StudentHeader from "@/app/ui/StudentHeader"
+import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader"
+import { redirect } from "next/navigation";
+import { getUserInfo } from "@/app/API/userInfo";
+import { useUserSession } from "@/app/API/getMe";
 
 export default function Home() {
+  const { userInfo, loggedIn } = useUserSession();
+
+  if (!userInfo) {
+    return <div>Loading</div>;
+  }
+  if (userInfo.role === 'SPSO'){
+    redirect('/spso')
+  }
   return (
     <main className="bg-[#353535] pb-[100px]">
-      <StudentHeader />
+      <StudentHeader header={userInfo as StudentHeaderProps} />
       <div className="inner_wrap container">
         <div className="container upload_container">
           <div className="drop-section container">
@@ -154,7 +165,7 @@ export default function Home() {
             li.classList.add('in-prog')
             li.innerHTML = \`
               <div className="col" style="display: flex; flex: .15; text-align: center; align-items: center; justify-content: center;">
-                <img className="logo" src="\${iconSelector(file.type)}" style="height="40px" width="40px"" alt="">
+                <img src="../\${iconSelector(file.type)}" style="height="40px" width="40px"" alt="">
               </div>
               <div className="col" style="flex: .75; text-align: left; font-size: 0.9rem; color: white; padding: 8px 10px;">
                 <div className="file-name">

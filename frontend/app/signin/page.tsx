@@ -1,8 +1,10 @@
 'use client';
 import Image from "next/image";
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { setCookie } from 'nookies';
+import { login } from "../API/signin";
+import { getUserInfo } from "../API/userInfo";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -11,55 +13,26 @@ export default function Login() {
   const router = useRouter();
 
   async function handleSignIn(email: string, password: string) {
-    try {
-      const response = await fetch("http://127.0.0.1:8080/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Invalid credentials");
+      let res = await login(email, password)   
+      
+      let user = null
+      if (res){
+        user = await getUserInfo();
+      }
+      else {
+        alert("Đăng nhập thất bại")
+        window.location.reload();
       }
 
-      const data = await response.json();
-      
-      // Lưu accessToken và refreshToken vào cookie
-      setCookie(null, "accessToken", data.accessToken, {
-        path: "/",
-        maxAge: 60 * 15, // 15 phút
-      });
-      setCookie(null, "refreshToken", data.refreshToken, {
-        path: "/",
-        maxAge: 60 * 60 * 24 * 7, // 7 ngày
-      });
-
-      // Gọi API để lấy thông tin người dùng
-      const userResponse = await fetch("http://127.0.0.1:8080/auth/me", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${data.accessToken}`
-        },
-      });
-
-      if (!userResponse.ok) {
-        throw new Error("Failed to fetch user info");
+      // routing based on user role
+      if (user.role === 'STUDENT') {
+        // router.push('/student');
+        redirect('/student')
       }
-
-      const userData = await userResponse.json();
-      
-      // Điều hướng dựa trên vai trò của người dùng
-      if (userData.role === 'STUDENT') {
-        router.push("/student");
-      } else {
-        router.push("/spso");
+      else {
+        // router.push('/spso');
+        redirect('/spso')
       }
-      
-    } catch (error: any) {
-      setErrorMessage(error.message || "Login failed");
-    }
   }
 
   function handleSubmit(e: React.FormEvent) {

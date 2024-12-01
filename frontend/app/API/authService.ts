@@ -36,7 +36,7 @@ export async function refreshAccessToken() {
 
     return accessToken;
   } catch (error) {
-    console.error("Failed to refresh access token:", error);
+    console.log("Failed to refresh access token:", error);
     return null;
   }
 }
