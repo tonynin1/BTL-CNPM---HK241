@@ -12,6 +12,7 @@ const COOKIE_OPTIONS = {
 // Login function
 export const login = async (email: string, password: string) => {
     try {
+        console.log('siung in')
         const response = await request.post('/auth/signin', {
             email: email,
             password: password,
@@ -24,5 +25,6 @@ export const login = async (email: string, password: string) => {
         return response;
     } catch (error) {
         console.error(error);
+        return null;
     }
 };

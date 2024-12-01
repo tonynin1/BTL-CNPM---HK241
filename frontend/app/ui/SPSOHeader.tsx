@@ -10,6 +10,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import '@/app/globals.css'
 import { logout } from "../API/signup";
 import { getUserInfo } from "../API/userInfo";
+import { ToastContainer } from "react-toastify";
 
 export interface SPSOHeaderProps {
   fname: string;
@@ -90,6 +91,7 @@ export default function SPSOHeader(
             <Link
               key={link.name}
               href={link.href}
+              style={{ textDecoration: "none" }}
               className={`flex items-center justify-center px-6 h-12 text-sm sm:text-base text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 transition duration-300 rounded ${
                 pathName === link.href
                   ? "bg-blue-600 text-white"
@@ -127,6 +129,7 @@ export default function SPSOHeader(
         </p>
 
       </div>
+      <ToastContainer />
     </header>
   );
 }

@@ -50,7 +50,7 @@ export default function Page() {
                 <th scope="col" className='px-6 py-3'>Tên</th>
                 <th scope="col" className='px-6 py-3'>MSSV</th>
                 <th scope="col" className='px-6 py-3'>Lần sử dụng gần nhất</th>
-                <th scope="col" className='px-6 py-3'>Hành động</th>
+                <th scope="col" className='px-6 py-3 text-center'>Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -61,7 +61,7 @@ export default function Page() {
                   <td className='px-6 py-4'>{student.user.usageHistory? student.user.usageHistory : student.createAt}</td>
                   <td className='px-6 py-4'>
                     <button 
-                      className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                      className='font-medium text-blue-600 dark:text-blue-500 hover:underline w-full text-center'
                       onClick={() => {
                         handlePrintHistory(student.customer.customerId);
                       }}  

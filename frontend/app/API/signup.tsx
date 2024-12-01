@@ -1,5 +1,6 @@
 import { setCookie, destroyCookie, parseCookies } from 'nookies';
 import * as request from '../axios/axios';
+import { toast } from 'react-toastify';
 
 // Đặt thời gian tồn tại cho token (7 ngày)
 const COOKIE_OPTIONS = {
@@ -101,6 +102,6 @@ export function getAccessTokenFromCookie(): string | null {
 export function logout() {
     destroyCookie(null, 'accessToken', { path: '/' });
     destroyCookie(null, 'refreshToken', { path: '/' });
-    alert('Logged out successfully');
+    toast.error('Logged out successfully');
     window.location.href = '/signin';
 }

@@ -14,6 +14,7 @@ import LoadingPage from "../ui/LoadingPage";
 import { createFeedBack } from "../API/student_homePage/student_homePage";
 
 export default function page() {
+
   const currentRate = NaN;
 
   const { userInfo, loggedIn } = useUserSessionForCustomer();
@@ -28,6 +29,7 @@ export default function page() {
       starRating: starRate,
     }));
   }, [starRate]);
+
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>;
@@ -58,12 +60,13 @@ export default function page() {
   return (
     <div>
       <StudentHeader header={userInfo as StudentHeaderProps} />
+
       <div className="container mx-auto">
         <div className="column-1s flex">
           <Image
             src={tutorial_img}
             alt="Tutorial"
-            objectFit="contain"
+            style={{objectFit: "contain"}}
             className="w-1/2 max-h-[700px]"
           />
           <div className="w-1/2 text-center content-center font-mono">
@@ -92,7 +95,7 @@ export default function page() {
             <Image
               src={buy_pages_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -120,7 +123,7 @@ export default function page() {
             <Image
               src={error_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -148,7 +151,7 @@ export default function page() {
             <Image
               src={new_system_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -174,7 +177,7 @@ export default function page() {
         </div>
       </div>
       <section id="contact" className="flex justify-center">
-        <div className="w-6/12">
+        <div className="w-6/12 my-4">
           <h2 className="text-center font-bold text-2xl">Your review</h2>
           <p className="text-center">
             Hãy đóng góp ý kiến của bạn về trải nghiệm sử dụng sản phẩm của

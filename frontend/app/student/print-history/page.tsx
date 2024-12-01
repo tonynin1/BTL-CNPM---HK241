@@ -9,6 +9,7 @@ import { getPrintOrdersByCustomerIdThatCompleted } from "@/app/API/student-print
 import build from "next/dist/build";
 
 export default function page() {
+
   const { userInfo, loggedIn } = useUserSessionForCustomer();
   const [allPrintOrders, setAllPrintOrders] = useState<any[]>([]);
 
@@ -216,12 +217,15 @@ export default function page() {
     
   return (
     <div >
+
       <StudentHeader header={userInfo as StudentHeaderProps} />
+
       <div className="container p-4 shadow-2xl sm:rounded-lg mt-8 bg-white dark:bg-gray-800">
           <div 
-            className=" overflow-y-scroll max-h-[90vh]"
+            className=" overflow-y-auto max-h-[90vh]"
           >
               <table className='w-full table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+
                   <caption className="caption-top text-center uppercase text-3xl">
                       lịch sử in
                   </caption>
@@ -233,6 +237,7 @@ export default function page() {
                       <th scope="col" className='px-6 py-3'>Thời gian in</th>
                       <th scope="col" className='px-6 py-3'>Trạng thái</th>
                       <th scope="col" className='px-6 py-3'>Số lượng bản sao</th>
+
                       <th scope="col" className='px-6 py-3'>Tòa</th>
                       <th scope="col" className='px-6 py-3'>Phòng</th>
                       </tr>

@@ -9,6 +9,7 @@ import { getAllPrinters, OnOffPrinter } from "@/app/API/spso-managePrinters/spso
 
 export default function page() {
     const { userInfo, loggedIn } = useUserSessionForSPSO();
+
     const printers = [
         {
           model: "LaserJet Pro M404dn",

@@ -8,6 +8,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
 import { logout } from "../API/authService";
+import { ToastContainer } from "react-toastify";
 
 export interface StudentHeaderProps {
   remainPages: number;
@@ -88,6 +89,7 @@ export default function StudentHeader(
             <Link
               key={link.name}
               href={link.href}
+              style={{textDecoration: 'none'}}
               className={`flex items-center justify-center px-6 h-12 text-sm sm:text-base no-underline text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 transition duration-300 rounded ${
                 pathName === link.href
                   ? "bg-blue-600 text-white"
@@ -125,6 +127,7 @@ export default function StudentHeader(
         </p>
 
       </div>
+      <ToastContainer />
     </header>
   );
 }
