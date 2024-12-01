@@ -17,7 +17,7 @@ import Rating from "@/app/student/Rating";
 export default function page() {
   const currentRate = NaN;
 
-  const { userInfo, loggedIn } = useUserSession();
+  const { userInfo, loggedIn } = useUserSessionForCustomer();
   const [starRate, setStarRate] = useState<number>(Number(currentRate));
   const [formData, setFormData] = useState({
     starRating: NaN,
