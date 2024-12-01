@@ -21,7 +21,7 @@ import LoadingPage from "@/app/ui/LoadingPage";
 import MyFooter from "@/app/ui/MyFooter";
 import UserFeedbackCard from "@/app/component/UserFeedbackCard";
 import LineChart from "@/app/component/LineChart";
-import BarChart from "@/app/component/BarChart";
+import DoughnutChart from "@/app/component/DoughnutChart";
 
 export default function Home() {
   // const { userInfo, loggedIn } = useUserSession();
@@ -33,87 +33,64 @@ export default function Home() {
   // if (userInfo.role === 'STUDENT'){
   //   redirect('/student')
   // }
+  const data1 = {
+    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3',],
+    datasets: [
+      {
+        label: 'Số lượng giấy đã in',
+        data: [65, 59, 80,],
+        fill: true    ,
+        borderColor: 'rgba(255, 206, 86, 1)',
+        backgroundColor: 'rgba(255, 206, 86, 0.1)',
+        tension: 0.1,
+      },
+    ],
+  };
+
+  const data4 = {
+    labels: [
+      'Sinh viên',
+      'SPSO',
+    ],
+    datasets: [{
+      label: 'Số lượng người sử dụng',
+      data: [300, 50],
+      backgroundColor: [
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+      ],
+      hoverOffset: 4
+    }]
+  };
+
   return (
-    <main className="bg-[hsl(0,7%,92%)]">
+    <main className="bg-white">
         {/* <SPSOHeader header={userInfo as SPSOHeaderProps} /> */}
-        {/* <section className="inner_container p-0 container" id="tin_tuc">
-        <div className="wrapper container rounded p-4">
-            <ul className="list">
-              <li>
-                <div className="bg">
-                      <Image 
-                        src={img2}
-                        alt="Tutorial"
-                        objectFit="contain"
-                        className="w-1/2 max-h-[700px]"
-                      />           
-                    <div className="detail">
-                        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet tenetur accusamus voluptatibus ab laborum cumque, corporis eius porro iusto et molestiae, ex, distinctio quasi dolorem omnis aliquam ipsum pariatur! Fugit!</h2>                      
-                    </div>
-                </div>
-              </li>
-              <li>
-                <div className="bg">
-                    <a href="/vi/tin-tuc/phan-mem-erp-vidipha-su-dung-gd2" className="card-img-top">
-                      <Image 
-                        src={img3}
-                        alt="Tutorial"
-                        objectFit="contain"
-                        className="w-1/2 max-h-[700px]"
-                      />                    </a>
-                    <div className="detail">
-                          <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut animi voluptates, ex deleniti impedit facere rem at dolore, voluptatum atque, veniam rerum odit consequatur nostrum iure nisi beatae enim quibusdam.</h2>
-                    </div>
-                </div>
-              </li>
-              <li>
-                <div className="bg">
-                    <a href="/vi/tin-tuc/phan-mem-erp-thu-y-uv-su-dung" className="card-img-top">
-                      <Image 
-                        src={img4}
-                        alt="Tutorial"
-                        objectFit="contain"
-                        className="w-1/2 max-h-[700px]"
-                      />                  </a>
-                    <div className="detail">
-                        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero corporis quis et obcaecati sed debitis dolores sunt repellendus a! Nostrum magni nihil, adipisci voluptatem mollitia consectetur id eligendi impedit ratione.</h2>
-                    </div>
-                </div>
-              </li>
-              <li>
-                  <div className="bg">
-                        <Image 
-                          src={img5}
-                          alt="Tutorial"
-                          objectFit="contain"
-                          className="w-1/2 max-h-[700px]"
-                        />                       
-                        <div className="detail">
-                            <h2>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur minima sit praesentium maiores culpa sunt necessitatibus suscipit enim rem tempore non perferendis, consectetur accusantium. Tenetur non distinctio libero temporibus eveniet.</h2>
-                        </div>
-                  </div>
-              </li>
-            </ul>
+      <div className="container py-8 rounded shadow my-8 max-h-[600px] text-center flex items-center flex-col">
+          <p>Số lượng người sử dụng dịch vụ</p>
+          <DoughnutChart data={data4} width="500px" height="500px"/>
+      </div>
+
+      <div className="container py-8 rounded shadow my-8 max-h-[600px] text-center flex items-center flex-col">
+          <p>Số lượng trang giấy đã in</p>
+          <LineChart data={data1} width="1000px" height="500px"/>
+      </div>
+
+      <div className="container py-8 rounded shadow my-8">
+        <p className="text-center font-bold text-xl">Đánh giá người dùng</p>
+        <div className="flex flex-wrap gap-2 justify-center">
+          <div className="w-[23%]">
+            <UserFeedbackCard rating={4} imgSrc={person1}/>
+          </div>
+          <div className="w-[23%]">
+            <UserFeedbackCard rating={4} imgSrc={person2}/>
+          </div>
+          <div className="w-[23%]">
+            <UserFeedbackCard rating={4} imgSrc={person3}/>
+          </div>
         </div>
-      </section> */}
-      <div className="container">
-          Số lượng người sử dụng
-          <LineChart />
       </div>
 
-      <div className="container">
-          Số trang giấy đã in
-          <BarChart />
-      </div>
-
-      <div className="container">
-          Số tiền người dùng đã thanh toán
-      </div>
-
-      <div className="container">
-        Đánh giá người dùng
-        <UserFeedbackCard />
-      </div>
 
       <MyFooter />
     </main>
