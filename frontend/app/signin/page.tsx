@@ -5,12 +5,16 @@ import { redirect, useRouter } from 'next/navigation';
 import { setCookie } from 'nookies';
 import { login } from "../API/signin";
 import { getUserInfo } from "../API/userInfo";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
   async function handleSignIn(email: string, password: string) {
       let res = await login(email, password)   
@@ -20,8 +24,8 @@ export default function Login() {
         user = await getUserInfo();
       }
       else {
-        alert("Đăng nhập thất bại")
-        window.location.reload();
+        toast.error("Đăng nhập thất bại")
+        // window.location.reload();
       }
 
       // routing based on user role
@@ -40,6 +44,10 @@ export default function Login() {
     handleSignIn(username, password);
   }
 
+  function handleShowPassword() {
+    setIsShowPassword(!isShowPassword);
+  }
+
   return (
     <main>
       <div className="login-container container mt-[10%]">
@@ -48,6 +56,7 @@ export default function Login() {
             <Image src="/HCMUT_official_logo.png" alt="Logo" width={60} height={60} className="logo" />
             <span className="logo-text">HCMUT SPSS</span>
           </div>
+          <ToastContainer />
           <div className="login-form">
             <form onSubmit={handleSubmit}>
               <input
@@ -60,9 +69,9 @@ export default function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              <div className="password-container mb-8">
+              <div className="password-container mb-8 relative">
                 <input
-                  type="password"
+                  type={isShowPassword ? 'text' : 'password'}
                   id="password"
                   name="password"
                   placeholder="Mật khẩu"
@@ -71,6 +80,11 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <div className="absolute top-1/2 right-3 transform -translate-y-1/2 text-lg hover:opacity-50 hover:cursor-pointer ease-in-out duration-300"
+                     onClick={handleShowPassword}
+                >
+                  { isShowPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                </div>
               </div>
               {errorMessage && (
                 <p className="text-red-500 mb-4">{errorMessage}</p>

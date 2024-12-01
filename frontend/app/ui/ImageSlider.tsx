@@ -81,9 +81,9 @@ export default function ImageSlider(): JSX.Element {
           <Image
             src={images[currentIndex].src}
             alt={`Slider Image ${currentIndex + 1}`}
-            layout="fill"
-            objectFit="cover"
+            fill
             className="transition-all duration-500 linear cursor-pointer"
+            style={{objectFit: 'cover'}}
           />
           <div className={`absolute
                            ${currentIndex === 0? 'top-56 text-xl left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center': '' }
