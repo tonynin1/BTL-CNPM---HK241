@@ -364,7 +364,7 @@ export default function Home() {
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
+                                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-hline"></div>
                                     </div>
