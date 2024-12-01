@@ -1,0 +1,138 @@
+h1{
+    color: bisque;
+}
+table {
+    margin-top: 20px;
+}
+input[type="checkbox"] {
+    transform: scale(1.5); 
+    cursor: pointer; 
+    margin: 0; 
+}
+.align-middle {
+    vertical-align: middle; 
+}
+a {
+    color: #1e90ff;
+}
+a:hover {
+    text-decoration: underline;
+}
+.Button{
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 30px; 
+}
+.btn{
+    margin-left: 30px;
+}
+.inner_wrap.container{
+    padding-bottom: 0px;
+}
+.container.upload_container{
+    padding-bottom: 50px;
+    min-height: 300px;
+}
+
+.modal-dialog .modal-content {
+    background-color: #353535;
+    color: white;
+}
+
+.modal-title {
+    color: hwb(139 0% 0%);
+    font-weight: bold; 
+}
+.settings-container {
+    flex: 0 0 300px;
+    padding: 20px;
+    background-color: #353535;
+}
+
+
+.settings {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setting label {
+    font-weight: bold;
+}
+
+.setting #pages,#Margin {
+    transition: border-color 0.3s; 
+    max-width: 150px;
+    padding-left: 10px;
+}
+
+.setting #pages:hover {
+    border-color: #0056b3;
+}
+
+.print-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.print-button:hover {
+    background-color: #0056b3;
+}
+
+.pdf-frame {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.more-settings {
+    background-color: #1e1e1e; 
+    color: white; 
+    padding: 15px; 
+    border-radius: 8px; 
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.setting-item label {
+    width: 40%; 
+}
+
+.Option{
+    border: 1px solid black;
+    min-height: 35px;
+    min-width: 200px;
+    border-radius: 5px;
+    padding-left: 10px;
+    background-color: black;
+}
+
+.setting input {
+    background-color: black;
+    color: white;           
+}
+#customInput {
+    display: none; 
+}
