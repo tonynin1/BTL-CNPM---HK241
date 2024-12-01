@@ -22,9 +22,11 @@ export default function Login() {
       setIsLoading(true);
       let res = await login(email, password)   
       
+      setIsLoading(false);
       let user = null
       if (res){
         user = await getUserInfo();
+        toast.success("Đăng nhập thành công")
       }
       else {
         toast.error("Đăng nhập thất bại")
@@ -41,7 +43,6 @@ export default function Login() {
         redirect('/spso')
       }
 
-      setIsLoading(false);
   }
 
   function handleSubmit(e: React.FormEvent) {

@@ -11,30 +11,34 @@ import { useUserSessionForSPSO } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 import MyFooter from "@/app/ui/MyFooter";
 import UserFeedbackCard from "@/app/component/UserFeedbackCard";
-import LineChart from "@/app/component/LineChart";
 import DoughnutChart from "@/app/component/DoughnutChart";
 
-import { getAllStudents, getAllSpso } from "@/app/API/spso-systemReport/spso-systemReport";
+import { getSumStudents, getSumSpso, getSumPrintedPage } from "@/app/API/spso-systemReport/spso-systemReport";
+import BarChart from "@/app/component/BarChart";
 
 export default function Home() {
 
   const { userInfo, loggedIn } = useUserSessionForSPSO();
-  const [allStudents, setAllStudents] = useState([]);
-  const [allSpso, setAllSpso] = useState([]);
+  const [studentCount, setStudentCount] = useState([]);
+  const [spsoCount, setSpsoCount] = useState([]);
+  const [printedCount, setPrintedCount] = useState([]);
 
   const fetching = async () => {
-    let students = await getAllStudents();
-    setAllStudents(students);
+    let student_count = await getSumStudents();
+    setStudentCount(student_count);
 
-    let spsos = await getAllSpso();
-    setAllSpso(spsos);
+    let spso_count = await getSumSpso();
+    setSpsoCount(spso_count);
+
+    let printed_count = await getSumPrintedPage();
+    setPrintedCount(printed_count);
   }
 
   useEffect(() => {
     fetching();
   }, []);
 
-  console.log(allStudents, allSpso);
+  console.log(studentCount, spsoCount, printedCount);
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>
@@ -44,14 +48,14 @@ export default function Home() {
     redirect('/student')
   }
   const data1 = {
-    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3',],
+    labels: ['Tháng 12',],
     datasets: [
       {
         label: 'Số lượng giấy đã in',
-        data: [65, 59, 80,],
+        data: [`${printedCount}`,],
         fill: true    ,
         borderColor: 'rgba(255, 206, 86, 1)',
-        backgroundColor: 'rgba(255, 206, 86, 0.1)',
+        backgroundColor: 'rgba(255, 206, 86, 0.8)',
         tension: 0.1,
       },
     ],
@@ -64,7 +68,7 @@ export default function Home() {
     ],
     datasets: [{
       label: 'Số lượng người sử dụng',
-      data: [`${allStudents.length}`, `${allSpso.length}`],
+      data: [`${studentCount}`, `${spsoCount}`],
       backgroundColor: [
         'rgba(75, 192, 192, 1)',
         'rgba(153, 102, 255, 1)',
@@ -83,7 +87,7 @@ export default function Home() {
 
       <div className="container py-8 rounded shadow my-8 max-h-[600px] text-center flex items-center flex-col">
           <p>Số lượng trang giấy đã in</p>
-          <LineChart data={data1} width="1000px" height="500px"/>
+          <BarChart data={data1} width="1000px" height="500px"/>
       </div>
 
       <div className="container py-8 rounded shadow my-8">
