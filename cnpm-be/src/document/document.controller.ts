@@ -20,13 +20,6 @@ export class DocumentController {
         return this.documentService.getDocumentById(documentId);
     }
 
-    @Get('printerId')
-    allDocumentsByPrinterId(
-        @Query('printerId') printerId: number
-    ){
-        return this.documentService.allDocumentsByPrinterId(printerId);
-    }
-
     @Get('customerId')
     allDocumentsByCustomerId(
         @Query('customerId') customerId: number
