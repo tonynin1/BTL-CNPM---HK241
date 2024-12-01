@@ -16,18 +16,18 @@ import { useUserSession } from "../API/getMe";
 
 
 export default function page() {
-  const { userInfo, loggedIn } = useUserSession();
+  // const { userInfo, loggedIn } = useUserSession();
 
-  if (!userInfo) {
-    return <div>Loading</div>;
-  }
+  // if (!userInfo) {
+  //   return <div>Loading</div>;
+  // }
 
-  if (userInfo.role === 'STUDENT'){
-    redirect('/student')
-  }
+  // if (userInfo.role === 'STUDENT'){
+  //   redirect('/student')
+  // }
   return (
     <div>
-      <SPSOHeader header={userInfo as SPSOHeaderProps} />
+      {/* <SPSOHeader header={userInfo as SPSOHeaderProps} /> */}
       <div className="container mx-auto">
         <div className="column-1s flex">
           <Image 

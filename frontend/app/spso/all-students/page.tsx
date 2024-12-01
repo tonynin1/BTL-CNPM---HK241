@@ -1,5 +1,6 @@
 'use client';
 import MyFooter from "@/app/ui/MyFooter";
+import PrintHistory from "@/app/ui/PrintHistory";
 import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import { useEffect, useState } from "react";
 import { parseCookies } from "nookies"; // Thư viện đọc cookie
@@ -44,32 +45,39 @@ export default function Page() {
       id: '2213987',
     },
   ];
-  const { userInfo, loggedIn } = useUserSession();
-  const [allStudents , setAllStudents] = useState<any>(null);
+  // const { userInfo, loggedIn } = useUserSession();
+  // const [allStudents , setAllStudents] = useState<any>(null);
 
-  const fetching = async () => {
-    let data = await getAllStudents();
-    setAllStudents(data);
-  }
+  // const fetching = async () => {
+  //   let data = await getAllStudents();
+  //   setAllStudents(data);
+  // }
   
-  useEffect(() => {
-    fetching();
-  }, []);
-  console.log(allStudents);
+  // useEffect(() => {
+  //   fetching();
+  // }, []);
+  // console.log(allStudents);
   
-  if (!userInfo || !allStudents) {
-    return <div>Loading</div>;
-  }
+  // if (!userInfo || !allStudents) {
+  //   return <div>Loading</div>;
+  // }
 
-  if (userInfo.role === 'STUDENT'){
-    redirect('/student')
+  // if (userInfo.role === 'STUDENT'){
+  //   redirect('/student')
+  // }
+
+  const [isShowPrintHis, setIsShowPrintHis] = useState(false);
+  function handlePrintHistory() {
+    setIsShowPrintHis(!isShowPrintHis);
   }
 
   return (
-    <div className="h-screen">
-      <SPSOHeader header = {userInfo as SPSOHeaderProps}/>
-      <div className="h-full">
-        <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4 ' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
+    <div className="h-screen relative">
+      {isShowPrintHis && <PrintHistory onClick={handlePrintHistory}/>}
+
+      {/* <SPSOHeader header = {userInfo as SPSOHeaderProps}/> */}
+      <div className="h-full p-4">
+        <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
           <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
             <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
               <tr>
@@ -80,13 +88,16 @@ export default function Page() {
               </tr>
             </thead>
             <tbody>
-              {allStudents.map((student : any) => (
+              {students.map((student : any) => (
                 <tr key={student.userId} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
                   <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.fname + ' ' + student.lname}</td>
                   <td className='px-6 py-4'>{student.userId}</td>
                   <td className='px-6 py-4'>{student.usageHistory? student.usageHistory : student.createAt}</td>
                   <td className='px-6 py-4'>
-                    <button className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>
+                    <button 
+                      className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                      onClick={handlePrintHistory}  
+                    >
                       Xem lịch sử in
                     </button>
                   </td>
