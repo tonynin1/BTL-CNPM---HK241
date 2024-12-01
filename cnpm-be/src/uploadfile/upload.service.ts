@@ -1,12 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FileUploadService {
   private s3: AWS.S3;
 
-  constructor() {
-    // Khởi tạo AWS S3 client
+  constructor(
+    private readonly prisma: PrismaService,
+  ) {
     this.s3 = new AWS.S3({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -14,32 +16,70 @@ export class FileUploadService {
     });
   }
 
-  // Xử lý upload nhiều file lên S3 và trả về URL của các file
-  async uploadFiles(files: Express.Multer.File[]): Promise<any> {
+  // Phương thức upload file
+  async uploadFiles(
+    files: Express.Multer.File[], 
+    customerId: number,
+    printerIds: number[],    // Mảng các printerId tương ứng với các file
+    docQuantities: number[]  // Mảng số lượng tài liệu tương ứng với các file
+  ): Promise<any> {
     const fileUrls = [];
+    const documents = [];
+  
+    try {
+      if (!customerId) {
+        throw new UnauthorizedException('Invalid token or missing customerId in token');
+      }
+      if (files.length !== docQuantities.length || files.length !== printerIds.length) {
+        throw new Error('The number of uploaded files must match docQuantities and printerIds');
+      }
 
-    for (const file of files) {
-      // Upload file lên S3 và lấy URL của file
-      const uploadResult = await this.uploadFileToS3(file);
-      
-      // Thêm URL của file vào mảng fileUrls
-      fileUrls.push(uploadResult.Location);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const docQuantity = docQuantities[i];  // Lấy số lượng tài liệu cho file này
+        const printerId = printerIds[i];      // Lấy printerId tương ứng
+
+        // Upload file lên S3
+        const uploadResult = await this.uploadFileToS3(file);
+        const docName = file.originalname;    // Tên file từ local
+        const docLink = uploadResult.Location; // URL của file trên S3
+
+        // Tạo document để lưu vào DB
+        const newDocument = await this.prisma.document.create({
+          data: {
+            docName: docName,  // Tên file
+            docLink: docLink,  // URL của file
+            customerId: Number(customerId),  // Lưu customerId từ token
+            printerId: Number(printerId),  // Lưu printerId
+            docQuantity: Number(docQuantity),  // Lưu số lượng tài liệu
+          },
+        });
+
+        documents.push(newDocument);  // Thêm vào danh sách các document đã tạo
+        fileUrls.push(docLink);  // Thêm vào danh sách các URL file đã upload
+      }
+
+      return { fileUrls, documents };  // Trả về danh sách URL và documents đã tạo
+    } catch (error) {
+      throw new Error('File upload failed: ' + error.message);
     }
-
-    return { fileUrls };
   }
 
-  // Hàm upload file lên S3 và trả về kết quả
-  private async uploadFileToS3(file: Express.Multer.File) {
-    const uploadParams = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: `${Date.now()}-${file.originalname}`, // Tạo tên file duy nhất
-      Body: file.buffer,
-      ContentType: file.mimetype,
-      ACL: 'public-read',  // Đảm bảo file có thể truy cập công khai
+  // Phương thức phụ trợ để upload file lên S3
+  private async uploadFileToS3(file: Express.Multer.File): Promise<AWS.S3.ManagedUpload.SendData> {
+    const params = {
+      Bucket: process.env.AWS_S3_BUCKET_NAME,  // Tên bucket S3 của bạn
+      Key: `${Date.now()}-${file.originalname}`,  // Tên file khi upload lên S3 (bao gồm timestamp để tránh trùng tên)
+      Body: file.buffer,  // Nội dung file
+      ContentType: file.mimetype,  // Kiểu file (image/jpeg, application/pdf, ...)
+      ACL: 'public-read',  // Quyền truy cập cho file (có thể thay đổi tùy theo yêu cầu)
     };
 
-    // Upload file lên S3 và trả về kết quả
-    return this.s3.upload(uploadParams).promise();
+    try {
+      const uploadResult = await this.s3.upload(params).promise();
+      return uploadResult;  // Trả về kết quả upload
+    } catch (error) {
+      throw new Error('S3 upload failed: ' + error.message);
+    }
   }
 }

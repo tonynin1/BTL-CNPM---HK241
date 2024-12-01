@@ -1,19 +1,25 @@
-import { Controller, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
-import { FileUploadService } from './upload.service';  // Import service
-import { FilesInterceptor } from '@nestjs/platform-express';  // Để sử dụng interceptor xử lý nhiều file
+import { Controller, Post, UploadedFiles, UseInterceptors, Body } from '@nestjs/common';
+import { FileUploadService } from './upload.service';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileUploadDto } from './dto/file-upload.dto';
 
-@Controller('upload')  // Định nghĩa route là '/upload'
+@Controller('upload')
 export class FileUploadController {
   constructor(private readonly fileUploadService: FileUploadService) {}
-
-  // Định nghĩa route POST để upload file
   @Post()
-  @UseInterceptors(FilesInterceptor('files'))  // 'files' là tên trường trong form-data
-  async uploadFiles(@UploadedFiles() files: Express.Multer.File[]) {
-    // Gọi phương thức uploadFiles trong service để upload các file lên S3
-    const result = await this.fileUploadService.uploadFiles(files);
-
-    // Trả về URL của các file đã upload lên S3
-    return result;
-  }
+  @UseInterceptors(FilesInterceptor('files'))  // 'files' là tên trường file trong form-data
+  async uploadFiles(
+  @UploadedFiles() files: Express.Multer.File[],  // Nhận các file upload
+  @Body() fileUploadDto: FileUploadDto  // Nhận thông tin khác như customerId, printerId, docQuantity từ body
+  ) {
+    if (!files || files.length === 0) {
+      throw new Error('No files uploaded');
+    }
+    const { customerId, printerId, docQuantities } = fileUploadDto;
+    // Đảm bảo số lượng file và số lượng docQuantities phải khớp
+    if (files.length !== docQuantities.length) {
+      throw new Error('The number of docQuantities must match the number of uploaded files');
+    }
+    return this.fileUploadService.uploadFiles(files, customerId, printerId, docQuantities);
+    }
 }
