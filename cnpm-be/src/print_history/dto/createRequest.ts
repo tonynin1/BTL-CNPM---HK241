@@ -28,4 +28,8 @@ export class CreatePrintRequestDto {
   @IsInt()
   @IsNotEmpty()
   docId: number; // ID tài liệu
+
+  @IsInt()
+  @IsNotEmpty()
+  printerId: number; // ID máy in
 }

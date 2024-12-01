@@ -236,6 +236,7 @@ export class PrintHistoryService {
             numCopies: dto.numCopies,
             customerId: dto.customerId,
             docId: dto.docId,
+            printerId: dto.printerId,
           },
         });
         return {
