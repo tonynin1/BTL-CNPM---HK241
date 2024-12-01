@@ -60,16 +60,21 @@ export class PaymentOrderService{
 
             await this.payment_onsite.updateSSPSBalance(order_data, customer_balance)
 
-            return await prisma.pagePurchaseOrder.create({
+            await prisma.pagePurchaseOrder.create({
                 data: {
                     purchaseTime: purchaseTimeISO,
                     customerId: customerId,
                     ppoStatus: "success",
-                    pageNum: order_data.pageNum,
+                    pageNum: +order_data.pageNum,
                     price: order_data.price,
                     paymentMethod: order_data.paymentMethod,
                 }
             });
+
+            return {
+                status : "success",
+                message : "Successful purchase!"
+            }
         }
         if(method == "Office") {
             await prisma.customer.update({

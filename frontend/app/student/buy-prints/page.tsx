@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { parseCookies } from "nookies";
 import api from '@/app/API/axiosInstance';
-import * as request from '../../axios/axios';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
@@ -67,41 +66,65 @@ export default function Page() {
   // Step 3: Handle form submission
    const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent default form submission behavior
-    let base_api_endpoint = ''
     const purchaseTime = Date.now();
     if(formData.paymentMethod === "Office") {
-        base_api_endpoint = 'payment/method/office'
+        try {
+            const cookies = parseCookies();
+            const accessToken = cookies.accessToken;
+    
+            if (!accessToken) {
+                throw new Error("Access token not found.");
+            }
+    
+            const response = await api.post('payment/method/office', {
+                purchaseTime: purchaseTime,
+                customerId: userInfo.customerId,
+                ppoStatus: "Pending",
+                pageNum: formData.totalPages,
+                price: money,
+                paymentMethod: formData.paymentMethod,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+    
+            if (response.status === 201) {
+                alert("Please make the payment at the office to complete the purchase!");    
+            }
+        } catch (error) {
+            alert("Error: " + error);
+        }
     }
 
     if(formData.paymentMethod === "Onsite") {
-        base_api_endpoint = 'payment/method/on-site'
-    }
-
-    try {
-        const cookies = parseCookies();
-        const accessToken = cookies.accessToken;
-
-        if (!accessToken) {
-            throw new Error("Access token not found.");
-        }
-
-        const response = await api.post(base_api_endpoint, {
-            purchaseTime: purchaseTime,
-            customerId: userInfo.customerId,
-            ppoStatus: "Pending",
-            pageNum: formData.totalPages,
-            price: money,
-            paymentMethod: formData.paymentMethod,
-        }, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
+        try {
+            const cookies = parseCookies();
+            const accessToken = cookies.accessToken;
+    
+            if (!accessToken) {
+                throw new Error("Access token not found.");
             }
-        });
-
-        alert(response.data.message)
-    } catch (error) {
-        alert("Error: " + error);
+    
+            const response = await api.post('payment/method/on-site', {
+                purchaseTime: purchaseTime,
+                customerId: userInfo.customerId,
+                ppoStatus: "Success",
+                pageNum: formData.totalPages,
+                price: money,
+                paymentMethod: formData.paymentMethod,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+    
+            alert(response.data.message);
+        } catch (error) {
+            alert("Error: " + error);
+        }
     }
+
   };
 
   return (
@@ -144,7 +167,7 @@ export default function Page() {
 
               <div className="flex justify-between items-center px-10 gap-10">
                 <span>Total</span>
-                <span>{money} vnd</span>
+                <span>{money} VND</span>
               </div>
               <button
                 type="submit"
