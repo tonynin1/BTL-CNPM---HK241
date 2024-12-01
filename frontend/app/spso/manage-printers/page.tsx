@@ -8,11 +8,8 @@ import { get } from "http";
 import { getAllPrinters, OnOffPrinter } from "@/app/API/spso-managePrinters/spso-managePrinters";
 
 export default function page() {
-<<<<<<< HEAD
-    // const { userInfo, loggedIn } = useUserSession();
-=======
     const { userInfo, loggedIn } = useUserSessionForSPSO();
->>>>>>> c544e4edcf7d5b456ab598ac201b39826077a247
+
     const printers = [
         {
           model: "LaserJet Pro M404dn",
@@ -105,11 +102,6 @@ export default function page() {
           status: 'INVALID'
         }
       ];
-<<<<<<< HEAD
-    // if (!userInfo) {
-    //     return <LoadingPage></LoadingPage>
-    // }
-=======
     
     const [allPrinters, setAllPrinters] = useState<any>(null);
     
@@ -134,7 +126,6 @@ export default function page() {
     if (!userInfo || !allPrinters) {
         return <LoadingPage></LoadingPage>
     }
->>>>>>> c544e4edcf7d5b456ab598ac201b39826077a247
       
   return (
     <div className="h-screen">

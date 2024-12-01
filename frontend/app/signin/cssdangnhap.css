@@ -158,8 +158,25 @@ input[type="text"], input[type="password"] {
     transition: background-color 0.3s ease;
 }
 
+.signup-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.02);
+}
+
 .login-button:hover {
     background-color: #0056b3;
+}
+
+.login-button:disabled,
+.signup-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: scale(1);
+} 
+
+.login-button:disabled:hover,
+.signup-button:disabled:hover {
+    background-color: #007bff;
 }
 
 /* Định dạng footer */
@@ -193,7 +210,3 @@ input[type="text"], input[type="password"] {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.signup-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.02);
-}

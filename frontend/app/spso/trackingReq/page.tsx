@@ -7,35 +7,70 @@ import { redirect } from 'next/navigation';
 import Script from 'next/script';
 import LoadingPage from '@/app/ui/LoadingPage';
 import SPSOHeader, { SPSOHeaderProps } from '@/app/ui/SPSOHeader';
+import { getAllPrinters } from '@/app/API/spso-managePrinters/spso-managePrinters';
+import { getAllPendingRequestByPrinterId, triggerPending } from '@/app/API/spso-trackingReq/spso-trackingReq';
 
 export default function Home() {
     const { userInfo } = useUserSessionForSPSO();
     const [buttonStates, setButtonStates] = useState([false, false, false, false, false]); 
+    const [allPendingReq, setAllPendingReq] = useState<any>([]);
+   
+    const fetching = async () => {
+        if (!userInfo) return;
+        try {
+            // set pending null first
+            setAllPendingReq([]);
+            console.log(userInfo);
+            // get all printers by this spso
+            let res = await getAllPrinters(userInfo.sosoMemberId)
+            
+            let printers = res.data;
+            console.log(printers);
 
-    const tableData = [
-        { id: 1, attributes: 'Red', startTime: '2023-10-19 12:00:00', endTime: '2023-10-19 12:30:00', status: 'Pending', copies: 1 },
-        { id: 2, attributes: 'Blue', startTime: '2023-10-19 12:10:00', endTime: '2023-10-19 12:40:00', status: 'Completed', copies: 2 },
-        { id: 3, attributes: 'Green', startTime: '2023-10-19 12:20:00', endTime: '2023-10-19 12:50:00', status: 'Pending', copies: 3 },
-        { id: 4, attributes: 'Yellow', startTime: '2023-10-19 12:30:00', endTime: '2023-10-19 13:00:00', status: 'Pending', copies: 4 },
-        { id: 5, attributes: 'Purple', startTime: '2023-10-19 12:40:00', endTime: '2023-10-19 13:10:00', status: 'Completed', copies: 5 },
-    ];
+            if (printers.length > 0 ){
 
-    if (!userInfo) {
+                printers.forEach(async (printer: any) => {
+                    let res : any = await getAllPendingRequestByPrinterId(printer.printerId);
+
+                    if (res.data.length > 0){
+                        console.log(res.data);
+                        setAllPendingReq((prev: any) => {
+                            return [...prev, ...res.data];
+                        })
+                    }
+
+                })
+            }
+
+        } catch (error) {
+            console.log("Error fetching data: ", error);
+        }
+    }
+    const toggleButton = (index : any, printOrderId: number) => {
+        if (confirm("Do you sure you want to change the status of this print order?")) {
+            triggerPending(printOrderId);
+            setButtonStates(prevStates => {
+                const newStates = [...prevStates];
+                newStates[index] = !newStates[index]; 
+                return newStates;
+            });
+
+        }
+    };
+
+    useEffect(() => {
+        if (userInfo){
+            fetching();
+        }
+    }, [userInfo]);
+
+    if (!userInfo || !allPendingReq) {
         return <LoadingPage></LoadingPage>
     }
 
     if (userInfo.role === "STUDENT") {
         redirect("/student");
     }
-
-    const toggleButton = (index) => {
-        setButtonStates(prevStates => {
-            const newStates = [...prevStates];
-            newStates[index] = !newStates[index]; 
-            return newStates;
-        });
-    };
-
     return (
         <main className="bg-[#353535] pb-[500px]">
             <SPSOHeader header={userInfo as SPSOHeaderProps} />
@@ -55,17 +90,17 @@ export default function Home() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableData.map((row, index) => (
-                                <tr key={row.id}>
-                                    <td>{row.id}</td>
+                            {allPendingReq.map((row : any, index : number) => (
+                                <tr key={row.printOrderId}>
+                                    <td>{row.printOrderId}</td>
                                     <td>{row.attributes}</td>
                                     <td>{row.startTime}</td>
                                     <td>{row.endTime}</td>
-                                    <td>{row.status}</td>
-                                    <td>{row.copies}</td>
+                                    <td>{row.poStatus}</td>
+                                    <td>{row.numCopies}</td>
                                     <td>
                                         <button
-                                            onClick={() => toggleButton(index)}
+                                            onClick={() => toggleButton(index, row.printOrderId)}
                                             style={{
                                                 backgroundColor: buttonStates[index] ? '#4caf50' : 'Red',
                                                 color: buttonStates[index] ? 'black' : 'white',

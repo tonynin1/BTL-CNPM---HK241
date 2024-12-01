@@ -84,6 +84,7 @@ model Printer {
   room              String
   spsomemberId      Int
   spsomember        SPSOMember         @relation(fields: [spsomemberId], references: [sosoMemberId])
+  printOrders       PrintOrder[]
 }
 
 
@@ -109,6 +110,8 @@ model PrintOrder {
   customer       Customer        @relation(fields: [customerId], references: [customerId])
   docId          Int
   document       Document        @relation(fields: [docId], references: [documentId])
+  printerId      Int
+  printer        Printer        @relation(fields: [printerId], references: [printerId])
   contains       Contains[]
 }
 

@@ -19,6 +19,7 @@ export default function Home() {
     const fetching = async () => {
         if (!userInfo) return;
         try {
+            console.log(userInfo);
             let data = await getAllPendingRequest(userInfo.customerId);
             setAllPendingReq(data.data);
             console.log(data.data);
@@ -69,9 +70,12 @@ export default function Home() {
                                 <th>End Time</th>
                                 <th>PO Status</th>
                                 <th>Num Copies</th>
+                                <th>Building</th>
+                                <th>Room</th>
+                                <th>SPSO Id</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        {allPendingReq? (<tbody>
                             {allPendingReq.map((item: any, index: number) => (
                                 <tr key={item.printOrderId}>
                                     <td className="align-middle"><input type="checkbox" /></td>
@@ -81,9 +85,12 @@ export default function Home() {
                                     <td className="align-middle">{new Date(item.endTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
                                     <td className="align-middle">{item.poStatus}</td>
                                     <td className="align-middle">{item.numCopies}</td>
+                                    <td className="align-middle">{item.printer.building}</td>
+                                    <td className="align-middle">{item.printer.room}</td>
+                                    <td className="align-middle">{item.printer.spsomemberId}</td>
                                 </tr>
                             ))}
-                        </tbody>
+                        </tbody>) : null}
                     </table>
                     <div className="Button">
                         <button type="button" className="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>

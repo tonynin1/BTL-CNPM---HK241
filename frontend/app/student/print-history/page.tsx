@@ -5,19 +5,41 @@ import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
+import { getPrintOrdersByCustomerIdThatCompleted } from "@/app/API/student-printHistory/student-printHistory";
+import build from "next/dist/build";
 
 export default function page() {
 
   const { userInfo, loggedIn } = useUserSessionForCustomer();
+  const [allPrintOrders, setAllPrintOrders] = useState<any[]>([]);
 
+  const fetching = async () => {
+    if (!userInfo)
+      return;
+    try {
+      const data = await getPrintOrdersByCustomerIdThatCompleted(userInfo.customerId);
+      console.log(data.data);
+      setAllPrintOrders(data.data);
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
 
-  // if (!userInfo) {
-  //   return <LoadingPage></LoadingPage>
-  // }
-  // if (userInfo.role === 'SPSO'){
-  //   // router.replace('http://localhost:8080')
-  //   redirect('/spso')
-  // }
+  useEffect(() => {
+    if (userInfo){
+      fetching();
+
+    }
+  }, [userInfo]);
+  if (!userInfo || !allPrintOrders || !Array.isArray(allPrintOrders)) {
+    console.log(allPrintOrders)
+    return <LoadingPage></LoadingPage>
+  }
+  if (userInfo.role === 'SPSO'){
+    // router.replace('http://localhost:8080')
+    redirect('/spso')
+  }
 
   const printOrders = [
     {
@@ -195,13 +217,16 @@ export default function page() {
     
   return (
     <div >
-      {/* <StudentHeader header={userInfo as StudentHeaderProps} /> */}
+
+      <StudentHeader header={userInfo as StudentHeaderProps} />
+
       <div className="container p-4 shadow-2xl sm:rounded-lg mt-8 bg-white dark:bg-gray-800">
           <div 
             className=" overflow-y-scroll max-h-[90vh]"
           >
               <table className='w-full table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-                  <caption className="caption-top text-center uppercase">
+
+                  <caption className="caption-top text-center uppercase text-3xl">
                       lịch sử in
                   </caption>
                   <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -212,28 +237,37 @@ export default function page() {
                       <th scope="col" className='px-6 py-3'>Thời gian in</th>
                       <th scope="col" className='px-6 py-3'>Trạng thái</th>
                       <th scope="col" className='px-6 py-3'>Số lượng bản sao</th>
+
+                      <th scope="col" className='px-6 py-3'>Tòa</th>
+                      <th scope="col" className='px-6 py-3'>Phòng</th>
                       </tr>
                   </thead>
                   <tbody>
-                      {printOrders.map((item, index) => (
+                      {allPrintOrders.map((item : any, index) => (
                           <tr key={index} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
                               <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                   {item.printOrderId}
                               </th>
                               <td className="px-6 py-4">
-                                  {item.attribute}
+                                  {item.attributes}
                               </td>
                               <td className="px-6 py-4">
-                                  {item.createdAt}
+                                  {item.startTime}
                               </td>
                               <td className={`px-6 py-4 ${item.printedAt ? 'text-green-500' : 'text-yellow-500'}`}>
-                                  {item.printedAt ? item.printedAt : 'Đang chờ xử lý'}
+                                  {item.endTime ? item.endTime : 'Đang chờ xử lý'}
                               </td>    
-                              <td className={`px-6 py-4 ${item.status === 'Pending' ? 'text-yellow-500' : item.status === 'Queued' ? 'text-blue-500' : 'text-green-500'}`}>
-                                  {item.status}
+                              <td className={`px-6 py-4 ${item.poStatus === 'Pending' ? 'text-yellow-500' : item.status === 'Queued' ? 'text-blue-500' : 'text-green-500'}`}>
+                                  {item.poStatus}
+                              </td>
+                              <td className="px-6 py-4 text-center">
+                                  {item.numCopies}
                               </td>
                               <td className="px-6 py-4">
-                                  {item.copies}
+                                  {item.printer.building}
+                              </td>
+                              <td className="px-6 py-4">
+                                  {item.printer.room}
                               </td>
                           </tr>
                       ))}
@@ -244,3 +278,18 @@ export default function page() {
     </div>
   );
 }
+
+let printers =[
+  {
+    building: "H6",
+    room: "101"
+  },
+  {
+    building: "H6",
+    room: "102"
+  },
+  {
+    building: "H2",
+    room: "103"
+  }
+]

@@ -20,6 +20,7 @@ export class PrinterController {
         return this.printerService.getPrinterById(printerId);
     }
 
+    
     @Get('spsoMemberId/:spsoMemberId')
     getPrintersBySPSOMemberId(
         @Param('spsoMemberId', ParseIntPipe) spsoMemberId: number

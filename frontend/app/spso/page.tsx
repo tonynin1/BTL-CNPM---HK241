@@ -28,13 +28,13 @@ export default function page() {
   }
   return (
     <div>
-      {/* <SPSOHeader header={userInfo as SPSOHeaderProps} /> */}
+      <SPSOHeader header={userInfo as SPSOHeaderProps} />
       <div className="container mx-auto">
         <div className="column-1s flex">
           <Image 
             src={tutorial_img}
             alt="Tutorial"
-            objectFit="contain"
+            style={{objectFit: "contain"}}
             className="w-1/2 max-h-[700px]"
           />
           <div className="w-1/2 text-center content-center font-mono">
@@ -54,7 +54,7 @@ export default function page() {
             <Image 
               src={buy_pages_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -73,7 +73,7 @@ export default function page() {
             <Image 
               src={error_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -92,7 +92,7 @@ export default function page() {
             <Image 
               src={new_system_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
