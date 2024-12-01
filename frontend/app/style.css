@@ -6,11 +6,21 @@
 	scroll-behavior: smooth;
 }
 
-.contact {
-	padding-top: 49px;
-	padding-bottom: 18px; /*60px - 42px*/
+section{
 	background-color: #ecf0f1;
 }
+
+.contact {
+    padding-top: 49px;
+    padding-bottom: 18px;
+    text-align: center; /* Căn giữa nội dung bên trong */
+}
+
+.contact .row {
+    justify-content: center; /* Căn giữa hàng */
+}
+
+
 
 .contact.container-fluid{
     padding-left: 150px;
@@ -50,9 +60,8 @@
 
 .contact button {
 	padding: 10px 30px;
-    background-color: rgba(31, 84, 242, 0.986);
+    background-color: var(--fourth-color);
     color: white;
-	border-radius: 8px;
 }
 
 .contact h3 {
@@ -79,22 +88,11 @@
 }
 
 /*footer*/
-footer {
-	/*line-height: 87px;*/
-	display: flex;
-	height: 87px;
-	/*center theo chiều dọc*/
-	align-items: center;
-
-	background-color: #2d3e50;
-	color: var(--second-color);
-}
-
-footer p {
+p {
 	margin-bottom: 0;
 }
 
-footer .back-to-top {
+.back-to-top {
 	line-height: 44px;
 	width: 44px;
 	background-color: var(--third-color);

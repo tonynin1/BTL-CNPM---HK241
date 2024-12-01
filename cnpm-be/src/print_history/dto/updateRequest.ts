@@ -3,7 +3,9 @@ import { IsNotEmpty, IsString, IsInt, IsOptional, IsDateString } from 'class-val
 export class UpdatePrintRequestDto {
   @IsString()
   @IsOptional()
-  attributes?: string; 
+  attributes?: string; // Mô tả yêu cầu in (VD: "Color Print, A4")
+
+  @IsDateString()
   @IsOptional()
   startTime?: string; // Thời gian bắt đầu in
 

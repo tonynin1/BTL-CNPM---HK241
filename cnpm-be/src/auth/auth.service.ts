@@ -14,6 +14,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private config: ConfigService,
+    private prismaService: PrismaService,
   ) {}
 
   async signupLocal(dto: AuthDto, createUserDto: CreateUserDto): Promise<Tokens> {
@@ -58,6 +59,25 @@ export class AuthService {
     const tokens = await this.getTokens(user.userId, user.email);
     await this.updateRtHash(user.userId, tokens.refresh_token);
 
+
+    // usage use update
+    await this.prismaService.user.update({
+      where: {
+        email: dto.email,
+      },
+      data: {
+        usageHistory: new Date().toLocaleString('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        }).replace(/\//g, '-')
+      }
+    });
+    
     return tokens;
   }
 
@@ -75,7 +95,7 @@ export class AuthService {
     });
     return true;
   }
-
+  
   async refreshTokens(userId: number, rt: string): Promise<Tokens> {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -133,12 +153,35 @@ export class AuthService {
       where: {
         userId: userId,
       },
-    });
+      
+    })
+
+    let returnVal2 = null;
+    if (returnVal.role === 'STUDENT') {
+      returnVal2 = await this.prisma.customer.findFirst({
+        where: {
+          userId: userId,
+        }
+      })
+    }
+    else {
+      returnVal2 = await this.prisma.sPSOMember.findFirst({
+        where: {
+          userId: userId,
+        }
+      })
+    }
+
+
+
 
     if (returnVal?.hashedRt === null) {
       throw new ForbiddenException('Access Denied');
     }
 
-    return returnVal;
+    return {
+      ...returnVal,
+      ...returnVal2
+    }
   }
 }

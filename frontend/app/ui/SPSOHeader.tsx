@@ -2,18 +2,28 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
 import '@/app/globals.css'
+import { logout } from "../API/signup";
+import { getUserInfo } from "../API/userInfo";
 
-export default function StudentHeader() {
+export interface SPSOHeaderProps {
+  fname: string;
+  role: string;
+}
+export default function SPSOHeader(
+  {header}: {header: SPSOHeaderProps}
+) {
+  const router = useRouter()
   const [time, setTime] = useState(900) 
   const [minute, setMinute] = useState(Math.floor(time/60))
   const [second, setSecond] = useState(Number(time%60))
-
+  const [loggedIn, setLoggedIn] = useState(true)
+  
   useEffect(() => {
     if(time < 0) return
     const timer = setTimeout(() => {
@@ -34,23 +44,27 @@ export default function StudentHeader() {
     },
     {
       name: 'Quản lý máy in',
-      href: '/manage-printers',
+      href: '/spso/manage-printers',
     },
     {
       name: 'Xem thông tin các sinh viên',
-      href: '/all-students',
+      href: '/spso/all-students',
     },
     {
       name: 'Xem báo cáo hệ thống',
-      href: '/system-report',
+      href: '/spso/system-report',
     },
   ]
 
   const handleLogout = () => {
     // localStorage.removeItem('token')
+    logout();
     window.location.href = '/'
   }
-
+  if (!loggedIn){
+    // return <div>Please Login</div>
+    router.replace('http://localhost:3000/')
+  }
   return (
     <header className="sticky top-0 left-0 w-full flex items-center justify-between p-4 sm:p-6 bg-gray-100 dark:bg-gray-900 shadow-md transition-colors duration-300 z-10">
       <div className="flex items-center gap-2">
@@ -61,7 +75,7 @@ export default function StudentHeader() {
           height={60}
           priority
         />
-        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SSPS</h1>
+        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>
 
 
@@ -87,7 +101,7 @@ export default function StudentHeader() {
         <div className="student_account relative flex items-center gap-2 items-center transition-all hover:cursor-pointer"
             
         >
-          <span className="uppercase">q.vinh</span>
+          <span className="uppercase">{header.fname}</span>
           <VscAccount className="text-xl"/>
           <FaAngleDown />
 
