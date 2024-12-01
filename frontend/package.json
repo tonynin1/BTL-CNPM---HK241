@@ -14,7 +14,7 @@
     "btlcnpm": "file:",
     "frontend": "file:",
     "lucide-react": "^0.460.0",
-    "next": "15.0.2",
+    "next": "^15.0.2",
     "nookies": "^2.5.2",
     "react": "^18.3.1",
     "react-countdown-circle-timer": "^3.2.1",

@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { parseCookies } from "nookies";
+import api from '@/app/API/axiosInstance';
+import * as request from '../../axios/axios';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
-import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
@@ -10,14 +12,12 @@ export default function Page() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
   const [money, setMoney] = useState(0);
   const moneyOfA4 = 1000;
-  const moneyOfA3 = 2000;
-  const [currType, setCurrType] = useState("null");
   const [totalPages, setTotalPages] = useState(NaN);
 
   // Step 1: Define state to hold form data
   const [formData, setFormData] = useState({
     totalPages: NaN,
-    paperType: "null",
+    paymentMethod: "",
   });
 
   // Handle redirect logic with state
@@ -33,10 +33,9 @@ export default function Page() {
 
   useEffect(() => {
     if (totalPages > 0) {
-      if (currType === "a4") setMoney(totalPages * moneyOfA4);
-      if (currType === "a3") setMoney(totalPages * moneyOfA3);
+      setMoney(totalPages * moneyOfA4);
     }
-  }, [currType, totalPages]);
+  }, [totalPages]);
 
   // Handle redirect after state update
   if (shouldRedirect) {
@@ -57,9 +56,6 @@ export default function Page() {
       [name]: value,
     }));
 
-    if (name === "paperType") {
-      setCurrType(value);
-    }
     if (name === "totalPages") {
       if (value > 0) setTotalPages(value);
     }
@@ -69,9 +65,43 @@ export default function Page() {
   };
 
   // Step 3: Handle form submission
-  const handleSubmit = async (e: any) => {
+   const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent default form submission behavior
-    console.log("Form data:", formData);
+    let base_api_endpoint = ''
+    const purchaseTime = Date.now();
+    if(formData.paymentMethod === "Office") {
+        base_api_endpoint = 'payment/method/office'
+    }
+
+    if(formData.paymentMethod === "Onsite") {
+        base_api_endpoint = 'payment/method/on-site'
+    }
+
+    try {
+        const cookies = parseCookies();
+        const accessToken = cookies.accessToken;
+
+        if (!accessToken) {
+            throw new Error("Access token not found.");
+        }
+
+        const response = await api.post(base_api_endpoint, {
+            purchaseTime: purchaseTime,
+            customerId: userInfo.customerId,
+            ppoStatus: "Pending",
+            pageNum: formData.totalPages,
+            price: money,
+            paymentMethod: formData.paymentMethod,
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        });
+
+        alert(response.data.message)
+    } catch (error) {
+        alert("Error: " + error);
+    }
   };
 
   return (
@@ -98,17 +128,17 @@ export default function Page() {
               </div>
               <div className="flex justify-between items-center px-10 gap-10 ">
                 <label htmlFor="paperType" className="w-1/3">
-                  Type of paper
+                  Payment method
                 </label>
                 <select
-                  name="paperType"
+                  name="paymentMethod"
                   id="paperType"
                   className="flex-auto text-center p-2"
                   onChange={handleInputChange}
                 >
-                  <option value="null">Choose a paper type</option>
-                  <option value="a4">A4</option>
-                  <option value="a3">A3</option>
+                  <option value="null">Payment method</option>
+                  <option value="Office">Pay at office</option>
+                  <option value="Onsite">Pay on site</option>
                 </select>
               </div>
 
