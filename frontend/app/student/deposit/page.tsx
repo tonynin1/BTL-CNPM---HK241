@@ -72,7 +72,7 @@ export default function Page() {
                   name="money"
                   className="flex-auto text-center p-2"
                   onChange={handleInputChange}
-                  placeholder="enter a number"
+                  placeholder="vnd"
                 />
               </div>
               <button
