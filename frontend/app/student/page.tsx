@@ -14,18 +14,18 @@ import { useUserSession } from "../API/getMe";
 import LoadingPage from "../ui/LoadingPage";
 
 export default function page() {
-  const { userInfo, loggedIn } = useUserSession();
+  // const { userInfo, loggedIn } = useUserSession();
 
-  if (!userInfo) {
-    return <LoadingPage></LoadingPage>
-  }
+  // if (!userInfo) {
+  //   return <LoadingPage></LoadingPage>
+  // }
 
-  if (userInfo.role === 'SPSO'){
-    redirect('/spso')
-  }
+  // if (userInfo.role === 'SPSO'){
+  //   redirect('/spso')
+  // }
   return (
     <div>
-      <StudentHeader header={userInfo as StudentHeaderProps}/>
+      {/* <StudentHeader header={userInfo as StudentHeaderProps}/> */}
       <div className="container mx-auto">
         <div className="column-1s flex">
           <Image
