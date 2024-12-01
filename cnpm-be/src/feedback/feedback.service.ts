@@ -33,6 +33,18 @@ export class FeedbackService {
     async createFeedback(createFeedbackDto: createFeedbackDto) {
         
         try{
+            // Check if customer exists
+            const findFirst = await this.prismaService.feedback.findFirst({
+                where: {
+                    customerId: createFeedbackDto.customerId,
+                },
+            });
+            if (findFirst && findFirst.customerId === createFeedbackDto.customerId) {
+                return {
+                    status: 404,
+                    message: 'You already have a feedback',
+                }
+            }
             const feedback = await this.prismaService.feedback.create({
                 data: {
                     feedTime: new Date(),
@@ -59,7 +71,45 @@ export class FeedbackService {
         }
 
     }
+    async updateFeedBackByCustomerId(customerId: number, updateFeedbackDto: updateFeedbackDto) {
+        try{
+            const feedback = await this.prismaService.feedback.findFirst({
+                where: {
+                    customerId: customerId,
+                },
+            });
+            
+            if (feedback.customerId !== customerId) {
+                return {
+                    status: 404,
+                    message: 'Feedback not found',
+                }
+            }
+            console.log(customerId);
+        
+            const response = await this.prismaService.feedback.update({
+                where: {
+                    feedbackId: feedback.feedbackId,
+                },
+                data: {
+                    rating: updateFeedbackDto.rating? updateFeedbackDto.rating : feedback.rating,
+                    contentByCustomer: updateFeedbackDto.contentByCustomer? updateFeedbackDto.contentByCustomer : feedback.contentByCustomer,
+                },
+            });
 
+            return {
+                status: 200,
+                message: 'Feedback updated',
+                data: response,
+            }
+        }
+        catch(error){
+            return {
+                status: 500,
+                message: 'Internal server error ' + error.message,
+            }
+        }
+    }
     async updateFeedback(feedbackId: number, updateFeedbackDto: updateFeedbackDto) {
         try{
             const feedback = await this.getFeedbackById(feedbackId)

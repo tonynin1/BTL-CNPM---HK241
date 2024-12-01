@@ -5,6 +5,60 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class PrintHistoryService {
     constructor(private prismaService: PrismaService) {}
 
+    // Get by printOrderId
+    async getPrintOrderById(printOrderId: number) {
+        try {
+            const res = await this.prismaService.printOrder.findUnique({
+                where: { printOrderId },
+                include: {
+                    contains: {
+                        include: {
+                            document: true,
+                        },
+                    },
+                },
+            });
+            const printer = await this.prismaService.printer.findUnique({
+                where: { printerId: res.printerId },
+            });
+            return {
+                status: 200,
+                data: {
+                    res,
+                    printer,
+                }
+            }
+        } catch (error) {
+            return {
+                message: 'Internal server error: ' + error.message,
+                status: 500
+            }
+        }
+    }
+    // get all print orders that are pending by printerId
+    async getPrintOrdersByPrinterId(printerId: number) {
+        try {
+            const res = await this.prismaService.printOrder.findMany({
+                where: { printerId, poStatus: 'Pending' },
+                include: {
+                    contains: {
+                        include: {
+                            document: true,
+                        },
+                    },
+                },
+            });
+            return {
+                status: 200,
+                data: res
+            }
+        } catch (error) {
+            return {
+                message: 'Internal server error: ' + error.message,
+                status: 500
+            }
+        }
+    }
     // get all Print Orders by Customer ID that is completed
     async getAllPrintOrdersByCustomerIdThatCompleted(customerId: number) {
         try {
@@ -18,10 +72,19 @@ export class PrintHistoryService {
                     },
                 },
             });
+
+            // get information of printer
+            const resWithPrinter = await Promise.all(res.map(async (order) => {
+                const printer = await this.prismaService.printer.findUnique({
+                    where: { printerId: order.printerId },
+                });
+                return { ...order, printer };
+            }));
             return {
                 status: 200,
-                data: res
+                data: resWithPrinter
             }
+            
         } catch (error) {
             return {
                 message: 'Internal server error: ' + error.message,
@@ -46,9 +109,18 @@ export class PrintHistoryService {
                 startTime: 'asc',
               },
             })
+
+            // get information of printer
+            const resWithPrinter = await Promise.all(res.map(async (order) => {
+                const printer = await this.prismaService.printer.findUnique({
+                    where: { printerId: order.printerId },
+                });
+                return { ...order, printer };
+            }));
             return {
                 status: 200,
-                data: res
+                data: resWithPrinter
+
             }
         } catch (error) {
             return {
@@ -236,6 +308,7 @@ export class PrintHistoryService {
             numCopies: dto.numCopies,
             customerId: dto.customerId,
             docId: dto.docId,
+            printerId: dto.printerId,
           },
         });
         return {

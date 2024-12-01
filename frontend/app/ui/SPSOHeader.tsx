@@ -52,6 +52,10 @@ export default function SPSOHeader(
       href: '/spso/all-students',
     },
     {
+      name: 'Các đơn hàng chờ xử lí',
+      href: '/spso/trackingReq',
+    },
+    {
       name: 'Xem báo cáo hệ thống',
       href: '/spso/system-report',
     },
