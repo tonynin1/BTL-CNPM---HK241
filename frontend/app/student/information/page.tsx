@@ -3,11 +3,11 @@ import React, { useEffect, useState, useRef } from "react";
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 // import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Page() {
-  const { userInfo, loggedIn } = useUserSession();
+  const { userInfo, loggedIn } = useUserSessionForCustomer();
 
   // Step 1: Define state to hold form data
 
@@ -26,14 +26,14 @@ export default function Page() {
       setShouldRedirect(true);
     }
     setFormData({
-      fname: userInfo?.fname,
-      lname: userInfo?.lname,
+      fname: userInfo?.fname || "",
+      lname: userInfo?.lname || "",
     });
   }, [loggedIn, userInfo]);
   console.log("USERINFO", userInfo);
   const [formData, setFormData] = useState({
-    fname: undefined,
-    lname: undefined,
+    fname: "",
+    lname: "",
   });
   console.log("FORMDATA", formData);
   // Handle redirect after state update
@@ -66,12 +66,12 @@ export default function Page() {
       <StudentHeader header={userInfo as StudentHeaderProps} />
       <div className="flex justify-center p-6 h-[100vh]">
         <div className="w-1/2 bg-white h-fit rounded-lg p-4 shadow-lg shadow-slate-200">
-          <div className="text-lg text-center font-semibold pb-6">Profile</div>
+          <div className="text-lg text-center font-semibold pb-6">Thông tin chi tiết</div>
           <div>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
               <div className="flex justify-between items-center px-10 gap-10 ">
                 <label htmlFor="lname" className="w-1/3">
-                  Family name
+                  Họ
                 </label>
                 <input
                   type="text"
@@ -97,7 +97,9 @@ export default function Page() {
                   className="feather feather-edit-3 h-4 w-4 cursor-pointer"
                   onClick={() => {
                     setEditFamilyName(true);
-                    inputLNameRef.current.focus();
+                    if (inputLNameRef.current) {
+                      inputLNameRef.current.focus();
+                    }
                   }}
                 >
                   <path d="M12 20h9"></path>
@@ -106,7 +108,7 @@ export default function Page() {
               </div>
               <div className="flex justify-between items-center px-10 gap-10 ">
                 <label htmlFor="fname" className="w-1/3">
-                  First name
+                  Tên
                 </label>
                 <input
                   type="text"
@@ -132,7 +134,9 @@ export default function Page() {
                   className="feather feather-edit-3 h-4 w-4 cursor-pointer"
                   onClick={() => {
                     setEditFName(true);
-                    inputFNameRef.current.focus();
+                    if (inputFNameRef.current) {
+                      inputFNameRef.current.focus();
+                    }
                   }}
                 >
                   <path d="M12 20h9"></path>
@@ -140,18 +144,25 @@ export default function Page() {
                 </svg>
               </div>
               <div className="flex justify-between items-center px-10 gap-10 ">
-                <span>Số dư tài khoản</span>
-                <span>{userInfo.accBalance} vnd</span>
+                <span>Mã số sinh viên</span>
+                <span>{userInfo.customerId} </span>
               </div>
               <div className="flex justify-between items-center px-10 gap-10 ">
-                <span>Remain pages</span>
-                <span>{userInfo?.remainPages} trang</span>
+                <span>Số dư tài khoản</span>
+                <span>{userInfo.accBalance} VND</span>
+              </div>
+              <div className="flex justify-between items-center px-10 gap-10 ">
+                <span>Số dư trang</span>
+                <span>{userInfo?.remainPages} Trang</span>
               </div>
 
               {(editFName || editFamilyName) && (
                 <button
                   type="submit"
                   className="bg-[#353535] text-white rounded-lg p-2"
+                  onClick={async () => {
+                    
+                  }}
                 >
                   Change information
                 </button>

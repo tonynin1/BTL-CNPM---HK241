@@ -100,7 +100,6 @@ export class PrinterService {
     async updatePrinter(printerId: number, updateDto: updatePrinterDto) {
 
         try {
-            console.log(updateDto);
             await this.prisma.printer.update({
                 where: {
                     printerId: printerId

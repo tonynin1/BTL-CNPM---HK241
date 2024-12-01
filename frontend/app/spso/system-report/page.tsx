@@ -13,11 +13,11 @@ import person3 from "@/public/person3.jpg"
 import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForSPSO } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Home() {
-  const { userInfo, loggedIn } = useUserSession();
+  const { userInfo, loggedIn } = useUserSessionForSPSO();
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>
