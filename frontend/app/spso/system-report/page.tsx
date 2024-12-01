@@ -14,9 +14,27 @@ import UserFeedbackCard from "@/app/component/UserFeedbackCard";
 import LineChart from "@/app/component/LineChart";
 import DoughnutChart from "@/app/component/DoughnutChart";
 
+import { getAllStudents, getAllSpso } from "@/app/API/spso-systemReport/spso-systemReport";
+
 export default function Home() {
 
   const { userInfo, loggedIn } = useUserSessionForSPSO();
+  const [allStudents, setAllStudents] = useState([]);
+  const [allSpso, setAllSpso] = useState([]);
+
+  const fetching = async () => {
+    let students = await getAllStudents();
+    setAllStudents(students);
+
+    let spsos = await getAllSpso();
+    setAllSpso(spsos);
+  }
+
+  useEffect(() => {
+    fetching();
+  }, []);
+
+  console.log(allStudents, allSpso);
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>
@@ -25,16 +43,51 @@ export default function Home() {
   if (userInfo.role === 'STUDENT'){
     redirect('/student')
   }
+  const data1 = {
+    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3',],
+    datasets: [
+      {
+        label: 'Số lượng giấy đã in',
+        data: [65, 59, 80,],
+        fill: true    ,
+        borderColor: 'rgba(255, 206, 86, 1)',
+        backgroundColor: 'rgba(255, 206, 86, 0.1)',
+        tension: 0.1,
+      },
+    ],
+  };
+
+  const data4 = {
+    labels: [
+      'Sinh viên',
+      'SPSO',
+    ],
+    datasets: [{
+      label: 'Số lượng người sử dụng',
+      data: [`${allStudents.length}`, `${allSpso.length}`],
+      backgroundColor: [
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+      ],
+      hoverOffset: 4
+    }]
+  };
+
   return (
-    <main className="bg-[hsl(0,7%,92%)]">
+    <main className="bg-white">
       <SPSOHeader header={userInfo as SPSOHeaderProps} />
-        
-      <div className="container mx-auto">
-        <p>Thống kê số lượng người sử dụng dịch vụ</p>
+      <div className="container py-8 rounded shadow my-8 max-h-[600px] text-center flex items-center flex-col">
+          <p>Số lượng người sử dụng dịch vụ</p>
+          <DoughnutChart data={data4} width="500px" height="500px"/>
+      </div>
+
+      <div className="container py-8 rounded shadow my-8 max-h-[600px] text-center flex items-center flex-col">
+          <p>Số lượng trang giấy đã in</p>
+          <LineChart data={data1} width="1000px" height="500px"/>
       </div>
 
       <div className="container py-8 rounded shadow my-8">
-        <p className="text-center font-bold text-3xl">Đánh giá người dùng</p>
+        <p className="text-center font-bold text-xl">Đánh giá người dùng</p>
         <div className="flex flex-wrap gap-2 justify-center">
           <div className="w-[23%]">
             <UserFeedbackCard rating={4} imgSrc={person1}/>
