@@ -5,12 +5,12 @@ table {
     margin-top: 20px;
 }
 input[type="checkbox"] {
-    transform: scale(1.5); /* Thay đổi kích thước checkbox */
-    cursor: pointer; /* Thay đổi con trỏ khi hover */
-    margin: 0; /* Loại bỏ margin mặc định */
+    transform: scale(1.5); 
+    cursor: pointer; 
+    margin: 0; 
 }
 .align-middle {
-    vertical-align: middle; /* Căn giữa theo chiều dọc */
+    vertical-align: middle; 
 }
 a {
     color: #1e90ff;
@@ -33,7 +33,7 @@ a:hover {
     padding-bottom: 50px;
     min-height: 300px;
 }
-/* Các phần hiện có không thay đổi */
+
 .modal-dialog .modal-content {
     background-color: #353535;
     color: white;
@@ -78,7 +78,6 @@ a:hover {
     border-color: #0056b3;
 }
 
-/* Nút Print */
 .print-button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -94,7 +93,6 @@ a:hover {
     background-color: #0056b3;
 }
 
-/* Style cho PDF preview */
 .pdf-frame {
     width: 100%;
     height: 100%;
@@ -105,21 +103,21 @@ a:hover {
     justify-content: center;
 }
 .more-settings {
-    background-color: #1e1e1e; /* Màu nền tối */
-    color: white; /* Màu chữ trắng */
-    padding: 15px; /* Khoảng cách bên trong */
-    border-radius: 8px; /* Bo góc */
+    background-color: #1e1e1e; 
+    color: white; 
+    padding: 15px; 
+    border-radius: 8px; 
 }
 
 .setting-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px; /* Khoảng cách giữa các mục */
+    margin-bottom: 10px;
 }
 
 .setting-item label {
-    width: 40%; /* Chiều rộng cho label */
+    width: 40%; 
 }
 
 .Option{
@@ -132,9 +130,9 @@ a:hover {
 }
 
 .setting input {
-    background-color: black; /* Nền màu đen */
-    color: white;            /* Văn bản màu trắng */
+    background-color: black;
+    color: white;           
 }
 #customInput {
-    display: none; /* Ẩn ô nhập liệu mặc định */
+    display: none; 
 }
