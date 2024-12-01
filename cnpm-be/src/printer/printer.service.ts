@@ -66,7 +66,6 @@ export class PrinterService {
         }
     }
 
-
     async createPrinter(createPrinterDto: createPrinterDto) {
        
         try{

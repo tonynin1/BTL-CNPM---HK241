@@ -7,6 +7,10 @@ import { CreatePrintRequestDto } from './dto/createRequest';
 export class PrintHistoryController {
   constructor(private readonly printHistoryService: PrintHistoryService) {}
 
+  @Get('request/printer/:printerId') // tested
+  async getPrintOrdersByPrinterId(@Param('printerId', ParseIntPipe) printerId: number) {
+    return await this.printHistoryService.getPrintOrdersByPrinterId(printerId);
+  }
   @Get('request/:customerId') // tested
   async getPrintOrdersByCustomerId(@Param('customerId', ParseIntPipe) customerId: number) {
     return await this.printHistoryService.getPrintOrdersByCustomerId(customerId);
@@ -20,6 +24,11 @@ export class PrintHistoryController {
   @Get('request/pending/:customerId') // tested
   async getPrintOrdersByCustomerIdThatPending(@Param('customerId', ParseIntPipe) customerId: number) {
     return await this.printHistoryService.getAllPrintOrdersByCustomerIdThatPending(customerId);
+  }
+
+  @Get('request/printOrderId/:printOrderId') // tested
+  async getPrintOrderById(@Param('printOrderId', ParseIntPipe) printOrderId: number) {
+    return await this.printHistoryService.getPrintOrderById(printOrderId);
   }
   @Delete('request/delete/:customerId/:orderId') // tested, delete print order by customerId and orderId
   async deletePrintOrder(

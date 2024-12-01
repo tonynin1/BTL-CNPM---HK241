@@ -28,7 +28,7 @@ export default function page() {
   }
   return (
     <div>
-      {/* <SPSOHeader header={userInfo as SPSOHeaderProps} /> */}
+      <SPSOHeader header={userInfo as SPSOHeaderProps} />
       <div className="container mx-auto">
         <div className="column-1s flex">
           <Image 

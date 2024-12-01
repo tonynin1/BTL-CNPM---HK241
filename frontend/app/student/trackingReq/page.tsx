@@ -19,6 +19,7 @@ export default function Home() {
     const fetching = async () => {
         if (!userInfo) return;
         try {
+            console.log(userInfo);
             let data = await getAllPendingRequest(userInfo.customerId);
             setAllPendingReq(data.data);
             console.log(data.data);
@@ -71,7 +72,7 @@ export default function Home() {
                                 <th>Num Copies</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        {allPendingReq? (<tbody>
                             {allPendingReq.map((item: any, index: number) => (
                                 <tr key={item.printOrderId}>
                                     <td className="align-middle"><input type="checkbox" /></td>
@@ -83,7 +84,7 @@ export default function Home() {
                                     <td className="align-middle">{item.numCopies}</td>
                                 </tr>
                             ))}
-                        </tbody>
+                        </tbody>) : null}
                     </table>
                     <div className="Button">
                         <button type="button" className="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>

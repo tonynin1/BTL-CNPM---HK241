@@ -42,10 +42,9 @@ export default function Page() {
       id: '2213987',
     },
   ];
-  // const { userInfo, loggedIn } = useUserSession();
-  // const [allStudents , setAllStudents] = useState<any>(null);
   const { userInfo, loggedIn } = useUserSessionForSPSO();
   const [allStudents , setAllStudents] = useState<any>(null);
+  const [isShowPrintHis, setIsShowPrintHis] = useState(false);
 
   const fetching = async () => {
     let data = await getAllStudents();
@@ -67,7 +66,6 @@ export default function Page() {
     redirect('/student')
   }
 
-  const [isShowPrintHis, setIsShowPrintHis] = useState(false);
   function handlePrintHistory() {
     setIsShowPrintHis(!isShowPrintHis);
   }
@@ -76,7 +74,7 @@ export default function Page() {
     <div className="h-screen relative">
       {isShowPrintHis && <PrintHistory onClick={handlePrintHistory}/>}
 
-      {/* <SPSOHeader header = {userInfo as SPSOHeaderProps}/> */}
+      <SPSOHeader header = {userInfo as SPSOHeaderProps}/>
       <div className="h-full p-4">
         <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
           <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
