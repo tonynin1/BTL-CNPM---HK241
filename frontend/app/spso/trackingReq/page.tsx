@@ -2,14 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForSPSO } from "@/app/API/getMe";
 import { redirect } from 'next/navigation';
 import { deletePendingRequest, getAllPendingRequest, updatePendingRequest } from '@/app/API/student-trackingReq/student-trackingReq';
 import Script from 'next/script';
 import LoadingPage from '@/app/ui/LoadingPage';
+import SPSOHeader, { SPSOHeaderProps } from '@/app/ui/SPSOHeader';
 
 export default function Home() {
-    const { userInfo } = useUserSession();
+    const { userInfo } = useUserSessionForSPSO();
     const [pageOption, setPageOption] = useState('Default');
     const [showCustomInput, setShowCustomInput] = useState(false);
     const [marginOption, setMarginOption] = useState('Default');
@@ -19,8 +20,8 @@ export default function Home() {
         return <LoadingPage></LoadingPage>
     }
 
-    if (userInfo.role === "SPSO") {
-        redirect("/spso");
+    if (userInfo.role === "STUDENT") {
+        redirect("/student");
     }
 
     const toggleButton = () => {
@@ -29,7 +30,7 @@ export default function Home() {
 
     return (
         <main className="bg-[#353535] pb-[500px]">
-            <StudentHeader header={userInfo as StudentHeaderProps} />
+            <SPSOHeader header={userInfo as SPSOHeaderProps} />
             <div className="inner_wrap container">
                 <div className="container upload_container">
                     <h1 className="text-white">Bảng Dữ Liệu Khách Hàng</h1>

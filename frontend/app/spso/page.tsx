@@ -9,8 +9,6 @@ import new_system_img from "@/public/Home/new-system.jpg"
 import error_img from "@/public/Home/error.png"
 import buy_pages_img from "@/public/Home/buy-pages.jpg"
 import MyFooter from "../ui/MyFooter";
-import { useEffect, useState } from "react";
-import { getUserInfo } from "../API/userInfo";
 import { redirect } from "next/navigation";
 import { useUserSessionForSPSO } from "../API/getMe";
 import LoadingPage from "../ui/LoadingPage";
