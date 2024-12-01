@@ -54,10 +54,10 @@ export default function Page() {
   };
 
   return (
-    <div className="bg-[#353535] h-[100vh] overflow-hidden">
+    <div className="bg-[#353535] h-fit min-h-[100vh]">
       <StudentHeader header={userInfo as StudentHeaderProps} />
-      <div className="flex justify-center p-6 h-[100vh]">
-        <div className="w-1/2 bg-white h-fit rounded-lg p-4 shadow-lg shadow-slate-200">
+      <div className="flex justify-center p-6 h-fit">
+        <div className="w-1/2 bg-white h-fit rounded-lg p-4 shadow-gray-500 shadow-2xl">
           <div>
             <div className="text-lg text-center font-semibold pb-6">
               Nạp tiền
@@ -82,6 +82,32 @@ export default function Page() {
                 Confirm
               </button>
             </form>
+          </div>
+        </div>
+      </div>
+      <div className="bg-[#353535] h-fit ">
+        <div className="flex justify-center p-6">
+          <div className="w-3/4 bg-white shadow-2xl shadow-gray-500 p-4  rounded-xl">
+            <table className="table-auto w-full">
+              <thead className="text-center">
+                <tr>
+                  <th className="w-[calc(100%-80%)]">Transaction Id</th>
+                  <th className="w-[calc(100%-80%)]">Transactions day</th>
+                  <th className="w-[calc(100%-80%)]">Total pages</th>
+                  <th className="w-[calc(100%-80%)]">Total money</th>
+                  <th className="w-[calc(100%-80%)]">payment method</th>
+                </tr>
+              </thead>
+              <tbody className="text-center">
+                <tr>
+                  <td>1</td>
+                  <td>12/12/2222</td>
+                  <td>2</td>
+                  <td>4</td>
+                  <td>Malcolm Lockyer</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
