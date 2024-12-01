@@ -66,8 +66,9 @@ export default function Page() {
     redirect('/student')
   }
 
-  function handlePrintHistory() {
-    setIsShowPrintHis(!isShowPrintHis);
+  function handlePrintHistory(customerId: number) {
+    console.log(customerId);
+    // setIsShowPrintHis(!isShowPrintHis);
   }
 
   return (
@@ -95,7 +96,9 @@ export default function Page() {
                   <td className='px-6 py-4'>
                     <button 
                       className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
-                      onClick={handlePrintHistory}  
+                      onClick={() => {
+                        handlePrintHistory(student.userId);
+                      }}  
                     >
                       Xem lịch sử in
                     </button>

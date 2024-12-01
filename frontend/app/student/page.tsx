@@ -7,12 +7,10 @@ import new_system_img from "@/public/Home/new-system.jpg";
 import error_img from "@/public/Home/error.png";
 import buy_pages_img from "@/public/Home/buy-pages.jpg";
 import MyFooter from "../ui/MyFooter";
-import { use, useEffect, useState } from "react";
-import { getUserInfo } from "../API/userInfo";
+import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "../API/getMe";
 import LoadingPage from "../ui/LoadingPage";
-import Rating from "@/app/student/Rating";
 
 export default function page() {
   const currentRate = NaN;
