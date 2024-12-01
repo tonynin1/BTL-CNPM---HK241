@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import React from "react";
+import { signup } from "../API/signup";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -32,11 +33,12 @@ export default function Login() {
 
     // In dữ liệu ra console hoặc xử lý tiếp
     console.log("Form Submitted:", formData);
-    alert("Đăng ký thành công!");
+    signup(formData);
+    alert("Nhấn để xác nhận đăng ký!");
   };
 
   return (
-    <main>
+    <main className="bg-[#353535] flex  pb-[400px]">
       <div className="login-container">
         <div className="login-box mt-[5%]">
           <div className="flex items-center mb-4 mt-2 justify-center gap-2">

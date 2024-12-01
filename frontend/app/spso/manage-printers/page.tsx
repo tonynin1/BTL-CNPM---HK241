@@ -97,7 +97,7 @@ export default function page() {
       
   return (
     <div className="h-screen">
-      <SPSOHeader />
+      <SPSOHeader header={{fname: 'SPSO', role: 'ADMIN'}} />
       <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400 mb-8'>
             <thead className='text-xs text-gray-700 uppercase dark:text-black'>
