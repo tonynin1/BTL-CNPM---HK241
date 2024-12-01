@@ -10,6 +10,12 @@ import { getUserInfo } from "@/app/API/userInfo";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 
+const printers = [
+  { building: "Nhà A", room: "Phòng 101" },
+  { building: "Nhà B", room: "Phòng 202" },
+];
+
+
 export default function Home() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
 
@@ -57,7 +63,28 @@ export default function Home() {
         </div>
 
         <div className="section">
-          <div className="row align-items-start"> 
+            <div className="row align-items-start"> 
+              <div className="form-group col">
+                <p className="p">Chọn máy in</p>
+                <select
+                  className="form-control"
+                  onChange={(e) => setSelectedPrinter(e.target.value)}
+                >
+                  <option value="">Chọn máy in</option>
+                  {printers.map((printer, index) => (
+                    <option key={index} value={JSON.stringify(printer)}>
+                      {`${printer.building} - ${printer.room}`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="form-group col">
+                <p className="p">Margin</p>
+                <input type="number" className="form-control" id="so-ban" placeholder="Default"/>
+              </div>
+            </div>
+            <div className="row align-items-start"> 
               <div className="form-group col">
                 <p className="p">Số bản</p>
                 <input type="number" className="form-control" id="so-ban" placeholder="Nhập số bản"/>
@@ -72,7 +99,7 @@ export default function Home() {
                   <option value="a5">A5</option>
                 </select>
               </div>
-              </div>
+            </div>
             <br/>
             <div className="row align-items-start"> 
               <div className="form-group col">
