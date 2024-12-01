@@ -9,6 +9,8 @@ import { redirect } from "next/navigation";
 import { getUserInfo } from "@/app/API/userInfo";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
+import { getAllPrinsAvailable } from "@/app/API/student-printDoc/student-printDoc";
+import { all } from "axios";
 
 const printers = [
   { building: "Nhà A", room: "Phòng 101" },
@@ -18,8 +20,23 @@ const printers = [
 
 export default function Home() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
-
-  if (!userInfo) {
+  const [AllPrinters, setAllPrinters] = useState<any[]>([]);
+  
+  const fetching = async () => {
+    if (!userInfo) return;
+    try {
+      let data = await getAllPrinsAvailable();
+      setAllPrinters(data.data);
+    } catch (error) {
+      console.log("Error fetching user info:", error);
+      
+    }
+  }
+  useEffect(() => {
+    fetching();
+  }, [userInfo]);
+  
+  if (!userInfo || !AllPrinters) {
     return <LoadingPage></LoadingPage>
   }
   if (userInfo.role === 'SPSO'){
@@ -68,12 +85,11 @@ export default function Home() {
                 <p className="p">Chọn máy in</p>
                 <select
                   className="form-control"
-                  onChange={(e) => setSelectedPrinter(e.target.value)}
                 >
                   <option value="">Chọn máy in</option>
-                  {printers.map((printer, index) => (
+                  {AllPrinters.map((printer, index) => (
                     <option key={index} value={JSON.stringify(printer)}>
-                      {`${printer.building} - ${printer.room}`}
+                      {`Địa điểm: ${printer.building} - ${printer.room}; Model: ${printer.model}; Brand: ${printer.brand}`} 
                     </option>
                   ))}
                 </select>
@@ -123,7 +139,23 @@ export default function Home() {
             
             </div>
             <div className="inner_submit">
-              <button className="submit">SUBMIT</button>
+              <button className="submit" onClick={() => {
+                const selectedPrinter = (document.querySelector('.form-control') as HTMLSelectElement).value;
+                const margin = (document.getElementById('so-ban') as HTMLInputElement).value;
+                const copies = (document.getElementById('so-ban') as HTMLInputElement).value;
+                const paperSize = (document.getElementById('kho-giay') as HTMLSelectElement).value;
+                const printType = (document.getElementById('kieu-in') as HTMLSelectElement).value;
+                const paperOrientation = (document.getElementById('huong-giay') as HTMLSelectElement).value;
+
+                console.log({
+                  selectedPrinter,
+                  margin,
+                  copies,
+                  paperSize,
+                  printType,
+                  paperOrientation
+                });
+              }}>SUBMIT</button>
             </div>
             
           </div>

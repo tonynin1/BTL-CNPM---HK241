@@ -20,6 +20,24 @@ export class PrinterService {
         }
     }
 
+    async getAllPrintersThatIsAvailable() {
+        try {
+            const printers = await this.prisma.printer.findMany({
+                where: {
+                    status: 'VALID'
+                }
+            });
+            return {
+                data: printers,
+                status: 200
+            }
+        } catch (error) {
+            return {
+                message: 'Internal server error: ' + error.message,
+                status: 500
+            }
+        }
+    }
     async getallPrinterBySPSOMemberId(spsoMemberId: number) {
         try {
             const printers = await this.prisma.printer.findMany({
