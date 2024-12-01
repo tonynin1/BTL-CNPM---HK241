@@ -33,6 +33,19 @@ export class FeedbackService {
     async createFeedback(createFeedbackDto: createFeedbackDto) {
         
         try{
+            // Check if customer exists
+            const customer = await this.prismaService.customer.findFirst({
+                where: {
+                    customerId: createFeedbackDto.customerId,
+                },
+            });
+
+            if (customer.customerId === createFeedbackDto.customerId) {
+                return {
+                    status: 404,
+                    message: 'You already have a feedback',
+                }
+            }
             const feedback = await this.prismaService.feedback.create({
                 data: {
                     feedTime: new Date(),

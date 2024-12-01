@@ -10,9 +10,12 @@ import { FaAngleDown } from "react-icons/fa6";
 import { logout } from "../API/authService";
 
 export interface StudentHeaderProps {
+  remainPages: number;
+  accBalance: number;
   fname: string;
   role: string;
   customerId: number;
+  lname: string;
 }
 export default function StudentHeader(
   {header}: {header: StudentHeaderProps}

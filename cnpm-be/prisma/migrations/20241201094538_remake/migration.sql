@@ -65,6 +65,7 @@ CREATE TABLE "Printer" (
     "brand" TEXT NOT NULL,
     "description" TEXT,
     "facility" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'VALID',
     "building" TEXT NOT NULL,
     "room" TEXT NOT NULL,
     "spsomemberId" INTEGER NOT NULL,
@@ -95,6 +96,7 @@ CREATE TABLE "PrintOrder" (
     "numCopies" INTEGER NOT NULL,
     "customerId" INTEGER NOT NULL,
     "docId" INTEGER NOT NULL,
+    "printerId" INTEGER NOT NULL,
 
     CONSTRAINT "PrintOrder_pkey" PRIMARY KEY ("printOrderId")
 );
@@ -104,7 +106,6 @@ CREATE TABLE "Document" (
     "documentId" SERIAL NOT NULL,
     "docName" TEXT NOT NULL,
     "customerId" INTEGER NOT NULL,
-    "printerId" INTEGER NOT NULL,
     "docQuantity" INTEGER NOT NULL,
     "docLink" TEXT,
 
@@ -154,10 +155,10 @@ ALTER TABLE "PrintOrder" ADD CONSTRAINT "PrintOrder_customerId_fkey" FOREIGN KEY
 ALTER TABLE "PrintOrder" ADD CONSTRAINT "PrintOrder_docId_fkey" FOREIGN KEY ("docId") REFERENCES "Document"("documentId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Document" ADD CONSTRAINT "Document_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("customerId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "PrintOrder" ADD CONSTRAINT "PrintOrder_printerId_fkey" FOREIGN KEY ("printerId") REFERENCES "Printer"("printerId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Document" ADD CONSTRAINT "Document_printerId_fkey" FOREIGN KEY ("printerId") REFERENCES "Printer"("printerId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Document" ADD CONSTRAINT "Document_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("customerId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Contains" ADD CONSTRAINT "Contains_documentId_fkey" FOREIGN KEY ("documentId") REFERENCES "Document"("documentId") ON DELETE RESTRICT ON UPDATE CASCADE;
