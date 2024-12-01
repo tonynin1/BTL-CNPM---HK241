@@ -1,5 +1,5 @@
 // file-upload.dto.ts
-import { IsInt, IsPositive } from 'class-validator';
+import { IsInt, IsPositive, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 export class FileUploadDto {
   @ApiProperty({
@@ -17,6 +17,13 @@ export class FileUploadDto {
   @IsInt()
   @IsPositive()
   printerId: number;
+
+  @ApiProperty({
+    description: 'attribute of document',
+    example: 'A4',
+  })
+  
+  attribute: string;
 
   @ApiProperty({
     description: 'ID of customer',

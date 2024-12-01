@@ -17,7 +17,8 @@ export class FileUploadService {
     });
   }
   async uploadFiles(
-    files: Express.Multer.File[],  
+    files: Express.Multer.File[], 
+    attribute: string, 
     customerId: number,
     printerId: number,
     docQuantity: number,
@@ -50,7 +51,7 @@ export class FileUploadService {
       });
     const printOrder = await this.prisma.printOrder.create({
       data: {
-        attributes: "Print order for documents",  
+        attributes: String(attribute),  
         startTime: new Date(),
         endTime: new Date(), 
         poStatus: 'Pending',
