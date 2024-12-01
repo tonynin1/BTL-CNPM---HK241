@@ -62,13 +62,12 @@ export default function Home() {
             </li>
             <li>
               <div className="bg">
-                  <a href="/vi/tin-tuc/phan-mem-erp-vidipha-su-dung-gd2" className="card-img-top">
                     <Image 
                       src={img3}
                       alt="Tutorial"
                       objectFit="contain"
                       className="w-1/2 max-h-[700px]"
-                    />                    </a>
+                    />                 
                   <div className="detail">
                         <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut animi voluptates, ex deleniti impedit facere rem at dolore, voluptatum atque, veniam rerum odit consequatur nostrum iure nisi beatae enim quibusdam.</h2>
                   </div>
@@ -76,13 +75,12 @@ export default function Home() {
           </li>
           <li>
             <div className="bg">
-                <a href="/vi/tin-tuc/phan-mem-erp-thu-y-uv-su-dung" className="card-img-top">
                   <Image 
                     src={img4}
                     alt="Tutorial"
                     objectFit="contain"
                     className="w-1/2 max-h-[700px]"
-                  />                  </a>
+                  />                 
                 <div className="detail">
                     <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero corporis quis et obcaecati sed debitis dolores sunt repellendus a! Nostrum magni nihil, adipisci voluptatem mollitia consectetur id eligendi impedit ratione.</h2>
                 </div>
@@ -124,10 +122,10 @@ export default function Home() {
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/trien-khai-erp-pharmasoft-tai-nha-may-duoc-pham-eu-gmp-long-hau">Công ty EnterSoft triển khai phần mềm ERP-PharmaSoft cho Nhà Máy Dược Phẩm GMP-EU Long Hậu</a>
+                                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius adipisci labore quaerat dignissimos similique dolorem, quas repellat, expedita, placeat excepturi laudantium illo! Nulla tempora earum maxime tenetur asperiores at et.
                                         </div>
                                         <div className="tcb-product-rating">
-                                            Cuối năm 2023, Công ty Cổ phần Giải pháp Phần mềm EnterSoft đã ký kết hợp đồng triển khai phần mềm quản trị tổng thể doanh nghiệp ngành dược phẩm ERP-PharmaSoft cho Nhà Máy Dược Phẩm GMP-EU Long Hậu – Chi Nhánh Công Ty Cổ phần Dược phẩm 3/2 (FT-PHARMA).
+                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum, quos cupiditate nesciunt fugit voluptate accusantium sunt aliquam, quasi numquam ratione itaque quidem beatae a placeat, excepturi voluptatem adipisci. Voluptas, sapiente?
                                         </div>
                                         <div className="tcb-hline"></div>
                                     </div>
@@ -136,18 +134,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/EnterSoft-chia-se-ve-cong-nghe-thong-minh-trong-quan-tri-doanh-nghiep-duoc-pham-tai-tech4life">
                                         <Image 
                                           src={person2}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/EnterSoft-chia-se-ve-cong-nghe-thong-minh-trong-quan-tri-doanh-nghiep-duoc-pham-tai-tech4life">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!                                        </div>
@@ -158,18 +154,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/entersoft-gap-go-doanh-nghiep-duoc-pham-tai-trien-lam-pharmedi-vietnam-2023">
                                         <Image 
                                           src={person3}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/entersoft-gap-go-doanh-nghiep-duoc-pham-tai-trien-lam-pharmedi-vietnam-2023">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
@@ -181,18 +175,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/entersoft-gop-mat-tai-trien-lam-pharmedi-vietnam-2023">
                                         <Image 
                                           src={person1}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/entersoft-gop-mat-tai-trien-lam-pharmedi-vietnam-2023">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!                                        </div>
@@ -209,18 +201,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/trien-khai-thanh-cong-phan-mem-erp-pharmasoft-cho-lyna-pharmtech">
                                         <Image 
                                           src={person2}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/trien-khai-thanh-cong-phan-mem-erp-pharmasoft-cho-lyna-pharmtech">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
@@ -232,18 +222,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/phan-mem-erp-longhiep-su-dung">
                                           <Image 
                                             src={person3}
                                             alt="Tutorial"
                                             objectFit="contain"
                                             className="w-1/2 max-h-[700px]"
                                           />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/phan-mem-erp-longhiep-su-dung">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
@@ -255,18 +243,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/entersoft-cung-cap-erp-cho-hutech-day">
                                         <Image 
                                           src={person1}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/entersoft-cung-cap-erp-cho-hutech-day">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
@@ -278,18 +264,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/phan-mem-dms-phat-trien">
                                         <Image 
                                           src={person2}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/phan-mem-dms-phat-trien">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
@@ -305,18 +289,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/phan-mem-erp-thu-y-uv-su-dung">
                                         <Image 
                                           src={person3}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
-                                    </div>
+                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/phan-mem-erp-thu-y-uv-su-dung">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
@@ -328,19 +310,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/phan-mem-erp-vidipha-su-dung-gd2">
                                         <Image 
                                           src={person1}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/phan-mem-erp-vidipha-su-dung-gd2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam tempora accusamus dolorum voluptatem voluptate! Quis, in ad! Sequi fugiat inventore eligendi, voluptates, asperiores fuga laboriosam reiciendis velit explicabo qui debitis?
-                                            </a>
+                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam tempora accusamus dolorum voluptatem voluptate! Quis, in ad! Sequi fugiat inventore eligendi, voluptates, asperiores fuga laboriosam reiciendis velit explicabo qui debitis?
                                         </div>
                                         <div className="tcb-product-rating">
                                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam tempora accusamus dolorum voluptatem voluptate! Quis, in ad! Sequi fugiat inventore eligendi, voluptates, asperiores fuga laboriosam reiciendis velit explicabo qui debitis?
@@ -352,18 +331,16 @@ export default function Home() {
                             <div className="col-xs-6 col-sm-3">
                                 <div className="tcb-product-item">
                                     <div className="tcb-product-photo">
-                                        <a href="/vi/tin-tuc/phan-mem-erp-kim-cuong-su-dung">
                                         <Image 
                                           src={person2}
                                           alt="Tutorial"
                                           objectFit="contain"
                                           className="w-1/2 max-h-[700px]"
                                         />  
-                                        </a>
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/phan-mem-erp-kim-cuong-su-dung">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
@@ -384,7 +361,7 @@ export default function Home() {
                                     </div>
                                     <div className="tcb-product-info">
                                         <div className="tcb-product-title">
-                                            <a href="/vi/tin-tuc/phan-mem-erp-rose-su-dung">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!</a>
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
                                         </div>
                                         <div className="tcb-product-rating">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non vel recusandae magni quia, ipsam eligendi ad architecto consectetur voluptatibus in libero amet possimus aliquam neque, sapiente voluptates iusto. Natus, alias!
@@ -399,11 +376,9 @@ export default function Home() {
         </div>
 
         <div className="xem_tatca" data-aos="zoom-in-down">
-            <a href="/vi/tin-tuc">
                 <span>
                     Xem thêm &gt;&gt;
                 </span>
-            </a>
         </div>
     </div>
     <section id="contact">
