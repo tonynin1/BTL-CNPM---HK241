@@ -136,3 +136,12 @@ a:hover {
 #customInput {
     display: none; 
 }
+
+td button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+    transition: background-color 0.3s, color 0.3s;
+}
