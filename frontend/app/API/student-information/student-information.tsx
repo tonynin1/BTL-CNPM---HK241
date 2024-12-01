@@ -14,7 +14,7 @@ export async function editUser(fname: string, lname: string, phoneNumber : strin
         const response = await api.patch(`users/edit`,{
             fname: fname,
             lname: lname,
-            phone: "0355916621"
+            // phone: "0355916621"
         }, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,

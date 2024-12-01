@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "../API/getMe";
 import LoadingPage from "../ui/LoadingPage";
+import { createFeedBack } from "../API/student_homePage/student_homePage";
 
 export default function page() {
   const currentRate = NaN;
@@ -19,7 +20,7 @@ export default function page() {
   const [starRate, setStarRate] = useState<number>(Number(currentRate));
   const [formData, setFormData] = useState({
     starRating: NaN,
-    content: undefined,
+    content: "",
   });
   useEffect(() => {
     setFormData((prev) => ({
@@ -38,6 +39,12 @@ export default function page() {
   const handleSubmit = async (e: any) => {
     // e.preventDefault(); // Prevent default form submission behavior
     console.log("Form data:", formData);
+    try {
+      const response = await createFeedBack(userInfo.customerId, formData.starRating, formData.content);
+    } catch (error) {
+      console.log("Error creating feedback:", error);
+      
+    }
   };
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
