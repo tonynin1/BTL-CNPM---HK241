@@ -5,6 +5,7 @@ import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
+import { Edit } from "lucide-react";
 
 export default function Page() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
@@ -14,7 +15,6 @@ export default function Page() {
   // Handle redirect logic with state
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [editFamilyName, setEditFamilyName] = useState(false);
-
   const [editFName, setEditFName] = useState(false);
   const inputLNameRef = useRef<HTMLInputElement>(null);
   const inputFNameRef = useRef<HTMLInputElement>(null);
@@ -79,7 +79,8 @@ export default function Page() {
                   className="flex-auto text-center p-2"
                   onChange={handleInputChange}
                   placeholder="enter your family name"
-                  value={userInfo?.lname}
+                  // {!EditFamilyName  && value={userInfo.lname}}
+                  defaultValue={userInfo.lname}
                   disabled={!editFamilyName}
                   autoFocus={editFamilyName}
                   ref={inputLNameRef}
@@ -116,7 +117,7 @@ export default function Page() {
                   className="flex-auto text-center p-2 "
                   onChange={handleInputChange}
                   placeholder="enter your family name"
-                  value={userInfo.fname}
+                  defaultValue={userInfo.fname}
                   disabled={!editFName}
                   autoFocus={editFName}
                   ref={inputFNameRef}
