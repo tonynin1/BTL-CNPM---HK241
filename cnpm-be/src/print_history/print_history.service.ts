@@ -235,6 +235,7 @@ export class PrintHistoryService {
             poStatus: dto.poStatus || 'Pending',
             numCopies: dto.numCopies,
             customerId: dto.customerId,
+            docId: dto.docId,
           },
         });
         return {

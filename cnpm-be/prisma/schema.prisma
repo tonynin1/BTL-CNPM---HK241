@@ -107,6 +107,8 @@ model PrintOrder {
   numCopies      Int
   customerId     Int
   customer       Customer        @relation(fields: [customerId], references: [customerId])
+  docId          Int
+  document       Document        @relation(fields: [docId], references: [documentId])
   contains       Contains[]
 }
 
@@ -120,6 +122,7 @@ model Document {
   docQuantity    Int
   docLink        String?
   contains       Contains[]
+  printOrders    PrintOrder[]
 }
 
 model Contains {
