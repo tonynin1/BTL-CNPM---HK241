@@ -11,12 +11,13 @@ import { useEffect, useState } from "react";
 import { getUserInfo } from "../API/userInfo";
 import { redirect } from "next/navigation";
 import { useUserSession } from "../API/getMe";
+import LoadingPage from "../ui/LoadingPage";
 
 export default function page() {
   const { userInfo, loggedIn } = useUserSession();
 
   if (!userInfo) {
-    return <div>Loading</div>;
+    return <LoadingPage></LoadingPage>
   }
 
   if (userInfo.role === 'SPSO'){

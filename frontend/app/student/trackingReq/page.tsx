@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { useUserSession } from "@/app/API/getMe";
 import { redirect } from 'next/navigation';
-import { getAllPendingRequest, updatePendingRequest } from '@/app/API/student-trackingReq/student-trackingReq';
+import { deletePendingRequest, getAllPendingRequest, updatePendingRequest } from '@/app/API/student-trackingReq/student-trackingReq';
 import Script from 'next/script';
+import LoadingPage from '@/app/ui/LoadingPage';
 
 export default function Home() {
     const { userInfo } = useUserSession();
@@ -33,7 +34,7 @@ export default function Home() {
     }, [userInfo]);
 
     if (!userInfo) {
-        return <div>Loading</div>;
+        return <LoadingPage></LoadingPage>
     }
 
     if (userInfo.role === "SPSO") {
@@ -106,12 +107,12 @@ export default function Home() {
                             // console log this user
                             console.log(userInfo);
                             // Add your logic here to handle the selected IDs (e.g., sending to API)
-                            // selectedPrintOrderIds.forEach(async (printOrderId) => {
-                            //     let res = await updatePendingRequest(Number(printOrderId), "Delete");
-                            //     console.log(res);
-                            // });
+                            selectedPrintOrderIds.forEach(async (printOrderId) => {
+                                let res = await deletePendingRequest(Number(printOrderId));
+                                console.log(res);
+                            });
                             // // reload the page
-                            // window.location.reload();
+                            window.location.reload();
                         }}>Delete</button>
                     </div>
                     <div className="modal fade" id="exampleModalCenter" tabIndex={-1} role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

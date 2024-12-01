@@ -8,12 +8,13 @@ import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader"
 import { redirect } from "next/navigation";
 import { getUserInfo } from "@/app/API/userInfo";
 import { useUserSession } from "@/app/API/getMe";
+import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Home() {
   const { userInfo, loggedIn } = useUserSession();
 
   if (!userInfo) {
-    return <div>Loading</div>;
+    return <LoadingPage></LoadingPage>
   }
   if (userInfo.role === 'SPSO'){
     redirect('/spso')

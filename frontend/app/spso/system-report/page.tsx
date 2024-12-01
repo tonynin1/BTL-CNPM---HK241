@@ -14,12 +14,13 @@ import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
 import { useUserSession } from "@/app/API/getMe";
+import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Home() {
   const { userInfo, loggedIn } = useUserSession();
 
   if (!userInfo) {
-    return <div>Loading</div>;
+    return <LoadingPage></LoadingPage>
   }
 
   if (userInfo.role === 'STUDENT'){

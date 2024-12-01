@@ -50,3 +50,25 @@ export async function updatePendingRequest(printOrderId: number, attributes : st
     
   }
 }
+
+export async function deletePendingRequest(printOrderId: number) {
+  try {
+    const cookies = parseCookies();
+    let accessToken = cookies.accessToken;
+
+    if (!accessToken) {
+      throw new Error("Access token not found.");
+    }
+
+    const response = await api.delete(`print-history/request/delete/${printOrderId}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        }
+    })
+    return response.data;
+    
+  } catch (error) {
+    console.log("Error deleting pending request:", error);
+    return null;
+  }
+}
