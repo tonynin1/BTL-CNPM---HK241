@@ -38,7 +38,7 @@ export default function Login() {
   };
 
   return (
-    <main className="bg-[#353535] flex  pb-[400px]">
+    <main className=" flex  pb-[400px]">
       <div className="login-container">
         <div className="login-box mt-[5%]">
           <div className="flex items-center mb-4 mt-2 justify-center gap-2">

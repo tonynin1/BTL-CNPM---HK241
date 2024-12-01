@@ -8,12 +8,13 @@ import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader"
 import { redirect } from "next/navigation";
 import { getUserInfo } from "@/app/API/userInfo";
 import { useUserSession } from "@/app/API/getMe";
+import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Home() {
   const { userInfo, loggedIn } = useUserSession();
 
   if (!userInfo) {
-    return <div>Loading</div>;
+    return <LoadingPage></LoadingPage>
   }
   if (userInfo.role === 'SPSO'){
     redirect('/spso')
@@ -155,7 +156,14 @@ export default function Home() {
 
 
         function typeValidation(type){
-            return true
+            const validTypes = [
+                'application/pdf',
+                'image/jpeg',
+                'image/png',
+                'text/plain',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            ];
+            return validTypes.includes(type);
         }
 
         // upload file function
@@ -220,7 +228,6 @@ export default function Home() {
                 'image/jpeg': 'image.png',
                 'image/png': 'image.png',
                 'text/plain': 'text.png',
-
             };
 
             if (iconMap[type]) {

@@ -1,7 +1,11 @@
+'use client'
 import SPSOHeader from "@/app/ui/SPSOHeader";
 import MyFooter from "@/app/ui/MyFooter";
+import { useUserSession } from "@/app/API/getMe";
+import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function page() {
+    const { userInfo, loggedIn } = useUserSession();
     const printers = [
         {
           model: "LaserJet Pro M404dn",
@@ -94,6 +98,9 @@ export default function page() {
           status: 'INVALID'
         }
       ];
+    if (!userInfo) {
+        return <LoadingPage></LoadingPage>
+    }
       
   return (
     <div className="h-screen">

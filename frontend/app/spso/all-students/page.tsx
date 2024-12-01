@@ -3,12 +3,10 @@ import MyFooter from "@/app/ui/MyFooter";
 import PrintHistory from "@/app/ui/PrintHistory";
 import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import { useEffect, useState } from "react";
-import { parseCookies } from "nookies"; // Thư viện đọc cookie
-import { refreshAccessToken } from "@/app/API/authService";
 import { redirect, useRouter } from "next/navigation"; // Để điều hướng
-import { getUserInfo } from "@/app/API/userInfo";
 import { useUserSession } from "@/app/API/getMe";
 import { getAllStudents } from "@/app/API/spso-allStudents/spso-allStudents";
+import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Page() {
   const router = useRouter();
@@ -58,9 +56,11 @@ export default function Page() {
   // }, []);
   // console.log(allStudents);
   
+
   // if (!userInfo || !allStudents) {
-  //   return <div>Loading</div>;
+  //   return <LoadingPage></LoadingPage>
   // }
+
 
   // if (userInfo.role === 'STUDENT'){
   //   redirect('/student')

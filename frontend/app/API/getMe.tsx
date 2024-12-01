@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { getUserInfo } from "@/app/API/userInfo";
@@ -25,7 +26,9 @@ export function useUserSession() {
 
   useEffect(() => {
     if (!loggedIn) {
+      alert("Your session has expired. Please sign in again.");
       redirect("/signin");
+      console.clear();
     }
   }, [loggedIn]);
 
