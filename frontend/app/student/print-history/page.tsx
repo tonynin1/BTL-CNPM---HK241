@@ -216,7 +216,7 @@ export default function page() {
 ];
     
   return (
-    <div >
+    <div className="bg-[#353535] pb-[500px]">
 
       <StudentHeader header={userInfo as StudentHeaderProps} />
 
