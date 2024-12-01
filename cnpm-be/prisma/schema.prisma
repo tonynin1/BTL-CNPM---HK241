@@ -19,6 +19,7 @@ model Admin {
   password    String
   User        User[]
 }
+
 model User {
   userId         Int         @id @default(autoincrement())
   fname          String
@@ -45,7 +46,6 @@ model SPSOMember {
   user           User         @relation(fields: [userId], references: [userId])
   printers       Printer[]
   customers      Customer[]
-  feedbacks      Feedback[]
 }
 
 model Customer {
@@ -62,17 +62,16 @@ model Customer {
   pagePurchaseOrders PagePurchaseOrder[]
   printOrders        PrintOrder[]
   documents          Document[]
+  deposits           Deposit[]
 }
 
 model Feedback {
   feedbackId      Int            @id @default(autoincrement())
   customerId      Int
   customer        Customer        @relation(fields: [customerId], references: [customerId])
-  spsomemberId    Int
-  spsomember      SPSOMember      @relation(fields: [spsomemberId], references: [sosoMemberId])
   feedTime        DateTime
   rating          Int
-  content         String
+  contentByCustomer         String
 }
 
 model Printer {
@@ -81,11 +80,12 @@ model Printer {
   brand             String
   description       String?
   facility          String
+  status            String            @default("VALID")
   building          String
   room              String
   spsomemberId      Int
   spsomember        SPSOMember         @relation(fields: [spsomemberId], references: [sosoMemberId])
-  documents         Document[]
+  printOrders       PrintOrder[]
 }
 
 
@@ -100,6 +100,15 @@ model PagePurchaseOrder {
   paymentMethod  String
 }
 
+model Deposit {
+    depositId       Int              @id @default(autoincrement())
+    depositTime     DateTime         
+    customerId      Int             
+    customer        Customer        @relation(fields: [customerId], references: [customerId])
+    depositStatus   String
+    amount          Int   
+}
+
 model PrintOrder {
   printOrderId   Int            @id @default(autoincrement())
   attributes     String
@@ -109,6 +118,10 @@ model PrintOrder {
   numCopies      Int
   customerId     Int
   customer       Customer        @relation(fields: [customerId], references: [customerId])
+  docId          Int
+  document       Document        @relation(fields: [docId], references: [documentId])
+  printerId      Int
+  printer        Printer        @relation(fields: [printerId], references: [printerId])
   contains       Contains[]
 }
 
@@ -117,10 +130,10 @@ model Document {
   docName        String
   customerId     Int
   customer       Customer        @relation(fields: [customerId], references: [customerId])
-  printerId      Int
-  printer        Printer         @relation(fields: [printerId], references: [printerId])
   docQuantity    Int
+  docLink        String?
   contains       Contains[]
+  printOrders    PrintOrder[]
 }
 
 model Contains {

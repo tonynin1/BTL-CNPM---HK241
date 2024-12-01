@@ -6,13 +6,40 @@ import { User } from '@prisma/client';
 @Injectable()
 export class CustomerService {
     constructor(
-        private prisma: PrismaService
+        private prisma: PrismaService,
     ) {}
 
     async getAllCustomers() {
         return await this.prisma.customer.findMany();
     }
 
+    // get sum of all customers
+    async getSumOfAllCustomers() {
+        return await this.prisma.customer.count();
+    }
+    async getAllCustomersWithUser() {
+        const users = await this.prisma.user.findMany({
+            where: {
+                role: 'STUDENT'
+            }
+        });
+
+        // reuturn users with customer
+        let usersWithCustomer = [];
+        for (let i = 0; i < users.length; i++) {
+            let customer = await this.prisma.customer.findFirst({
+                where: {
+                    userId: users[i].userId
+                }
+            });
+            usersWithCustomer.push({
+                user: users[i],
+                customer: customer
+            });
+        }
+
+        return usersWithCustomer;
+    }
     async getCustomerByUserId(userId: number) {
         const cus = await this.prisma.customer.findFirst({
             where: {
@@ -52,6 +79,17 @@ export class CustomerService {
     }
 
     async createCustomer(userId: number, createDto: createCustomerDto) {
+        const findUser = await this.prisma.user.findUnique({
+            where: {
+                userId: userId
+            }
+        });
+        if (findUser.role === 'SPSO') {
+            return {
+                message: 'THIS USER\'s ROLE IS SPSO, CANNOT CREATE CUSTOMER',
+                status: 403
+            }
+        }
         const findCustomer = await this.prisma.customer.findFirst({
             where: {
                 userId: userId

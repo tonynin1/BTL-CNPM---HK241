@@ -28,14 +28,13 @@ export default function MyHeader() {
           src="/home/bk.png"
           alt="Next.js logo"
           width={60}
-          height={40}
-          priority
+          height={0}
         />
         <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>
 
       <Link
-        href="/print_pages"
+        href="/signin"
         className="flex items-center justify-center no-underline w-32 h-12 text-sm sm:text-base text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 transition duration-300 rounded"
       >
         Đăng nhập

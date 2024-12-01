@@ -7,9 +7,20 @@ import { useEffect, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
+import { logout } from "../API/authService";
+import { ToastContainer } from "react-toastify";
 
-
-export default function StudentHeader() {
+export interface StudentHeaderProps {
+  remainPages: number;
+  accBalance: number;
+  fname: string;
+  role: string;
+  customerId: number;
+  lname: string;
+}
+export default function StudentHeader(
+  {header}: {header: StudentHeaderProps}
+) {
   const [time, setTime] = useState(900) 
   const [minute, setMinute] = useState(Math.floor(time/60))
   const [second, setSecond] = useState(Number(time%60))
@@ -34,26 +45,29 @@ export default function StudentHeader() {
     },
     {
       name: 'In tài liệu',
-      href: '/print-documents',
+      href: '/student/print-documents',
     },
     {
       name: 'Mua trang in',
-      href: '/buy-prints',
+      href: '/student/buy-prints',
+    },
+    {
+      name: 'Nạp tiền',
+      href: '/student/deposit',
+    },
+    {
+      name: "Các đơn chờ in",
+      href: '/student/trackingReq'
     },
     {
       name: 'Lịch sử in',
-      href: '/print-history',
+      href: '/student/print-history',
     },
     {
       name: 'Thông tin sinh viên',
-      href: '/infor',
+      href: '/student/information',
     },
   ]
-
-  const handleLogout = () => {
-    // localStorage.removeItem('token')
-    window.location.href = '/'
-  }
 
   return (
     <header className="sticky top-0 left-0 w-full flex items-center justify-between p-4 sm:p-6 bg-gray-100 dark:bg-gray-900 shadow-md transition-colors duration-300 z-10">
@@ -65,7 +79,7 @@ export default function StudentHeader() {
           height={60}
           priority
         />
-        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SSPS</h1>
+        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>
 
 
@@ -75,6 +89,7 @@ export default function StudentHeader() {
             <Link
               key={link.name}
               href={link.href}
+              style={{textDecoration: 'none'}}
               className={`flex items-center justify-center px-6 h-12 text-sm sm:text-base no-underline text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 transition duration-300 rounded ${
                 pathName === link.href
                   ? "bg-blue-600 text-white"
@@ -91,7 +106,7 @@ export default function StudentHeader() {
         <div className="student_account relative flex items-center gap-2 items-center transition-all hover:cursor-pointer"
             
         >
-          <span className="uppercase">q.vinh</span>
+          <span className="uppercase">{header.fname}</span>
           <VscAccount className="text-xl"/>
           <FaAngleDown />
 
@@ -99,7 +114,7 @@ export default function StudentHeader() {
           >
             <ul className="text-black rounded bg-white overflow-hidden pl-0 text-center">
               <li className="px-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm"
-                onClick={handleLogout}
+                onClick={logout}
               >
                 Đăng xuất
               </li>
@@ -112,6 +127,7 @@ export default function StudentHeader() {
         </p>
 
       </div>
+      <ToastContainer />
     </header>
   );
 }

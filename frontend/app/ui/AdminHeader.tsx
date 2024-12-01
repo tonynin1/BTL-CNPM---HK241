@@ -51,11 +51,15 @@ export default function StudentHeader() {
 
           <div className="student_dropdown w-[150px] absolute top-7 left-0 hidden"
           >
-            <ul className="text-black rounded bg-white overflow-hidden">
+            <ul className="text-black rounded bg-white overflow-hidden shadow-xl">
               <li className="px-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm text-center"
                 onClick={handleLogout}
               >
                 Đăng xuất
+              </li>
+              <li className="px-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm text-center"
+              >
+                Cài đặt
               </li>
             </ul>
           </div>
