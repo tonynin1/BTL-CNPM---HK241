@@ -4,12 +4,13 @@ import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
 import { useUserSession } from "@/app/API/getMe";
+import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function page() {
   const { userInfo, loggedIn } = useUserSession();
 
   if (!userInfo) {
-    return <div>Loading</div>;
+    return <LoadingPage></LoadingPage>
   }
   if (userInfo.role === 'SPSO'){
     // router.replace('http://localhost:8080')

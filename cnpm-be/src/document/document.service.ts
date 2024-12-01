@@ -51,34 +51,7 @@ export class DocumentService {
         }
     }
 
-    async allDocumentsByPrinterId(printerId: number){
-        try {
-            const docs = await this.prismaService.document.findMany({
-                where: {
-                    printerId: printerId
-                }
-            })
-    
-            if (!docs) {
-                return {
-                    message: 'Document not found',
-                    status: 404
-                }
-            }
-    
-            return {
-                data: docs,
-                status: 200
-            }
-            
-        } catch (error) {
-            return {
-                message: "Internal Server Error: " + error.message,
-                status: 500
-            }
-            
-        }
-    }
+
 
     async allDocumentsByCustomerId(customerId: number){
         try {
@@ -107,8 +80,8 @@ export class DocumentService {
                 data: {
                     docName: createDto.docName,
                     customerId: createDto.customerId,
-                    printerId: createDto.printerId,
                     docQuantity: createDto.docQuantity,
+                    docLink: createDto.docLink
                 }
             })
     
@@ -134,7 +107,6 @@ export class DocumentService {
                 data: {
                     docName: updateDto.docName,
                     customerId: updateDto.customerId,
-                    printerId: updateDto.printerId,
                     docQuantity: updateDto.docQuantity,
                 }
             })

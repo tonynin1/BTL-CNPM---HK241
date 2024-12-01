@@ -83,7 +83,6 @@ model Printer {
   room              String
   spsomemberId      Int
   spsomember        SPSOMember         @relation(fields: [spsomemberId], references: [sosoMemberId])
-  documents         Document[]
 }
 
 
@@ -107,6 +106,8 @@ model PrintOrder {
   numCopies      Int
   customerId     Int
   customer       Customer        @relation(fields: [customerId], references: [customerId])
+  docId          Int
+  document       Document        @relation(fields: [docId], references: [documentId])
   contains       Contains[]
 }
 
@@ -115,10 +116,10 @@ model Document {
   docName        String
   customerId     Int
   customer       Customer        @relation(fields: [customerId], references: [customerId])
-  printerId      Int
-  printer        Printer         @relation(fields: [printerId], references: [printerId])
   docQuantity    Int
+  docLink        String?
   contains       Contains[]
+  printOrders    PrintOrder[]
 }
 
 model Contains {

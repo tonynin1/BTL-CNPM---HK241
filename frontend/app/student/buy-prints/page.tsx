@@ -4,6 +4,7 @@ import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
 import { useUserSession } from "@/app/API/getMe";
+import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Page() {
   const { userInfo, loggedIn } = useUserSession();
@@ -45,7 +46,7 @@ export default function Page() {
   }
 
   if (!userInfo) {
-    return <div>Reloading...</div>;
+    return <LoadingPage></LoadingPage>
   }
 
   // Step 2: Handle input changes
