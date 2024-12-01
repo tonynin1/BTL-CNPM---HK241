@@ -34,7 +34,7 @@ export default function StudentHeader() {
     },
     {
       name: 'Quản lý máy in',
-      href: '/manage-printers',
+      href: '/spso/manage-printers',
     },
     {
       name: 'Xem thông tin các sinh viên',
@@ -42,7 +42,7 @@ export default function StudentHeader() {
     },
     {
       name: 'Xem báo cáo hệ thống',
-      href: '/system-report',
+      href: '/spso/system-report',
     },
   ]
 

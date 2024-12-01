@@ -28,8 +28,7 @@ export default function MyHeader() {
           src="/home/bk.png"
           alt="Next.js logo"
           width={60}
-          height={40}
-          priority
+          height={0}
         />
         <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>

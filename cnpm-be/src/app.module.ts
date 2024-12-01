@@ -20,10 +20,10 @@ import { APP_GUARD } from '@nestjs/core';
     })
   ],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AtGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AtGuard,
+    // },
   ],
 })
 export class AppModule {}
