@@ -5,6 +5,26 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class PrintHistoryService {
     constructor(private prismaService: PrismaService) {}
 
+    // get sum of all number of copies of all print orders
+    // get sum of all number of copies of all print orders
+    async getSumOfAllPrintOrders() {
+      try {
+          const allPrintOrders = await this.prismaService.printOrder.findMany();
+          const sum = allPrintOrders.reduce((acc, cur) => {
+              // Chỉ tính nếu `numCopies` là số hoặc có thể chuyển thành số
+              const numCopies = Number(cur.numCopies);
+              return isNaN(numCopies) ? acc : acc + numCopies;
+          }, 0);
+          return sum;
+  
+      } catch (error) {
+          return {
+              message: 'Internal server error: ' + error.message,
+              status: 500
+          };
+      }
+    }
+
     // Get by printOrderId
     async getPrintOrderById(printOrderId: number) {
         try {

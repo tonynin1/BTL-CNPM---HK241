@@ -6,22 +6,16 @@ import React from 'react';
 import Script from 'next/script';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader"
 import { redirect } from "next/navigation";
-import { getUserInfo } from "@/app/API/userInfo";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 import { getAllPrinsAvailable } from "@/app/API/student-printDoc/student-printDoc";
-import { all } from "axios";
-
-const printers = [
-  { building: "Nhà A", room: "Phòng 101" },
-  { building: "Nhà B", room: "Phòng 202" },
-];
 
 
 export default function Home() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
   const [AllPrinters, setAllPrinters] = useState<any[]>([]);
-  
+  const [printerId, setPrinterId] = useState<number | null>(null);
+  const [myForm, setMyForm] = useState<any>(null);
   const fetching = async () => {
     if (!userInfo) return;
     try {
@@ -81,19 +75,24 @@ export default function Home() {
 
         <div className="section">
             <div className="row align-items-start"> 
-              <div className="form-group col">
-                <p className="p">Chọn máy in</p>
-                <select
-                  className="form-control"
-                >
-                  <option value="">Chọn máy in</option>
-                  {AllPrinters.map((printer, index) => (
-                    <option key={index} value={JSON.stringify(printer)}>
-                      {`Địa điểm: ${printer.building} - ${printer.room}; Model: ${printer.model}; Brand: ${printer.brand}`} 
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-group col">
+              <p className="p">Chọn máy in</p>
+              <select
+                className="form-control"
+                onChange={(e) => {
+                  const selectedPrinter = JSON.parse(e.target.value);
+                  setPrinterId(selectedPrinter.printerId); // Assuming each printer object has an `id` field
+                }}
+              >
+                <option value="">Chọn máy in</option>
+                {AllPrinters.map((printer, index) => (
+                  <option key={index} value={JSON.stringify(printer)}>
+                    {`Địa điểm: ${printer.building} - ${printer.room}; Model: ${printer.model}; Brand: ${printer.brand}`} 
+                  </option>
+                ))}
+              </select>
+            </div>
+
               
               <div className="form-group col">
                 <p className="p">Margin</p>
@@ -139,8 +138,10 @@ export default function Home() {
             
             </div>
             <div className="inner_submit">
-              <button className="submit" onClick={() => {
-                const selectedPrinter = (document.querySelector('.form-control') as HTMLSelectElement).value;
+            <button
+              className="submit"
+              onClick={() => {
+                console.log("Selected Printer ID:", printerId); // Log the printer ID
                 const margin = (document.getElementById('so-ban') as HTMLInputElement).value;
                 const copies = (document.getElementById('so-ban') as HTMLInputElement).value;
                 const paperSize = (document.getElementById('kho-giay') as HTMLSelectElement).value;
@@ -148,14 +149,27 @@ export default function Home() {
                 const paperOrientation = (document.getElementById('huong-giay') as HTMLSelectElement).value;
 
                 console.log({
-                  selectedPrinter,
+                  printerId,
                   margin,
                   copies,
                   paperSize,
                   printType,
                   paperOrientation
                 });
-              }}>SUBMIT</button>
+
+                setMyForm({
+                  printerId,
+                  margin,
+                  copies,
+                  paperSize,
+                  printType,
+                  paperOrientation
+                })
+              }}
+            >
+              SUBMIT
+            </button>
+
             </div>
             
           </div>
@@ -227,6 +241,7 @@ export default function Home() {
 
         // upload file function
         function uploadFile(file){
+            console.log('asdasda');
             listSection.style.display = 'block'
             var li = document.createElement('li')
             li.classList.add('in-prog')
@@ -269,6 +284,8 @@ export default function Home() {
                 li.querySelectorAll('span')[0].innerHTML = Math.round(percent_complete) + '%'
                 li.querySelectorAll('span')[1].style.width = percent_complete + '%'
             }
+            
+          
             http.open('POST', '/app/sender.php', true)
             http.send(data)
             li.querySelector('.cross').onclick = () => http.abort();

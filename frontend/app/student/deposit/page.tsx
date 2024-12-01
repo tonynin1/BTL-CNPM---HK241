@@ -23,7 +23,6 @@ export default function Page() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [depositHistory, setDepositHistory] = useState<Deposit[]>([]);
   const [accountBalance, setAccountBalance] = useState<number | null>(null);
-
   useEffect(() => {
     if (!loggedIn) {
       setShouldRedirect(true);
@@ -193,8 +192,8 @@ export default function Page() {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {depositHistory.map((deposit) => ( 
-                  <tr key={deposit.depositId}>
+                {depositHistory.map((deposit, index) => ( 
+                  <tr key={index}>
                     <td>{deposit.depositId}</td>
                     <td>{new Date(deposit.depositTime).toLocaleDateString()}</td>
                     <td>{deposit.amount}</td>

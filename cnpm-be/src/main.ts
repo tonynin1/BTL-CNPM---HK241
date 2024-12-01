@@ -26,3 +26,16 @@ async function bootstrap() {
   await app.listen(8080);
 }
 bootstrap();
+
+
+// const app = await NestFactory.create(AppModule);
+
+//   app.enableCors({
+
+//     origin: 'http://localhost:3000',
+
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+
+//     credentials: true,
+
+//   });

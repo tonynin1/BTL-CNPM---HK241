@@ -20,6 +20,10 @@ export class SpsomemberController {
         return this.spsomemberService.findAllSPSOMember();
     }
 
+    @Get('sum')
+    async getSumOfAllSPSOMember() {
+        return this.spsomemberService.getSumOfAllSPSOMember();
+    }
     // Remove Auth for this route
     @HttpCode(HttpStatus.OK)
     @Get('userId')

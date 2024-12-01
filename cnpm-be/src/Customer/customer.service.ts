@@ -13,6 +13,10 @@ export class CustomerService {
         return await this.prisma.customer.findMany();
     }
 
+    // get sum of all customers
+    async getSumOfAllCustomers() {
+        return await this.prisma.customer.count();
+    }
     async getAllCustomersWithUser() {
         const users = await this.prisma.user.findMany({
             where: {
