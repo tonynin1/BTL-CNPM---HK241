@@ -12,12 +12,12 @@ import MyFooter from "../ui/MyFooter";
 import { useEffect, useState } from "react";
 import { getUserInfo } from "../API/userInfo";
 import { redirect } from "next/navigation";
-import { useUserSession } from "../API/getMe";
+import { useUserSessionForSPSO } from "../API/getMe";
 import LoadingPage from "../ui/LoadingPage";
 
 
 export default function page() {
-  const { userInfo, loggedIn } = useUserSession();
+  const { userInfo, loggedIn } = useUserSessionForSPSO();
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>

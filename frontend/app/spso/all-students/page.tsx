@@ -2,47 +2,14 @@
 import MyFooter from "@/app/ui/MyFooter";
 import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation"; // Để điều hướng
-import { useUserSession } from "@/app/API/getMe";
+import { redirect } from "next/navigation"; // Để điều hướng
+import { useUserSessionForSPSO } from "@/app/API/getMe";
 import { getAllStudents } from "@/app/API/spso-allStudents/spso-allStudents";
 import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Page() {
-  const router = useRouter();
 
-  const students = [
-    {
-      name: 'Nguyen Van A',
-      print_count: 'student1',
-      id: '2213982',
-    },
-    {
-      name: 'Le Thi B',
-      print_count: 'student2',
-      id: '2213983',
-    },
-    {
-      name: 'Tran Van C',
-      print_count: 'student3',
-      id: '2213984',
-    },
-    {
-      name: 'Pham Thi D',
-      print_count: 'student4',
-      id: '2213985',
-    },
-    {
-      name: 'Nguyen Van E',
-      print_count: 'student5',
-      id: '2213986',
-    },
-    {
-      name: 'Hoang Thi F',
-      print_count: 'student6',
-      id: '2213987',
-    },
-  ];
-  const { userInfo, loggedIn } = useUserSession();
+  const { userInfo, loggedIn } = useUserSessionForSPSO();
   const [allStudents , setAllStudents] = useState<any>(null);
 
   const fetching = async () => {

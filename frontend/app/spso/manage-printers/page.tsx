@@ -1,11 +1,14 @@
 'use client'
-import SPSOHeader from "@/app/ui/SPSOHeader";
+import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import MyFooter from "@/app/ui/MyFooter";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForSPSO } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
+import { useEffect, useState } from "react";
+import { get } from "http";
+import { getAllPrinters, OnOffPrinter } from "@/app/API/spso-managePrinters/spso-managePrinters";
 
 export default function page() {
-    const { userInfo, loggedIn } = useUserSession();
+    const { userInfo, loggedIn } = useUserSessionForSPSO();
     const printers = [
         {
           model: "LaserJet Pro M404dn",
@@ -98,13 +101,34 @@ export default function page() {
           status: 'INVALID'
         }
       ];
-    if (!userInfo) {
+    
+    const [allPrinters, setAllPrinters] = useState<any>(null);
+    
+    const fetching = async () => {
+      if (!userInfo) return;
+      try{
+        let data = await getAllPrinters(userInfo.sosoMemberId);
+        setAllPrinters(data.data);
+        console.log(data.data);
+      }
+      catch(e){
+        console.log(e)
+      }
+    }
+
+    useEffect(() => {
+      if (userInfo) {
+        fetching();
+      }
+    }, [userInfo]);
+
+    if (!userInfo || !allPrinters) {
         return <LoadingPage></LoadingPage>
     }
       
   return (
     <div className="h-screen">
-      <SPSOHeader header={{fname: 'SPSO', role: 'ADMIN'}} />
+      <SPSOHeader header={userInfo as SPSOHeaderProps} />
       <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400 mb-8'>
             <thead className='text-xs text-gray-700 uppercase dark:text-black'>
@@ -120,7 +144,7 @@ export default function page() {
                 </tr>
             </thead>
             <tbody>
-                {printers.map((printer, index) => (
+                {allPrinters.map((printer : any, index: number) => (
                 <tr key={index} className='odd:bg-white even:bg-gray-50 border-b dark:border-gray-700'>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{printer.model}</td>
                     <td className='px-6 py-4'>{printer.brand}</td>
@@ -140,9 +164,30 @@ export default function page() {
                     <td className='px-6 py-4 text-center'>
                         {
                           printer.status === 'VALID' ? (
-                              <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>INVALID</button>
+                              <button onClick={async () => {
+                                // if confirmed
+                                if (confirm('Are you sure you want to turn off this printer?')) {
+                                  
+                                  let newStatus =  await OnOffPrinter(printer.printerId);
+                                  if (newStatus === 200) {
+                                    let newPrinters = [...allPrinters];
+                                    newPrinters[index].status = 'INVALID';
+                                    setAllPrinters(newPrinters);
+                                  }
+                                }
+                              }} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>INVALID</button>
                             ) : (
-                              <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'>VALID</button>
+                              <button onClick={async () => {
+                                if (confirm('Are you sure you want to turn on this printer?')) {
+                                  let newStatus =  await OnOffPrinter(printer.printerId);
+                                  if (newStatus === 200) {
+                                    let newPrinters = [...allPrinters];
+                                    newPrinters[index].status = 'VALID';
+                                    setAllPrinters(newPrinters);
+                                  }
+
+                                }
+                              }} className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'>VALID</button>
                           )
                         }
                     </td>

@@ -3,4 +3,5 @@ export class updatePrinterDto {
     building?: string;
     room?: string;
     spsomemberId?: number;
+    status?: string;
 }

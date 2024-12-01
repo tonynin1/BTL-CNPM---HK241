@@ -14,6 +14,7 @@ import { getUserInfo } from "../API/userInfo";
 export interface SPSOHeaderProps {
   fname: string;
   role: string;
+  sosoMemberId: number;
 }
 export default function SPSOHeader(
   {header}: {header: SPSOHeaderProps}
