@@ -7,11 +7,11 @@ import Script from 'next/script';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader"
 import { redirect } from "next/navigation";
 import { getUserInfo } from "@/app/API/userInfo";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Home() {
-  const { userInfo, loggedIn } = useUserSession();
+  const { userInfo, loggedIn } = useUserSessionForCustomer();
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>

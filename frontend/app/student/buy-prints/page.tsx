@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Page() {
-  const { userInfo, loggedIn } = useUserSession();
+  const { userInfo, loggedIn } = useUserSessionForCustomer();
   const [money, setMoney] = useState(0);
   const moneyOfA4 = 1000;
   const moneyOfA3 = 2000;

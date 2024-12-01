@@ -2,34 +2,43 @@
 
 import React, { useEffect, useState } from 'react';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForSPSO } from "@/app/API/getMe";
 import { redirect } from 'next/navigation';
-import { deletePendingRequest, getAllPendingRequest, updatePendingRequest } from '@/app/API/student-trackingReq/student-trackingReq';
 import Script from 'next/script';
 import LoadingPage from '@/app/ui/LoadingPage';
+import SPSOHeader, { SPSOHeaderProps } from '@/app/ui/SPSOHeader';
 
 export default function Home() {
-    const { userInfo } = useUserSession();
-    const [pageOption, setPageOption] = useState('Default');
-    const [showCustomInput, setShowCustomInput] = useState(false);
-    const [marginOption, setMarginOption] = useState('Default');
-    const [showMarginInput, setShowMarginInput] = useState(false);
-    const [isActive, setIsActive] = useState(false);
+    const { userInfo } = useUserSessionForSPSO();
+    const [buttonStates, setButtonStates] = useState([false, false, false, false, false]); 
+
+    const tableData = [
+        { id: 1, attributes: 'Red', startTime: '2023-10-19 12:00:00', endTime: '2023-10-19 12:30:00', status: 'Pending', copies: 1 },
+        { id: 2, attributes: 'Blue', startTime: '2023-10-19 12:10:00', endTime: '2023-10-19 12:40:00', status: 'Completed', copies: 2 },
+        { id: 3, attributes: 'Green', startTime: '2023-10-19 12:20:00', endTime: '2023-10-19 12:50:00', status: 'Pending', copies: 3 },
+        { id: 4, attributes: 'Yellow', startTime: '2023-10-19 12:30:00', endTime: '2023-10-19 13:00:00', status: 'Pending', copies: 4 },
+        { id: 5, attributes: 'Purple', startTime: '2023-10-19 12:40:00', endTime: '2023-10-19 13:10:00', status: 'Completed', copies: 5 },
+    ];
+
     if (!userInfo) {
         return <LoadingPage></LoadingPage>
     }
 
-    if (userInfo.role === "SPSO") {
-        redirect("/spso");
+    if (userInfo.role === "STUDENT") {
+        redirect("/student");
     }
 
-    const toggleButton = () => {
-        setIsActive(!isActive);
+    const toggleButton = (index) => {
+        setButtonStates(prevStates => {
+            const newStates = [...prevStates];
+            newStates[index] = !newStates[index]; 
+            return newStates;
+        });
     };
 
     return (
         <main className="bg-[#353535] pb-[500px]">
-            <StudentHeader header={userInfo as StudentHeaderProps} />
+            <SPSOHeader header={userInfo as SPSOHeaderProps} />
             <div className="inner_wrap container">
                 <div className="container upload_container">
                     <h1 className="text-white">Bảng Dữ Liệu Khách Hàng</h1>
@@ -46,26 +55,27 @@ export default function Home() {
                             </tr>
                         </thead>
                         <tbody>
-                                <tr>
-                                    <td className="align-middle"></td>
-                                    <td className="align-middle"></td>
-                                    <td className='align-middle'></td>
-                                    <td className="align-middle"></td>
-                                    <td className="align-middle"></td>
-                                    <td className="align-middle"></td>
-                                    <td className="align-middle" style={styles.container}>
-                                    <button
-                                        onClick={toggleButton}
-                                        style={{
-                                            ...styles.button,
-                                            backgroundColor: isActive ? '#4caf50' : 'Red',
-                                            color: isActive ? 'black' : 'white',
-                                        }}
-                                    >
-                                        <strong>{isActive ? 'Done' : 'UnDone'}</strong>
-                                    </button>
-                                                            </td>
+                            {tableData.map((row, index) => (
+                                <tr key={row.id}>
+                                    <td>{row.id}</td>
+                                    <td>{row.attributes}</td>
+                                    <td>{row.startTime}</td>
+                                    <td>{row.endTime}</td>
+                                    <td>{row.status}</td>
+                                    <td>{row.copies}</td>
+                                    <td>
+                                        <button
+                                            onClick={() => toggleButton(index)}
+                                            style={{
+                                                backgroundColor: buttonStates[index] ? '#4caf50' : 'Red',
+                                                color: buttonStates[index] ? 'black' : 'white',
+                                            }}
+                                        >
+                                            <strong>{buttonStates[index] ? 'Done' : 'UnDone'}</strong>
+                                        </button>
+                                    </td>
                                 </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -76,21 +86,3 @@ export default function Home() {
         </main>
     );
 }
-
-const styles = {
-    container: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#333',
-    },
-    button: {
-        padding: '5px 10px',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        width: '100px',
-        transition: 'background-color 0.3s, color 0.3s',
-
-    },
-};

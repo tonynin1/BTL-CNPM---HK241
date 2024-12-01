@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForCustomer } from "@/app/API/getMe";
 import { redirect } from 'next/navigation';
 import { deletePendingRequest, getAllPendingRequest, updatePendingRequest } from '@/app/API/student-trackingReq/student-trackingReq';
 import Script from 'next/script';
 import LoadingPage from '@/app/ui/LoadingPage';
 
 export default function Home() {
-    const { userInfo } = useUserSession();
+    const { userInfo } = useUserSessionForCustomer();
     const [allPendingReq, setAllPendingReq] = useState<any>([]);
     const [pageOption, setPageOption] = useState('Default');
     const [showCustomInput, setShowCustomInput] = useState(false);

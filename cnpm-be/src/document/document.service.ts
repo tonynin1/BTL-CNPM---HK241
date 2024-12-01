@@ -80,14 +80,15 @@ export class DocumentService {
                 data: {
                     docName: createDto.docName,
                     customerId: createDto.customerId,
-                    docQuantity: createDto.docQuantity,
+                    docQuantity: 1,
                     docLink: createDto.docLink
                 }
             })
     
             return {
-                data: "Document created",
-                status: 200
+                message: "Document created",
+                status: 200,
+                data: doc
             }
             
         } catch (error) {
@@ -107,7 +108,6 @@ export class DocumentService {
                 data: {
                     docName: updateDto.docName,
                     customerId: updateDto.customerId,
-                    docQuantity: updateDto.docQuantity,
                 }
             })
         } catch (error) {

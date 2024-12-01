@@ -79,6 +79,7 @@ model Printer {
   brand             String
   description       String?
   facility          String
+  status            String            @default("VALID")
   building          String
   room              String
   spsomemberId      Int
