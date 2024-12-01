@@ -20,8 +20,8 @@ export class FileUploadService {
   async uploadFiles(
     files: Express.Multer.File[], 
     customerId: number,
-    printerIds: number[],    // Mảng các printerId tương ứng với các file
-    docQuantities: number[]  // Mảng số lượng tài liệu tương ứng với các file
+    printerIds: number[],    
+    docQuantities: number[]  
   ): Promise<any> {
     const fileUrls = [];
     const documents = [];
@@ -36,30 +36,30 @@ export class FileUploadService {
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const docQuantity = docQuantities[i];  // Lấy số lượng tài liệu cho file này
-        const printerId = printerIds[i];      // Lấy printerId tương ứng
+        const docQuantity = docQuantities[i];  
+        const printerId = printerIds[i];      
 
         // Upload file lên S3
         const uploadResult = await this.uploadFileToS3(file);
-        const docName = file.originalname;    // Tên file từ local
-        const docLink = uploadResult.Location; // URL của file trên S3
+        const docName = file.originalname;    
+        const docLink = uploadResult.Location; 
 
         // Tạo document để lưu vào DB
         const newDocument = await this.prisma.document.create({
           data: {
-            docName: docName,  // Tên file
-            docLink: docLink,  // URL của file
-            customerId: Number(customerId),  // Lưu customerId từ token
-            printerId: Number(printerId),  // Lưu printerId
-            docQuantity: Number(docQuantity),  // Lưu số lượng tài liệu
+            docName: docName,  
+            docLink: docLink,  
+            customerId: Number(customerId),  
+            printerId: Number(printerId),  
+            docQuantity: Number(docQuantity),  
           },
         });
 
-        documents.push(newDocument);  // Thêm vào danh sách các document đã tạo
-        fileUrls.push(docLink);  // Thêm vào danh sách các URL file đã upload
+        documents.push(newDocument);  
+        fileUrls.push(docLink);  
       }
 
-      return { fileUrls, documents };  // Trả về danh sách URL và documents đã tạo
+      return { fileUrls, documents };  
     } catch (error) {
       throw new Error('File upload failed: ' + error.message);
     }
@@ -68,16 +68,16 @@ export class FileUploadService {
   // Phương thức phụ trợ để upload file lên S3
   private async uploadFileToS3(file: Express.Multer.File): Promise<AWS.S3.ManagedUpload.SendData> {
     const params = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME,  // Tên bucket S3 của bạn
-      Key: `${Date.now()}-${file.originalname}`,  // Tên file khi upload lên S3 (bao gồm timestamp để tránh trùng tên)
-      Body: file.buffer,  // Nội dung file
-      ContentType: file.mimetype,  // Kiểu file (image/jpeg, application/pdf, ...)
-      ACL: 'public-read',  // Quyền truy cập cho file (có thể thay đổi tùy theo yêu cầu)
+      Bucket: process.env.AWS_S3_BUCKET_NAME,  
+      Key: `${Date.now()}-${file.originalname}`,  
+      Body: file.buffer,  
+      ContentType: file.mimetype,  
+      ACL: 'public-read',  
     };
 
     try {
       const uploadResult = await this.s3.upload(params).promise();
-      return uploadResult;  // Trả về kết quả upload
+      return uploadResult;  
     } catch (error) {
       throw new Error('S3 upload failed: ' + error.message);
     }

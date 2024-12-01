@@ -7,10 +7,10 @@ import { FileUploadDto } from './dto/file-upload.dto';
 export class FileUploadController {
   constructor(private readonly fileUploadService: FileUploadService) {}
   @Post()
-  @UseInterceptors(FilesInterceptor('files'))  // 'files' là tên trường file trong form-data
+  @UseInterceptors(FilesInterceptor('files')) 
   async uploadFiles(
-  @UploadedFiles() files: Express.Multer.File[],  // Nhận các file upload
-  @Body() fileUploadDto: FileUploadDto  // Nhận thông tin khác như customerId, printerId, docQuantity từ body
+  @UploadedFiles() files: Express.Multer.File[],
+  @Body() fileUploadDto: FileUploadDto 
   ) {
     if (!files || files.length === 0) {
       throw new Error('No files uploaded');
