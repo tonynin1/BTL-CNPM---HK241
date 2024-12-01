@@ -1,8 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const config = new DocumentBuilder()
+    .setTitle('API Documentation') // Tiêu đề tài liệu API
+    .setDescription('The API description') // Mô tả về API
+    .setVersion('1.0') // Phiên bản API
+    .addBearerAuth() // Thêm phương thức xác thực Bearer token (nếu cần)
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+
+  // Thiết lập đường dẫn tài liệu API
+  SwaggerModule.setup('api', app, document);
 
   app.enableCors({
     origin: 'http://localhost:3000',
