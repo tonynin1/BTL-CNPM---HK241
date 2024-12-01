@@ -1,6 +1,6 @@
 import axios from "axios";
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
-
+import * as request from '../axios/axios';
 export async function refreshAccessToken() {
   try {
     const cookies = parseCookies();
@@ -11,16 +11,16 @@ export async function refreshAccessToken() {
       return null;
     }
 
-    const response = await axios.post(
-      "http://127.0.0.1:8080/auth/refresh",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      }
-    );
+    // Gửi request lên server để refresh token
+    const response = await request.post('/auth/refresh', {}, {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    });
 
+    if (!response.data) {
+      throw new Error("Response data is undefined");
+    }
     const { accessToken, refreshToken: newRefreshToken } = response.data;
 
     // Lưu token mới vào cookie

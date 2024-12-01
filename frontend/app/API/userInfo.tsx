@@ -9,11 +9,11 @@ export async function getUserInfo() {
       const cookies = parseCookies();
       let accessToken = cookies.accessToken;
 
+      // always refresh token
       if (!accessToken) {
-        // Nếu không có accessToken, thử làm mới
-        accessToken = await refreshAccessToken();
+        await refreshAccessToken();
       }
-  
+
       const response = await api.get("auth/me", {
         headers: {
           Authorization: `Bearer ${accessToken}`, // Gửi token trong header
