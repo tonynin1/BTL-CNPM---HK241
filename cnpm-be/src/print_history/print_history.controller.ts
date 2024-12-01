@@ -16,6 +16,11 @@ export class PrintHistoryController {
     return await this.printHistoryService.getPrintOrdersByCustomerId(customerId);
   }
 
+  // sum of all pages printed
+  @Get('request/count/sum') // tested
+  async getSumOfAllPagesPrinted() {
+    return await this.printHistoryService.getSumOfAllPrintOrders();
+  }
   @Get('request/completed/:customerId') // tested
   async getPrintOrdersByCustomerIdThatCompleted(@Param('customerId', ParseIntPipe) customerId: number) {
     return await this.printHistoryService.getAllPrintOrdersByCustomerIdThatCompleted(customerId);

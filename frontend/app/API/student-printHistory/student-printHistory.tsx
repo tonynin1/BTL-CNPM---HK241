@@ -17,7 +17,6 @@ export async function getPrintOrdersByCustomerIdThatCompleted(customerId: number
         }
     })
 
-    console.log(response.data);
     return response.data;
     
   } catch (error) {
@@ -41,7 +40,6 @@ export async function getPrintOrdersByCustomerId(customerId: number) {
         }
     })
 
-    console.log(response.data);
     return response.data;
     
   } catch (error) {
