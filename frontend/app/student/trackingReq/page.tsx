@@ -4,15 +4,15 @@ import React, { useEffect, useState } from 'react';
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
 import { useUserSession } from "@/app/API/getMe";
 import { redirect } from 'next/navigation';
-import { getAllPendingRequest } from '@/app/API/student-trackingReq/student-trackingReq';
+import { getAllPendingRequest, updatePendingRequest } from '@/app/API/student-trackingReq/student-trackingReq';
 import Script from 'next/script';
 
 export default function Home() {
     const { userInfo } = useUserSession();
     const [allPendingReq, setAllPendingReq] = useState<any>([]);
-    const [pageOption, setPageOption] = useState('default');
+    const [pageOption, setPageOption] = useState('Default');
     const [showCustomInput, setShowCustomInput] = useState(false);
-    const [marginOption, setMarginOption] = useState('default');
+    const [marginOption, setMarginOption] = useState('Default');
     const [showMarginInput, setShowMarginInput] = useState(false);
 
     const fetching = async () => {
@@ -43,13 +43,13 @@ export default function Home() {
     const handlePageOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = event.target.value;
         setPageOption(value);
-        setShowCustomInput(value === 'custom');
+        setShowCustomInput(value === 'Custom');
     };
 
     const handleMarginOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = event.target.value;
         setMarginOption(value);
-        setShowMarginInput(value === 'custom');
+        setShowMarginInput(value === 'Custom');
     };
 
     return (
@@ -72,12 +72,12 @@ export default function Home() {
                         </thead>
                         <tbody>
                             {allPendingReq.map((item: any, index: number) => (
-                                <tr key={index}>
+                                <tr key={item.printOrderId}>
                                     <td className="align-middle"><input type="checkbox" /></td>
                                     <td className="align-middle">{item.printOrderId}</td>
                                     <td className="align-middle">{item.attributes}</td>
-                                    <td className="align-middle">{item.startTime}</td>
-                                    <td className="align-middle">{item.endTime}</td>
+                                    <td className='align-middle'>{new Date(item.startTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
+                                    <td className="align-middle">{new Date(item.endTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
                                     <td className="align-middle">{item.poStatus}</td>
                                     <td className="align-middle">{item.numCopies}</td>
                                 </tr>
@@ -86,7 +86,33 @@ export default function Home() {
                     </table>
                     <div className="Button">
                         <button type="button" className="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
-                        <button type="button" className="btn btn-outline-danger">Delete</button>
+                        <button type="button" className="btn btn-outline-danger" onClick={() => {
+                            // Retrieve all rows in the table
+                            const tableRows = document.querySelectorAll("table tbody tr");
+
+                            // Loop through each row and check if the checkbox is selected
+                            const selectedPrintOrderIds = Array.from(tableRows)
+                                .filter(row => {
+                                    const checkbox = row.querySelector("input[type='checkbox']") as HTMLInputElement;
+                                    return checkbox?.checked;
+                                })
+                                .map(row => {
+                                    // Extract the printOrderId from the corresponding cell
+                                    return row.querySelector("td:nth-child(2)")?.textContent;
+                                });
+
+                            // Console log the selected Print Order IDs
+                            console.log("Selected Print Order IDs:", selectedPrintOrderIds);
+                            // console log this user
+                            console.log(userInfo);
+                            // Add your logic here to handle the selected IDs (e.g., sending to API)
+                            // selectedPrintOrderIds.forEach(async (printOrderId) => {
+                            //     let res = await updatePendingRequest(Number(printOrderId), "Delete");
+                            //     console.log(res);
+                            // });
+                            // // reload the page
+                            // window.location.reload();
+                        }}>Delete</button>
                     </div>
                     <div className="modal fade" id="exampleModalCenter" tabIndex={-1} role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-centered" role="document">
@@ -97,19 +123,19 @@ export default function Home() {
                                 <div className="modal-body">
                                     <div className="settings-container">
                                         <div className="settings">
-                                            <div className="setting">
+                                            {/* <div className="setting">
                                                 <label>Destination:</label>
                                                 <select className="Option" id="destination">
                                                     <option>Microsoft Print to PDF</option>
                                                     <option>Printer 1</option>
                                                     <option>Printer 2</option>
                                                 </select>
-                                            </div>
+                                            </div> */}
                                             <div className="setting">
                                                 <label>Pages:</label>
                                                 <select className="Option" id="pageOptions" value={pageOption} onChange={handlePageOptionChange}>
-                                                    <option value="all">All</option>
-                                                    <option value="custom">Custom</option>
+                                                    <option value="All">All</option>
+                                                    <option value="Custom">Custom</option>
                                                 </select>
                                             </div>
 
@@ -122,10 +148,8 @@ export default function Home() {
                                             <div className="setting">
                                                 <label>Margin:</label>
                                                 <select className="Option" id="marginOptions" value={marginOption} onChange={handleMarginOptionChange}>
-                                                    <option value="default">Default</option>
-                                                    <option value="none">None</option>
-                                                    <option value="minimum">Minimum</option>
-                                                    <option value="custom">Custom</option>
+                                                    <option value="Default">Default</option>
+                                                    <option value="Custom">Custom</option>
                                                 </select>
                                             </div>
 
@@ -151,7 +175,7 @@ export default function Home() {
                                                     <option>Black & White</option>
                                                 </select>
                                             </div>
-                                            <div className="setting">
+                                            {/* <div className="setting">
                                                 <label>Page size:</label>
                                                 <select className="Option" id="page-size">
                                                     <option>Letter</option>
@@ -164,16 +188,16 @@ export default function Home() {
                                                     <option>B4</option>
                                                     <option>B5</option>
                                                 </select>
-                                            </div>
+                                            </div> */}
                                             <div className="setting">
                                                 <label>Pages per sheet:</label>
                                                 <select className="Option" id="pages-per-sheet">
                                                     <option>1</option>
                                                     <option>2</option>
+                                                    <option>3</option>
                                                     <option>4</option>
                                                     <option>5</option>
-                                                    <option>9</option>
-                                                    <option>16</option>
+                                                    <option>6</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -181,7 +205,68 @@ export default function Home() {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" className="btn btn-primary">Save changes</button>
+                                    <button type="button" className="btn btn-primary"
+                                        onClick={() => {
+                                            // get the option i chose
+                                            // Retrieve all rows in the table
+                                            const tableRows = document.querySelectorAll("table tbody tr");
+
+                                            // Loop through each row and check if the checkbox is selected
+                                            const selectedPrintOrderIds = Array.from(tableRows)
+                                                .filter(row => {
+                                                    const checkbox = row.querySelector("input[type='checkbox']") as HTMLInputElement;
+                                                    return checkbox?.checked;
+                                                })
+                                                .map(row => {
+                                                    // Extract the printOrderId from the corresponding cell
+                                                    return row.querySelector("td:nth-child(2)")?.textContent;
+                                                });
+
+                                            // Console log the selected Print Order IDs
+                                            console.log("Selected Print Order IDs:", selectedPrintOrderIds);
+                                            
+                                            // console log this user
+                                            console.log(userInfo);
+                                            // Add your logic here to handle the selected IDs (e.g., sending to API)
+                                            // get all the values
+                                            const pageOptions = document.getElementById("pageOptions") as HTMLSelectElement;
+                                            const pages = document.getElementById("pages") as HTMLInputElement;
+                                            const marginOptions = document.getElementById("marginOptions") as HTMLSelectElement;
+                                            const margin = document.getElementById("Margin") as HTMLInputElement;
+                                            const layout = document.getElementById("layout") as HTMLSelectElement;
+                                            const color = document.getElementById("color") as HTMLSelectElement;
+                                            const pagesPerSheet = document.getElementById("pages-per-sheet") as HTMLSelectElement;
+                                            
+                                            let attributes = "";
+                                            if (pageOptions.value === 'Custom') {
+                                                attributes += "Pages: " + (pages.value? pages.value : "All") + ", ";
+
+                                            }
+                                            if (marginOptions.value === 'Custom') {
+                                                attributes += "Margin: " + (margin.value? margin.value : "Default") + ", ";
+                                            }
+                                            else {
+                                                attributes += "Margin: Default, ";
+                                            }
+                                            attributes += "Layout: " + layout.value + ", ";
+
+                                            attributes += "Color: " + color.value + ", ";
+
+
+                                            attributes += "Pages per sheet: " + pagesPerSheet.value + ", ";
+                                            console.log(attributes);
+
+                                            // update the attributes
+                                            selectedPrintOrderIds.forEach(async (printOrderId) => {
+                                                let res = await updatePendingRequest(Number(printOrderId), attributes);
+                                                console.log(res);
+                                            });
+
+                                            // close the modal then reload the page
+                                            document.getElementById("exampleModalCenter")?.click();
+                                            window.location.reload();
+                                        }}
+                                    >Save changes</button>
                                 </div>
                             </div>
                         </div>

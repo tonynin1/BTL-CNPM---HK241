@@ -34,15 +34,18 @@ export class PrintHistoryService {
     async getAllPrintOrdersByCustomerIdThatPending(customerId: number) {
         try {
             const res = await this.prismaService.printOrder.findMany({
-                where: { customerId : customerId, poStatus: 'Pending' },
-                include: {
-                    contains: {
-                        include: {
-                            document: true,
-                        },
-                    },
+              where: { customerId: customerId, poStatus: 'Pending' },
+              include: {
+                contains: {
+                  include: {
+                    document: true,
+                  },
                 },
-            });
+              },
+              orderBy: {
+                startTime: 'asc',
+              },
+            })
             return {
                 status: 200,
                 data: res
@@ -202,6 +205,28 @@ export class PrintHistoryService {
 
     async addPrintRequest(dto: any) {
       try {
+
+        // check if remaining pages is enough
+        const customer = await this.prismaService.customer.findUnique({
+          where: { customerId: dto.customerId },
+        });
+        
+        if (customer.remainPages < dto.numCopies) {
+          return {
+            message: 'Not enough pages to print',
+            status: 400
+          }
+        }
+        else {
+          await this.prismaService.customer.update({
+            where: { customerId: dto.customerId },
+            data: {
+              remainPages: {
+                decrement: dto.numCopies,
+              },
+            },
+          });
+        }
         const create = await this.prismaService.printOrder.create({
           data: {
             attributes: dto.attributes,
@@ -279,6 +304,18 @@ export class PrintHistoryService {
               status: 404
             }
           }
+          // find the customer owning the print order
+          const customerId = printOrderExists.customerId;
+
+          // give customer the remain pages back
+          await this.prismaService.customer.update({
+            where: { customerId },
+            data: {
+              remainPages: {
+                increment: printOrderExists.numCopies,
+              },
+            },
+          })
           await this.prismaService.printOrder.delete({
             where: { printOrderId: id },
           });

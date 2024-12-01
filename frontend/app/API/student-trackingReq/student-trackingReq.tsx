@@ -22,3 +22,31 @@ export async function getAllPendingRequest(customerId: number) {
     return null;
   }
 }
+
+export async function updatePendingRequest(printOrderId: number, attributes : string) {
+  try {
+    console.log(printOrderId)
+    const cookies = parseCookies();
+    let accessToken = cookies.accessToken;
+
+    if (!accessToken) {
+      throw new Error("Access token not found.");
+    }
+
+    const response = await api.put(`print-history/request/${printOrderId}`, 
+      {
+        attributes: attributes
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error updating pending request:", error);
+    return null;
+    
+  }
+}

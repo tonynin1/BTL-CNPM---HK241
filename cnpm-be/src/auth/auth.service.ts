@@ -45,40 +45,45 @@ export class AuthService {
   }
 
   async signinLocal(dto: AuthDto): Promise<Tokens> {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: dto.email,
-      },
-    });
-
-    if (!user) throw new ForbiddenException('Access Denied');
-
-    const passwordMatches = await argon.verify(user.hash, dto.password);
-    if (!passwordMatches) throw new ForbiddenException('Access Denied');
-
-    const tokens = await this.getTokens(user.userId, user.email);
-    await this.updateRtHash(user.userId, tokens.refresh_token);
-
-
-    // usage use update
-    await this.prismaService.user.update({
-      where: {
-        email: dto.email,
-      },
-      data: {
-        usageHistory: new Date().toLocaleString('en-GB', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false
-        }).replace(/\//g, '-')
-      }
-    });
-    
-    return tokens;
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: {
+          email: dto.email,
+        },
+      });
+  
+      if (!user) throw new ForbiddenException('Access Denied');
+  
+      const passwordMatches = await argon.verify(user.hash, dto.password);
+      if (!passwordMatches) throw new ForbiddenException('Access Denied');
+  
+      const tokens = await this.getTokens(user.userId, user.email);
+      await this.updateRtHash(user.userId, tokens.refresh_token);
+  
+  
+      // usage use update
+      await this.prismaService.user.update({
+        where: {
+          email: dto.email,
+        },
+        data: {
+          usageHistory: new Date().toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          }).replace(/\//g, '-')
+        }
+      });
+      
+      return tokens;
+      
+    } catch (error) {
+      throw new ForbiddenException('Credentials incorrect');
+    }
   }
 
   async logout(userId: number): Promise<boolean> {
