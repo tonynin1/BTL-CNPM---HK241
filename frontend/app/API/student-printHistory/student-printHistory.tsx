@@ -1,7 +1,8 @@
+// http://localhost:8080/print-history/request/completed/:customerId
 import { parseCookies } from "nookies";
 import api from "../axiosInstance";
 
-export async function getAllStudents() {
+export async function getPrintOrdersByCustomerIdThatCompleted(customerId: number) {
   try {
     const cookies = parseCookies();
     let accessToken = cookies.accessToken;
@@ -10,20 +11,21 @@ export async function getAllStudents() {
       throw new Error("Access token not found.");
     }
 
-    const response = await api.get("customer/user", {
+    const response = await api.get(`print-history/request/completed/${customerId}`, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         }
     })
+
     return response.data;
     
   } catch (error) {
-    console.log("Error fetching all students:", error);
+    console.log("Error fetching print orders by customer id that completed:", error);
     return null;
   }
 }
 
-export async function getPrintHistoryByCustomerId(customerId: number) {
+export async function getPrintOrdersByCustomerId(customerId: number) {
   try {
     const cookies = parseCookies();
     let accessToken = cookies.accessToken;
@@ -37,10 +39,11 @@ export async function getPrintHistoryByCustomerId(customerId: number) {
             Authorization: `Bearer ${accessToken}`,
         }
     })
+
     return response.data;
     
   } catch (error) {
-    console.log("Error fetching print history by customer id:", error);
+    console.log("Error fetching print orders by customer id:", error);
     return null;
   }
 }

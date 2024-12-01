@@ -18,9 +18,15 @@ export class PrintHistoryService {
                     },
                 },
             });
+            const printer = await this.prismaService.printer.findUnique({
+                where: { printerId: res.printerId },
+            });
             return {
                 status: 200,
-                data: res
+                data: {
+                    res,
+                    printer,
+                }
             }
         } catch (error) {
             return {
@@ -66,10 +72,19 @@ export class PrintHistoryService {
                     },
                 },
             });
+
+            // get information of printer
+            const resWithPrinter = await Promise.all(res.map(async (order) => {
+                const printer = await this.prismaService.printer.findUnique({
+                    where: { printerId: order.printerId },
+                });
+                return { ...order, printer };
+            }));
             return {
                 status: 200,
-                data: res
+                data: resWithPrinter
             }
+            
         } catch (error) {
             return {
                 message: 'Internal server error: ' + error.message,
@@ -94,9 +109,18 @@ export class PrintHistoryService {
                 startTime: 'asc',
               },
             })
+
+            // get information of printer
+            const resWithPrinter = await Promise.all(res.map(async (order) => {
+                const printer = await this.prismaService.printer.findUnique({
+                    where: { printerId: order.printerId },
+                });
+                return { ...order, printer };
+            }));
             return {
                 status: 200,
-                data: res
+                data: resWithPrinter
+
             }
         } catch (error) {
             return {

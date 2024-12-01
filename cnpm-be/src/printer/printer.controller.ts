@@ -20,6 +20,10 @@ export class PrinterController {
         return this.printerService.getPrinterById(printerId);
     }
 
+    @Get('available')
+    getAllPrintersThatIsAvailable(){
+        return this.printerService.getAllPrintersThatIsAvailable();
+    }
     
     @Get('spsoMemberId/:spsoMemberId')
     getPrintersBySPSOMemberId(

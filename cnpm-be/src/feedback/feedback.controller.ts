@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { FeedbackService } from './feedback.service';
 import { createFeedbackDto, updateFeedbackDto } from './dto';
+import { patch } from 'axios';
 
 @Controller('feedback')
 export class FeedbackController {
@@ -27,6 +28,10 @@ export class FeedbackController {
         return this.feedbackService.updateFeedback(feedbackId, updateFeedbackDto);
     }
 
+    @Patch('update/customer/:customerId')
+    async updateFeedbackByCustomerId(@Param('customerId', ParseIntPipe) customerId: number,@Body() updateFeedbackDto: updateFeedbackDto) {
+        return this.feedbackService.updateFeedBackByCustomerId(customerId, updateFeedbackDto);
+    }
     @Delete('delete/:feedbackId')
     async deleteFeedback(@Param('feedbackId', ParseIntPipe) feedbackId: number) {
         return this.feedbackService.deleteFeedback(feedbackId);
