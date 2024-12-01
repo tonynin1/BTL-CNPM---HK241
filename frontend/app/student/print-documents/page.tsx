@@ -155,7 +155,14 @@ export default function Home() {
 
 
         function typeValidation(type){
-            return true
+            const validTypes = [
+                'application/pdf',
+                'image/jpeg',
+                'image/png',
+                'text/plain',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            ];
+            return validTypes.includes(type);
         }
 
         // upload file function
@@ -220,7 +227,6 @@ export default function Home() {
                 'image/jpeg': 'image.png',
                 'image/png': 'image.png',
                 'text/plain': 'text.png',
-
             };
 
             if (iconMap[type]) {

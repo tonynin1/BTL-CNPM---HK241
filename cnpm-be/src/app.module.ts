@@ -13,6 +13,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { PrintHistoryModule } from './print_history/print_history.module';
 import { FeedbackService } from './feedback/feedback.service';
 import { FeedbackModule } from './feedback/feedback.module';
+import { FileUploadModule } from './uploadfile/upload.module';
 import { PrinterModule } from './printer/printer.module';
 import { DocumentController } from './document/document.controller';
 import { DocumentService } from './document/document.service';
@@ -24,6 +25,7 @@ import { ContainsModule } from './contains/contains.module';
     PrismaModule, 
     UserModule, 
     AuthModule, 
+    FileUploadModule,
     CustomerModule,
     PaymentModule,
     TransactionAccountsModule,
