@@ -20,6 +20,24 @@ export class PrinterService {
         }
     }
 
+    async getallPrinterBySPSOMemberId(spsoMemberId: number) {
+        try {
+            const printers = await this.prisma.printer.findMany({
+                where: {
+                    spsomemberId: spsoMemberId
+                }
+            });
+            return {
+                data: printers,
+                status: 200
+            }
+        } catch (error) {
+            return {
+                message: 'Internal server error: ' + error.message,
+                status: 500
+            }
+        }
+    }
     async getPrinterById(printerId: number) {
         try {
             const printer = await this.prisma.printer.findFirst({
@@ -82,7 +100,6 @@ export class PrinterService {
     async updatePrinter(printerId: number, updateDto: updatePrinterDto) {
 
         try {
-            console.log(updateDto);
             await this.prisma.printer.update({
                 where: {
                     printerId: printerId
@@ -91,7 +108,8 @@ export class PrinterService {
                     building: updateDto.building,
                     facility: updateDto.facility,
                     room: updateDto.room,
-                    spsomemberId: updateDto.spsomemberId
+                    spsomemberId: updateDto.spsomemberId,
+                    status: updateDto.status
                 }
             });
             return {

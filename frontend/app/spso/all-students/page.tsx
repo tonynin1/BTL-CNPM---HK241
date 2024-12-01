@@ -3,13 +3,12 @@ import MyFooter from "@/app/ui/MyFooter";
 import PrintHistory from "@/app/ui/PrintHistory";
 import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation"; // Để điều hướng
-import { useUserSession } from "@/app/API/getMe";
+import { redirect } from "next/navigation"; // Để điều hướng
+import { useUserSessionForSPSO } from "@/app/API/getMe";
 import { getAllStudents } from "@/app/API/spso-allStudents/spso-allStudents";
 import LoadingPage from "@/app/ui/LoadingPage";
 
 export default function Page() {
-  const router = useRouter();
 
   const students = [
     {
@@ -45,26 +44,28 @@ export default function Page() {
   ];
   // const { userInfo, loggedIn } = useUserSession();
   // const [allStudents , setAllStudents] = useState<any>(null);
+  const { userInfo, loggedIn } = useUserSessionForSPSO();
+  const [allStudents , setAllStudents] = useState<any>(null);
 
-  // const fetching = async () => {
-  //   let data = await getAllStudents();
-  //   setAllStudents(data);
-  // }
+  const fetching = async () => {
+    let data = await getAllStudents();
+    setAllStudents(data);
+  }
   
-  // useEffect(() => {
-  //   fetching();
-  // }, []);
-  // console.log(allStudents);
+  useEffect(() => {
+    fetching();
+  }, []);
+  console.log(allStudents);
   
 
-  // if (!userInfo || !allStudents) {
-  //   return <LoadingPage></LoadingPage>
-  // }
+  if (!userInfo || !allStudents) {
+    return <LoadingPage></LoadingPage>
+  }
 
 
-  // if (userInfo.role === 'STUDENT'){
-  //   redirect('/student')
-  // }
+  if (userInfo.role === 'STUDENT'){
+    redirect('/student')
+  }
 
   const [isShowPrintHis, setIsShowPrintHis] = useState(false);
   function handlePrintHistory() {
@@ -88,7 +89,7 @@ export default function Page() {
               </tr>
             </thead>
             <tbody>
-              {students.map((student : any) => (
+              {allStudents.map((student : any) => (
                 <tr key={student.userId} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
                   <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.fname + ' ' + student.lname}</td>
                   <td className='px-6 py-4'>{student.userId}</td>

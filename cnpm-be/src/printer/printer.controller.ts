@@ -13,11 +13,18 @@ export class PrinterController {
         return this.printerService.getAllPrinter(); 
     }
 
-    @Get('printerId')
+    @Get('printerId/:printerId')
     getPrinterbyId(
-        @Query('printerId', ParseIntPipe) printerId: number
+        @Param('printerId', ParseIntPipe) printerId: number
     ){
         return this.printerService.getPrinterById(printerId);
+    }
+
+    @Get('spsoMemberId/:spsoMemberId')
+    getPrintersBySPSOMemberId(
+        @Param('spsoMemberId', ParseIntPipe) spsoMemberId: number
+    ){
+        return this.printerService.getallPrinterBySPSOMemberId(spsoMemberId);
     }
 
     @Post('create')

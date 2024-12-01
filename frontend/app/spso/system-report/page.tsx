@@ -16,7 +16,7 @@ import person3 from "@/public/person3.jpg"
 import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import { getUserInfo } from "@/app/API/userInfo";
 import { redirect } from "next/navigation";
-import { useUserSession } from "@/app/API/getMe";
+import { useUserSessionForSPSO } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 import MyFooter from "@/app/ui/MyFooter";
 import UserFeedbackCard from "@/app/component/UserFeedbackCard";
@@ -24,7 +24,8 @@ import LineChart from "@/app/component/LineChart";
 import DoughnutChart from "@/app/component/DoughnutChart";
 
 export default function Home() {
-  // const { userInfo, loggedIn } = useUserSession();
+
+  const { userInfo, loggedIn } = useUserSessionForSPSO();
 
   // if (!userInfo) {
   //   return <LoadingPage></LoadingPage>

@@ -29,7 +29,7 @@ export class DocumentController {
 
     @Post('create')
     createDocument(
-        createDto: createDocumentDto
+        @Body() createDto: createDocumentDto
     ){
         return this.documentService.createDocument(createDto);
     }
