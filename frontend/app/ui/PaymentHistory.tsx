@@ -54,9 +54,9 @@ export default function PaymentHistory({ onClick, customerId }: { onClick: () =>
                 throw new Error("Access token not found.");
             }
 
-            await api.patch('payment/update-status/method/office', {
-                ppoId,
-                newStatus
+            await api.put('payment/update-status/method/office', {
+                ppoId : ppoId,
+                ppoStatus: newStatus
             }, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -65,9 +65,12 @@ export default function PaymentHistory({ onClick, customerId }: { onClick: () =>
 
             setPaymentHistory(prevHistory => 
                 prevHistory.map(payment => 
-                    payment.ppoId === ppoId ? { ...payment, ppoStatus: newStatus } : payment
+                    payment.ppoId === ppoId 
+                        ? { ...payment, ppoStatus: newStatus }
+                        : payment
                 )
             );
+
         } catch (error) {
             console.error('Error updating payment status:', error);
             alert('Failed to update payment status. Please try again later.');
@@ -123,9 +126,9 @@ export default function PaymentHistory({ onClick, customerId }: { onClick: () =>
                                             onChange={(e) => handleStatusUpdate(item.ppoId, e.target.value)}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option value="PENDING">Pending</option>
-                                            <option value="COMPLETED">Success</option>
-                                            <option value="CANCELLED">Failed</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Success">Success</option>
+                                            <option value="Failed">Failed</option>
                                         </select>
                                     ) : (
                                         <span className="px-2 py-1">{item.ppoStatus}</span>
