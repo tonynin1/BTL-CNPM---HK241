@@ -15,11 +15,16 @@ export default function page() {
   const [allSpso, setAllSpso] = useState([]);
   const [allPrinters, setAllPrinters] = useState([]);
 
-  const updatePrinterStatus = async (printerId: number, updateData: any) => {
+  const updatePrinterStatus = async (printerId: number, updateData: any, index: number) => {
     console.log(updateData);
 
     await updatePrinter(printerId, updateData);
-    fetching();
+    // fetching();
+    const newAllPrinters = [...allPrinters];
+
+    newAllPrinters[index].status = updateData.status;
+
+    setAllPrinters(newAllPrinters);
   }
 
   const fetching = async () => {
@@ -162,13 +167,13 @@ export default function page() {
                         printer.status === 'VALID' ? (
                             <button 
                               className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded duration-300'
-                              onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'INVALID'})}}
+                              onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'INVALID'}, index)}}
                             >
                               Vô hiệu máy in
                             </button>
                           ) : (
                             <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded duration-300'
-                              onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'VALID'})}}
+                              onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'VALID'}, index)}}
                             >
                               Mở máy in
                             </button>
@@ -179,13 +184,15 @@ export default function page() {
               </tr>
               ))}
           </tbody>
+        </table>
+        <div className='w-fit ml-auto'>
           <button 
-            className='bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 mt-2 rounded absolute right-0'
+            className='bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded'
             onClick={e => setIsShowAddPrinterModal(true)}
           >
             Thêm máy in
           </button>
-        </table>
+        </div>
 
         
       </div>
