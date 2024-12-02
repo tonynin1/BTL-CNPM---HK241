@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { OnSiteDepositDto } from './dtos/on-site.deposit.dto';
 import { OnSiteAccountService } from './on-site/on-site.service';
 
@@ -12,11 +12,11 @@ export class TransactionAccountsController {
     }
 
     @Get('/deposit/history')
-    async getDepositHistory(@Body() customerId : number) {
-        return await this.onsite_account.getDepositHistory(customerId)
+    async getDepositHistory(@Query('customerId') customerId: string) {
+        return await this.onsite_account.getDepositHistory(+customerId);
     }
     
-    @Get('/balance/:customerId')
+    @Get('/balance')
     async getAccountBalance(@Param() customerId : number) {
         return await this.onsite_account.getAccountBalance(customerId)
     }

@@ -7,9 +7,42 @@ import { redirect } from "next/navigation"; // Để điều hướng
 import { useUserSessionForSPSO } from "@/app/API/getMe";
 import { getAllStudents } from "@/app/API/spso-allStudents/spso-allStudents";
 import LoadingPage from "@/app/ui/LoadingPage";
+import PaymentHistory from "@/app/ui/PaymentHistory";
 
 export default function Page() {
 
+  const students = [
+    {
+      name: 'Nguyen Van A',
+      print_count: 'student1',
+      id: '2213982',
+    },
+    {
+      name: 'Le Thi B',
+      print_count: 'student2',
+      id: '2213983',
+    },
+    {
+      name: 'Tran Van C',
+      print_count: 'student3',
+      id: '2213984',
+    },
+    {
+      name: 'Pham Thi D',
+      print_count: 'student4',
+      id: '2213985',
+    },
+    {
+      name: 'Nguyen Van E',
+      print_count: 'student5',
+      id: '2213986',
+    },
+    {
+      name: 'Hoang Thi F',
+      print_count: 'student6',
+      id: '2213987',
+    },
+  ];
   const { userInfo, loggedIn } = useUserSessionForSPSO();
   const [allStudents , setAllStudents] = useState<any>(null);
   const [isShowPrintHis, setIsShowPrintHis] = useState(false);
@@ -37,8 +70,12 @@ export default function Page() {
     setCustomerId(customerId);
     setIsShowPrintHis(!isShowPrintHis);
   }
+
   return (
     <div className="h-screen relative">
+      {isShowPrintHis 
+      && <PrintHistory onClick={handlePrintHistory}/>
+      && <PaymentHistory onClick={handlePaymentHistory}/>}
       {isShowPrintHis && <PrintHistory onClick={handlePrintHistory} customerId={customerId}/>}
 
       <SPSOHeader header = {userInfo as SPSOHeaderProps}/>
@@ -50,7 +87,8 @@ export default function Page() {
                 <th scope="col" className='px-6 py-3'>Tên</th>
                 <th scope="col" className='px-6 py-3'>MSSV</th>
                 <th scope="col" className='px-6 py-3'>Lần sử dụng gần nhất</th>
-                <th scope="col" className='px-6 py-3 text-center'>Hành động</th>
+                <th scope="col" className='px-6 py-3'>Lịch sử in</th>
+                <th scope="col" className='px-6 py-3'>Lịch sử mua trang</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +105,16 @@ export default function Page() {
                       }}  
                     >
                       Xem lịch sử in
+                    </button>
+                  </td>
+                  <td className='px-6 py-4'>
+                    <button 
+                      className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                      onClick={() => {
+                        handlePrintHistory(student.customer.customerId);
+                      }}  
+                    >
+                      Xem lịch sử mua trang
                     </button>
                   </td>
                 </tr>
