@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from 'react'
 import AdminHeader, { ADMINHeaderProps } from '@/app/ui/AdminHeader'
 import MyFooter from '../ui/MyFooter';
-import { getAllUsers, getAllPrinters, updatePrinter } from '../API/admin/admin';
+import { getAllUsers, getAllPrinters, updatePrinter, deletePrinter, deleteStudent, deleteSPSO } from '../API/admin/admin';
 import AddPrinterModal from '../component/AddPrinterModal';
 import { useUserSessionForADMIN } from '../API/getMe';
 import { redirect } from 'next/navigation';
@@ -32,16 +32,10 @@ export default function page() {
     let printers = await getAllPrinters();
 
     setAllPrinters(printers);
-    // console.log(printers);
 
-    // console.log('data', data);
   }
 
-  // console.log('allStudents', allStudents);
 
-  // console.log('allSpso', allSpso);
-
-  console.log('allPrinters', allPrinters);
 
   const [isShowAddPrinterModal, setIsShowAddPrinterModal] = useState(false);
   
@@ -80,10 +74,19 @@ export default function page() {
                 <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{spso.fname} {spso.lname}</td>
                 <td className='px-6 py-4'>{spso.email}</td>
                 <td className='px-6 py-4'>{spso.phone}</td>
-                <td className='px-6 py-4'>{spso.createAt}</td>
+                <td className='px-6 py-4'>{new Date(spso.createAt).toLocaleDateString('en-GB')}</td>
                 <td className='px-6 py-4'>
-                  <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
-                    Xóa spso
+                  <button onClick={async () => {{
+                    const res = await deleteSPSO(spso.userId);
+                    if (res) {
+                      alert('Xóa SPSO thành công');
+                      window.location.reload();
+                    }
+                    else {
+                      alert('SPSO này đang bận xủ lí đơn hàng, không thể xóa');
+                    }
+                  }}} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
+                    Xóa SPSO
                   </button>
                 </td>
               </tr>
@@ -110,10 +113,21 @@ export default function page() {
                 <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.fname} {student.lname}</td>
                 <td className='px-6 py-4'>{student.email}</td>
                 <td className='px-6 py-4'>{student.phone}</td>
-                <td className='px-6 py-4'>{student.createAt}</td>
+                <td className='px-6 py-4'>{new Date(student.createAt).toLocaleDateString('en-GB')}</td>
                 <td className='px-6 py-4'>
-                  <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
-                    Xóa student
+                  <button onClick={async () => {
+                    console.log(student.userId)
+                    const res = await deleteStudent(student.userId);
+
+                    if (res.status === 200) {
+                      alert('Xóa sinh viên thành công');
+                      window.location.reload();
+                    }
+                    else {
+                      alert('Sinh viên này đang bận xủ lí đơn hàng, không thể xóa');
+                    }
+                  }} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
+                    Xóa sinh viên
                   </button>
                 </td>
               </tr>
@@ -147,7 +161,7 @@ export default function page() {
                   <td className='px-6 py-4'>{printer.facility}</td>
                   <td className='px-6 py-4'>{printer.building}</td>
                   <td className='px-6 py-4'>{printer.room}</td>
-                  <td className='px-6 py-4 text-center'>1</td>
+                  <td className='px-6 py-4 text-center'>{printer.spsomemberId}</td>
                   <td className='px-6 py-4 text-center'>
                       {
                         printer.status === 'VALID' ? (
@@ -174,7 +188,22 @@ export default function page() {
                             </button>
                         )
                       }
-                      <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>Xóa máy in</button>
+                      <button onClick={async () => {
+                        // console log this printerId
+                        console.log(printer.printerId);
+                        if (confirm(`Bạn có chắc chắn muốn xóa máy in do SPSO có mã số ${printer.spsomemberId} quản lý không?`))
+                       { 
+                        const res = await deletePrinter(printer.printerId);
+                        if (res.status === 200){
+                          alert('Xóa máy in thành công');
+                          window.location.reload();
+                        }
+                        else{
+                          alert('Máy in này đang bận xủ lí đơn hàng, không thể xóa');
+                        }
+                      }
+
+                      }}className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>Xóa máy in</button>
                   </td>
               </tr>
               ))}
