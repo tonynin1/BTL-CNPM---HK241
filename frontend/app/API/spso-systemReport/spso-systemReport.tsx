@@ -88,6 +88,28 @@ export async function getSumPrintedPage() {
       return null;
     }
   }
+  // export async function getAllFeedbacks() {
+  //   try {
+  //     const cookies = parseCookies();
+  //     let accessToken = cookies.accessToken;
+  
+  //     if (!accessToken) {
+  //       throw new Error("Access token not found.");
+  //     }
+  
+  //     const response = await api.get("feedback", {
+  //         headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //         }
+  //     })
+  //     return response.data;
+      
+  //   } catch (error) {
+  //     console.log("Error fetching all students:", error);
+  //     return null;
+  //   }
+  // }
+
   export async function getAllFeedbacks() {
     try {
       const cookies = parseCookies();
@@ -97,7 +119,7 @@ export async function getSumPrintedPage() {
         throw new Error("Access token not found.");
       }
   
-      const response = await api.get("feedback", {
+      const response = await api.get("feedback/all", {
           headers: {
               Authorization: `Bearer ${accessToken}`,
           }
