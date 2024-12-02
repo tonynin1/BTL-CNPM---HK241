@@ -136,9 +136,12 @@ export default function Page() {
           }
         });
         setPaymentHistory(paymentHistoryResponse.data);
-        alert(formData.paymentMethod === "Office" 
-          ? "Please make the payment at the office to complete the purchase!"
-          : "Successful purchase!");
+        
+        if(formData.paymentMethod === "Office"){
+          alert("Please make the payment at the office to complete the purchase!");
+        } else {
+          alert(response.data.message);
+        }
       }
     } catch (error) {
       alert("Error: " + error);
