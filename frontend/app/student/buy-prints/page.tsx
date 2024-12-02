@@ -134,24 +134,24 @@ export default function Page() {
         <div className="w-1/2 bg-white h-fit rounded-lg p-4 shadow-lg shadow-slate-200">
           <div>
             <div className="text-lg text-center font-semibold pb-6">
-              Buys pages
+              Mua thêm trang in
             </div>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
               <div className="flex justify-between items-center px-10 gap-10 ">
                 <label htmlFor="totalPages" className="w-1/3">
-                  Number of pages
+                  Số lượng trang 
                 </label>
                 <input
                   type="number"
                   name="totalPages"
                   className="flex-auto text-center p-2"
                   onChange={handleInputChange}
-                  placeholder="enter a number"
+                  placeholder="Nhập số lượng trang"
                 />
               </div>
               <div className="flex justify-between items-center px-10 gap-10 ">
                 <label htmlFor="paperType" className="w-1/3">
-                  Payment method
+                  Phương thức thanh toán
                 </label>
                 <select
                   name="paymentMethod"
@@ -159,21 +159,20 @@ export default function Page() {
                   className="flex-auto text-center p-2"
                   onChange={handleInputChange}
                 >
-                  <option value="null">Payment method</option>
-                  <option value="Office">Pay at office</option>
-                  <option value="Onsite">Pay on site</option>
+                  <option value="Office">Trả tại văn phòng</option>
+                  <option value="Onsite">Thanh toán trực tiếp</option>
                 </select>
               </div>
 
               <div className="flex justify-between items-center px-10 gap-10">
-                <span>Total</span>
+                <span>Tổng</span>
                 <span>{money} VND</span>
               </div>
               <button
                 type="submit"
                 className="bg-[#353535] text-white rounded-lg p-2"
               >
-                Submit
+                Hoàn tất
               </button>
             </form>
           </div>

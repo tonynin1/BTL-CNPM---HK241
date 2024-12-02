@@ -64,15 +64,15 @@ export default function Home() {
                         <thead>
                             <tr>
                                 <th>Chọn</th>
-                                <th>Print Order Id</th>
-                                <th>Attributes</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>PO Status</th>
-                                <th>Num Copies</th>
-                                <th>Building</th>
-                                <th>Room</th>
-                                <th>SPSO Id</th>
+                                <th>ID đơn in</th>
+                                <th>Thông số in</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Trạng thái đơn</th>
+                                <th>Số bản sao</th>
+                                <th>Tòa</th>
+                                <th>Phòng</th>
+                                <th>ID SPSO</th>
                             </tr>
                         </thead>
                         {allPendingReq? (<tbody>
@@ -93,7 +93,7 @@ export default function Home() {
                         </tbody>) : null}
                     </table>
                     <div className="Button">
-                        <button type="button" className="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
+                        <button type="button" className="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">Sửa</button>
                         <button type="button" className="btn btn-outline-danger" onClick={() => {
                             // Retrieve all rows in the table
                             const tableRows = document.querySelectorAll("table tbody tr");
@@ -120,7 +120,7 @@ export default function Home() {
                             });
                             // // reload the page
                             window.location.reload();
-                        }}>Delete</button>
+                        }}>Xóa</button>
                     </div>
                     <div className="modal fade" id="exampleModalCenter" tabIndex={-1} role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-centered" role="document">

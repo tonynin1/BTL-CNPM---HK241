@@ -198,7 +198,7 @@ export default function page() {
                   <div className="col-lg-12">
                     <textarea
                       name="content"
-                      placeholder="Your review"
+                      placeholder="Nhận xét của bạn về dịch vụ"
                       className="rounded-lg w-full h-32 p-4"
                       onChange={handleInputChange}
                     />
@@ -242,7 +242,7 @@ export default function page() {
                     </span>
                   </div>
                   <div className=" w-fit ml-auto px-4 py-2 rounded-md text-white bg-blue-700 hover:bg-blue-500 transition-all hover:cursor-pointer">
-                    {!isSendingFeedback ? <button type="submit">SUBMIT</button> : <MdCloudUpload />}
+                    {!isSendingFeedback ? <button type="submit">GỬI</button> : <MdCloudUpload />}
                   </div>
                   <ToastContainer />
                 </div>
