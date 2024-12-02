@@ -31,10 +31,10 @@ export default function PrintHistory( {printOrder, customerId, onClick} : {
     }
   return (
     <div 
-        className={`absolute top-0 left-0 right-0 bottom-0 flex justify-center z-50 bg-black/[0.2] print_history_modal`}
+        className={`fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center z-50 bg-black/[0.2] print_history_modal`}
         onClick={onClick}
     >
-        <div className="relative p-4 shadow-2xl sm:rounded-lg max-h-[700px] mt-8 bg-white dark:bg-gray-800">
+        <div className="relative p-4 shadow-2xl sm:rounded-lg max-h-[700px] h-full bg-white dark:bg-gray-800">
             <div 
                 className=" overflow-y-scroll max-h-[600px]"
                 onClick={(e) => e.stopPropagation()}

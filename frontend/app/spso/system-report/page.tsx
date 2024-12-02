@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import React from 'react';
 
-import person1 from "@/public/person1.jpg"
-import person2 from "@/public/person2.jpg"
-import person3 from "@/public/person3.jpg"
+import person1 from "@/public/anonymous-png.png"
+
 import SPSOHeader, { SPSOHeaderProps } from "@/app/ui/SPSOHeader";
 import { redirect } from "next/navigation";
 import { useUserSessionForSPSO } from "@/app/API/getMe";
@@ -13,7 +12,7 @@ import MyFooter from "@/app/ui/MyFooter";
 import UserFeedbackCard from "@/app/component/UserFeedbackCard";
 import DoughnutChart from "@/app/component/DoughnutChart";
 
-import { getSumStudents, getSumSpso, getSumPrintedPage } from "@/app/API/spso-systemReport/spso-systemReport";
+import { getSumStudents, getSumSpso, getSumPrintedPage, getAllFeedbacks, getStudentByID } from "@/app/API/spso-systemReport/spso-systemReport";
 import BarChart from "@/app/component/BarChart";
 
 export default function Home() {
@@ -22,6 +21,7 @@ export default function Home() {
   const [studentCount, setStudentCount] = useState([]);
   const [spsoCount, setSpsoCount] = useState([]);
   const [printedCount, setPrintedCount] = useState([]);
+  const [feedbacks, setFeedbacks] = useState([]);
 
   const fetching = async () => {
     let student_count = await getSumStudents();
@@ -32,6 +32,9 @@ export default function Home() {
 
     let printed_count = await getSumPrintedPage();
     setPrintedCount(printed_count);
+
+    let feedbackList = await getAllFeedbacks();
+    setFeedbacks(feedbackList);
   }
 
   useEffect(() => {
@@ -93,15 +96,15 @@ export default function Home() {
       <div className="container py-8 rounded shadow my-8">
         <p className="text-center font-bold text-xl">Đánh giá người dùng</p>
         <div className="flex flex-wrap gap-2 justify-center">
-          <div className="w-[23%]">
-            <UserFeedbackCard rating={4} imgSrc={person1}/>
-          </div>
-          <div className="w-[23%]">
-            <UserFeedbackCard rating={4} imgSrc={person2}/>
-          </div>
-          <div className="w-[23%]">
-            <UserFeedbackCard rating={4} imgSrc={person3}/>
-          </div>
+          {
+            feedbacks.map((feedback: any) => {
+              return (
+                <div className="w-[23%]">
+                  <UserFeedbackCard name="Người dùng" key={feedback.feedbackId} rating={feedback.rating} content={feedback.contentByCustomer} time={feedback.feedTime} imgSrc={person1}/>
+                </div>
+              )
+            })
+          }
         </div>
       </div>
 

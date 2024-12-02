@@ -231,7 +231,7 @@ export default function page() {
                   </caption>
                   <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                       <tr>
-                      <th scope="col" className='px-6 py-3'>Print order ID</th>
+                      <th scope="col" className='px-6 py-3'>ID đơn in</th>
                       <th scope="col" className='px-6 py-3'>Thuộc tính</th>
                       <th scope="col" className='px-6 py-3'>Thời gian tạo</th>
                       <th scope="col" className='px-6 py-3'>Thời gian in</th>

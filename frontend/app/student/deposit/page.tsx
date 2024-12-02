@@ -147,7 +147,7 @@ export default function Page() {
       <div className="flex justify-between p-6">
         <div className="flex-grow"></div>
         <div className="text-white">
-          Balance: {accountBalance !== null ? `${accountBalance} VND` : 'Loading...'}
+          Số dư: {accountBalance !== null ? `${accountBalance} VND` : 'Loading...'}
         </div>
       </div>
       <div className="flex justify-center p-6 h-fit">
@@ -159,21 +159,21 @@ export default function Page() {
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
               <div className="flex justify-between items-center px-10 gap-10 ">
                 <label htmlFor="money" className="w-1/3">
-                  Amount of money
+                  Số tiền muốn nạp
                 </label>
                 <input
                   type="number"
                   name="money"
                   className="flex-auto text-center p-2"
                   onChange={handleInputChange}
-                  placeholder="enter a number"
+                  placeholder="Nhập số tiền"
                 />
               </div>
               <button
                 type="submit"
                 className="bg-[#353535] text-white rounded-lg p-2"
               >
-                Confirm
+                Hoàn tất
               </button>
             </form>
           </div>
@@ -185,10 +185,10 @@ export default function Page() {
             <table className="table-auto w-full">
               <thead className="text-center">
                 <tr>
-                  <th className="w-[calc(100%-80%)]">Deposit Id</th>
-                  <th className="w-[calc(100%-80%)]">Deposit date</th>
-                  <th className="w-[calc(100%-80%)]">Amount</th>
-                  <th className="w-[calc(100%-80%)]">Status</th>
+                  <th className="w-[calc(100%-80%)]">ID đơn nạp tiền</th>
+                  <th className="w-[calc(100%-80%)]">Ngày nạp</th>
+                  <th className="w-[calc(100%-80%)]">Số lượng</th>
+                  <th className="w-[calc(100%-80%)]">Trạng thái</th>
                 </tr>
               </thead>
               <tbody className="text-center">
@@ -196,7 +196,7 @@ export default function Page() {
                   <tr key={index}>
                     <td>{deposit.depositId}</td>
                     <td>{new Date(deposit.depositTime).toLocaleDateString()}</td>
-                    <td>{deposit.amount}</td>
+                    <td>{deposit.amount} VND</td>
                     <td>{deposit.depositStatus}</td>
                   </tr>
                 ))}

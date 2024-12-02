@@ -26,6 +26,10 @@ export default function page() {
   if (userInfo.role === 'STUDENT'){
     redirect('/student')
   }
+
+  if(userInfo.role === 'ADMIN'){
+    redirect('/admin')
+  }
   return (
     <div>
       <SPSOHeader header={userInfo as SPSOHeaderProps} />

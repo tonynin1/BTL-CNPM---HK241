@@ -12,6 +12,9 @@ import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "../API/getMe";
 import LoadingPage from "../ui/LoadingPage";
 import { createFeedBack } from "../API/student_homePage/student_homePage";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { MdCloudUpload } from "react-icons/md";
 
 export default function page() {
 
@@ -30,6 +33,8 @@ export default function page() {
     }));
   }, [starRate]);
 
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false);
+
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>;
@@ -38,15 +43,22 @@ export default function page() {
   if (userInfo.role === "SPSO") {
     redirect("/spso");
   }
+
+  if(userInfo.role === "ADMIN"){
+    redirect('/admin')
+  }
   const handleSubmit = async (e: any) => {
     // e.preventDefault(); // Prevent default form submission behavior
     console.log("Form data:", formData);
+    setIsSendingFeedback(true);
     try {
       const response = await createFeedBack(userInfo.customerId, formData.starRating, formData.content);
+      toast.success("Gửi ý kiến thành công!");
     } catch (error) {
       console.log("Error creating feedback:", error);
-      
+      toast.error("Có lỗi!!")
     }
+    setIsSendingFeedback(false);
   };
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -190,7 +202,7 @@ export default function page() {
                   <div className="col-lg-12">
                     <textarea
                       name="content"
-                      placeholder="Your review"
+                      placeholder="Nhận xét của bạn về dịch vụ"
                       className="rounded-lg w-full h-32 p-4"
                       onChange={handleInputChange}
                     />
@@ -233,9 +245,10 @@ export default function page() {
                       {starRate ? starRate : ""}
                     </span>
                   </div>
-                  <div className=" w-fit ml-auto px-4 py-2 rounded-md text-white bg-blue-400">
-                    <button>SUBMIT</button>
+                  <div className=" w-fit ml-auto px-4 py-2 rounded-md text-white bg-blue-700 hover:bg-blue-500 transition-all hover:cursor-pointer">
+                    {!isSendingFeedback ? <button type="submit">GỬI</button> : <MdCloudUpload />}
                   </div>
+                  <ToastContainer />
                 </div>
               </form>
             </div>

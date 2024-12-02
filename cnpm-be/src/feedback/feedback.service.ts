@@ -87,7 +87,7 @@ export class FeedbackService {
                 data: {
                     feedTime: new Date(),
                     rating: createFeedbackDto.rating? createFeedbackDto.rating : 0,
-                    contentByCustomer: "",
+                    contentByCustomer: createFeedbackDto.contentBySPSO? createFeedbackDto.contentBySPSO : 'Null feedback',
                     customer: {
                         connect: {
                             customerId: createFeedbackDto.customerId,
@@ -131,7 +131,7 @@ export class FeedbackService {
                 },
                 data: {
                     rating: updateFeedbackDto.rating? updateFeedbackDto.rating : feedback.rating,
-                    contentByCustomer: updateFeedbackDto.contentByCustomer? updateFeedbackDto.contentByCustomer : feedback.contentByCustomer,
+                    contentByCustomer: updateFeedbackDto.contentBySPSO? updateFeedbackDto.contentBySPSO : feedback.contentByCustomer,
                 },
             });
 

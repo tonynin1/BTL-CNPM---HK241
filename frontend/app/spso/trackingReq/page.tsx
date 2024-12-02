@@ -80,13 +80,13 @@ export default function Home() {
                     <table className="table table-dark table-striped">
                         <thead>
                             <tr>
-                                <th>Print Order Id</th>
-                                <th>Attributes</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>PO Status</th>
-                                <th>Num Copies</th>
-                                <th>Chose</th>
+                                <th>ID đơn in</th>
+                                <th>Thông số in</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Trạng thái đơn in</th>
+                                <th>Số bản sao</th>
+                                <th>Chọn</th>
                             </tr>
                         </thead>
                         <tbody>
