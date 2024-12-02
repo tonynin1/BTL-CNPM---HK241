@@ -6,8 +6,11 @@ import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
 import '@/app/globals.css'
 
-
-export default function StudentHeader() {
+export interface ADMINHeaderProps {
+  fname: string;
+  role: string;
+}
+export default function StudentHeader({header}: {header: ADMINHeaderProps}) {
   const [time, setTime] = useState(900) 
   const [minute, setMinute] = useState(Math.floor(time/60))
   const [second, setSecond] = useState(Number(time%60))

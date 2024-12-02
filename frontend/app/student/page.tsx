@@ -43,6 +43,10 @@ export default function page() {
   if (userInfo.role === "SPSO") {
     redirect("/spso");
   }
+
+  if(userInfo.role === "ADMIN"){
+    redirect('/admin')
+  }
   const handleSubmit = async (e: any) => {
     // e.preventDefault(); // Prevent default form submission behavior
     console.log("Form data:", formData);

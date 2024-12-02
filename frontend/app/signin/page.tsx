@@ -38,9 +38,17 @@ export default function Login() {
         // router.push('/student');
         redirect('/student')
       }
-      else {
+      else if(user.role === 'SPSO') {
         // router.push('/spso');
         redirect('/spso')
+      }
+      else if(user.role === 'ADMIN') {
+        // router.push('/admin');
+        redirect('/admin')
+      }
+      else {
+        // router.push('/signin');
+        redirect('/signin')
       }
 
   }
