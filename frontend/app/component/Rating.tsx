@@ -19,7 +19,7 @@ function Rating({ currentRate }: RatingProps) {
           return (
             <label
               key={i}
-              className="relative cursor-pointer inline-block transform ease-linear duration-300 hover:scale-120 hover:fill-[#ff9e0b] hover:drop-shadow-[0_0_5px_rgba(255,158,11,0.9)]"
+              className="relative inline-block transform ease-linear duration-300"
             >
               {/* Adjust size of stars */}
               <div className="w-4"></div>
@@ -27,13 +27,12 @@ function Rating({ currentRate }: RatingProps) {
                 type="radio"
                 name="rating"
                 value={ratingValue}
-                onClick={() => setStarRate(ratingValue)}
                 className="absolute appearance-none -z-50"
               />
               <svg
                 viewBox="0 0 576 512"
                 xmlns="http://www.w3.org/2000/svg"
-                className={`cursor-pointer ease-linear duration-300 hover:fill-[#ff9e0b] hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,158,11,0.9)]
+                className={`ease-linear duration-300 
                             ${
                               ratingValue <= starRate
                                 ? "fill-[#ff9e0b] drop-shadow-[0_0_5px_rgba(255,158,11,0.9)]"
