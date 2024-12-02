@@ -1,14 +1,13 @@
 
 import { refreshAccessToken } from "@/app/API/authService";
-import { useRouter} from 'next/navigation'
-import { setCookie, destroyCookie, parseCookies } from 'nookies';
+import { parseCookies } from 'nookies';
 import api from "./axiosInstance"
 
 export async function getUserInfo() {
     try {
       const cookies = parseCookies();
       let accessToken = cookies.accessToken;
-  
+
       if (!accessToken) {
         // Nếu không có accessToken, thử làm mới
         accessToken = await refreshAccessToken();
@@ -18,6 +17,7 @@ export async function getUserInfo() {
         headers: {
           Authorization: `Bearer ${accessToken}`, // Gửi token trong header
         },
+        withCredentials: true
       });
   
       console.log(response.data);

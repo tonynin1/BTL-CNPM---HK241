@@ -13,12 +13,32 @@ export class CustomerService {
         return await this.prisma.customer.findMany();
     }
 
+    // get sum of all customers
+    async getSumOfAllCustomers() {
+        return await this.prisma.customer.count();
+    }
     async getAllCustomersWithUser() {
-        return await this.prisma.user.findMany({
+        const users = await this.prisma.user.findMany({
             where: {
                 role: 'STUDENT'
             }
         });
+
+        // reuturn users with customer
+        let usersWithCustomer = [];
+        for (let i = 0; i < users.length; i++) {
+            let customer = await this.prisma.customer.findFirst({
+                where: {
+                    userId: users[i].userId
+                }
+            });
+            usersWithCustomer.push({
+                user: users[i],
+                customer: customer
+            });
+        }
+
+        return usersWithCustomer;
     }
     async getCustomerByUserId(userId: number) {
         const cus = await this.prisma.customer.findFirst({

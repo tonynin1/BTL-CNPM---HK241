@@ -37,7 +37,7 @@ export class PaymentOrderService{
                         purchaseTime: purchaseTimeISO,
                         customerId: customerId,
                         ppoStatus: "failed",
-                        pageNum: order_data.pageNum,
+                        pageNum: +order_data.pageNum,
                         price: order_data.price,
                         paymentMethod: order_data.paymentMethod,
                     }
@@ -54,22 +54,27 @@ export class PaymentOrderService{
                     customerId: customerId
                 },
                 data: {
-                    remainPages: current_page_num.remainPages + order_data.pageNum
+                    remainPages: current_page_num.remainPages + +order_data.pageNum
                 }
             })
 
             await this.payment_onsite.updateSSPSBalance(order_data, customer_balance)
 
-            return await prisma.pagePurchaseOrder.create({
+            await prisma.pagePurchaseOrder.create({
                 data: {
                     purchaseTime: purchaseTimeISO,
                     customerId: customerId,
                     ppoStatus: "success",
-                    pageNum: order_data.pageNum,
+                    pageNum: +order_data.pageNum,
                     price: order_data.price,
                     paymentMethod: order_data.paymentMethod,
                 }
             });
+
+            return {
+                status : "success",
+                message : "Successful purchase!"
+            }
         }
         if(method == "Office") {
             await prisma.customer.update({
@@ -77,7 +82,7 @@ export class PaymentOrderService{
                     customerId: customerId
                 },
                 data: {
-                    remainPages: current_page_num.remainPages + order_data.pageNum
+                    remainPages: current_page_num.remainPages + +order_data.pageNum
                 }
             }) 
 
@@ -86,7 +91,7 @@ export class PaymentOrderService{
                     purchaseTime: purchaseTimeISO,
                     customerId: customerId,
                     ppoStatus: order_data.ppoStatus,
-                    pageNum: order_data.pageNum,
+                    pageNum: +order_data.pageNum,
                     price: order_data.price,
                     paymentMethod: order_data.paymentMethod,
                 }
@@ -104,10 +109,10 @@ export class PaymentOrderService{
     }
     
     async display(customerId: number, purchaseTime?: Date) {
-        if (isNaN(purchaseTime.getTime())) {
+        if (!purchaseTime || isNaN(purchaseTime.getTime())) {
             return await prisma.pagePurchaseOrder.findMany({
                 where: {
-                    customerId: customerId
+                    customerId: +customerId
                 },
                 select: {
                     ppoId: true,
@@ -117,7 +122,7 @@ export class PaymentOrderService{
                     price: true,
                     paymentMethod: true
                 }
-            })
+            });
         } else {
             // Create start and end of the day in local timezone
             const startOfDay = new Date(purchaseTime);
@@ -128,7 +133,7 @@ export class PaymentOrderService{
 
             return await prisma.pagePurchaseOrder.findMany({
                 where: {
-                    customerId: customerId,
+                    customerId: +customerId,
                     purchaseTime: {
                         gte: startOfDay,
                         lte: endOfDay
@@ -142,7 +147,7 @@ export class PaymentOrderService{
                     price: true,
                     paymentMethod: true
                 }
-            })
+            });
         }
     }
 }

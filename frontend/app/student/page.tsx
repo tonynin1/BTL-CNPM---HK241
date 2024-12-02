@@ -11,15 +11,20 @@ import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "../API/getMe";
 import LoadingPage from "../ui/LoadingPage";
+import { createFeedBack } from "../API/student_homePage/student_homePage";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { MdCloudUpload } from "react-icons/md";
 
 export default function page() {
+
   const currentRate = NaN;
 
   const { userInfo, loggedIn } = useUserSessionForCustomer();
   const [starRate, setStarRate] = useState<number>(Number(currentRate));
   const [formData, setFormData] = useState({
     starRating: NaN,
-    content: undefined,
+    content: "",
   });
   useEffect(() => {
     setFormData((prev) => ({
@@ -28,6 +33,9 @@ export default function page() {
     }));
   }, [starRate]);
 
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false);
+
+
   if (!userInfo) {
     return <LoadingPage></LoadingPage>;
   }
@@ -35,9 +43,22 @@ export default function page() {
   if (userInfo.role === "SPSO") {
     redirect("/spso");
   }
+
+  if(userInfo.role === "ADMIN"){
+    redirect('/admin')
+  }
   const handleSubmit = async (e: any) => {
     // e.preventDefault(); // Prevent default form submission behavior
     console.log("Form data:", formData);
+    setIsSendingFeedback(true);
+    try {
+      const response = await createFeedBack(userInfo.customerId, formData.starRating, formData.content);
+      toast.success("Gửi ý kiến thành công!");
+    } catch (error) {
+      console.log("Error creating feedback:", error);
+      toast.error("Có lỗi!!")
+    }
+    setIsSendingFeedback(false);
   };
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -51,12 +72,13 @@ export default function page() {
   return (
     <div>
       <StudentHeader header={userInfo as StudentHeaderProps} />
+
       <div className="container mx-auto">
         <div className="column-1s flex">
           <Image
             src={tutorial_img}
             alt="Tutorial"
-            objectFit="contain"
+            style={{objectFit: "contain"}}
             className="w-1/2 max-h-[700px]"
           />
           <div className="w-1/2 text-center content-center font-mono">
@@ -85,7 +107,7 @@ export default function page() {
             <Image
               src={buy_pages_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -113,7 +135,7 @@ export default function page() {
             <Image
               src={error_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -141,7 +163,7 @@ export default function page() {
             <Image
               src={new_system_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -167,7 +189,7 @@ export default function page() {
         </div>
       </div>
       <section id="contact" className="flex justify-center">
-        <div className="w-6/12">
+        <div className="w-6/12 my-4">
           <h2 className="text-center font-bold text-2xl">Your review</h2>
           <p className="text-center">
             Hãy đóng góp ý kiến của bạn về trải nghiệm sử dụng sản phẩm của
@@ -180,7 +202,7 @@ export default function page() {
                   <div className="col-lg-12">
                     <textarea
                       name="content"
-                      placeholder="Your review"
+                      placeholder="Nhận xét của bạn về dịch vụ"
                       className="rounded-lg w-full h-32 p-4"
                       onChange={handleInputChange}
                     />
@@ -223,9 +245,10 @@ export default function page() {
                       {starRate ? starRate : ""}
                     </span>
                   </div>
-                  <div className=" w-fit ml-auto px-4 py-2 rounded-md text-white bg-blue-400">
-                    <button>SUBMIT</button>
+                  <div className=" w-fit ml-auto px-4 py-2 rounded-md text-white bg-blue-700 hover:bg-blue-500 transition-all hover:cursor-pointer">
+                    {!isSendingFeedback ? <button type="submit">GỬI</button> : <MdCloudUpload />}
                   </div>
+                  <ToastContainer />
                 </div>
               </form>
             </div>

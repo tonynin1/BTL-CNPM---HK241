@@ -9,7 +9,45 @@ export class FeedbackService {
     async getFeedbacks() {
         return this.prismaService.feedback.findMany();
     }
-
+    async getAllFeedBacksWithUserInfo(){
+        try {
+            
+            // first find all customer that has feedback
+            const feedbacks = await this.prismaService.customer.findMany({
+                where: {
+                    feedbacks: {
+                        some: {},
+                    },
+                },
+                include: {
+                    feedbacks: true,
+                },
+            })
+            .then(async (users) => {
+                const feedbacksWithUserInfo = [];
+                for (const user of users) {
+                    const thisUser = await this.prismaService.user.findUnique({
+                        where: {
+                            userId: user.userId,
+                        },
+                    });
+                    feedbacksWithUserInfo.push({
+                        user: thisUser,
+                        feedbacks: user.feedbacks,
+                    });
+                }
+                return feedbacksWithUserInfo;
+            });
+            
+            return feedbacks
+            
+        } catch (error) {
+            return {
+                status: 500,
+                message: 'Internal server error: ' + error.message,
+            }
+        }
+    }
     async getFeedbackById(feedbackId: number) {
         const feedback = await this.prismaService.feedback.findUnique({
             where: {
@@ -34,13 +72,12 @@ export class FeedbackService {
         
         try{
             // Check if customer exists
-            const customer = await this.prismaService.customer.findFirst({
+            const findFirst = await this.prismaService.feedback.findFirst({
                 where: {
                     customerId: createFeedbackDto.customerId,
                 },
             });
-
-            if (customer.customerId === createFeedbackDto.customerId) {
+            if (findFirst && findFirst.customerId === createFeedbackDto.customerId) {
                 return {
                     status: 404,
                     message: 'You already have a feedback',
@@ -50,7 +87,7 @@ export class FeedbackService {
                 data: {
                     feedTime: new Date(),
                     rating: createFeedbackDto.rating? createFeedbackDto.rating : 0,
-                    contentByCustomer: "",
+                    contentByCustomer: createFeedbackDto.contentBySPSO? createFeedbackDto.contentBySPSO : 'Null feedback',
                     customer: {
                         connect: {
                             customerId: createFeedbackDto.customerId,
@@ -72,7 +109,45 @@ export class FeedbackService {
         }
 
     }
+    async updateFeedBackByCustomerId(customerId: number, updateFeedbackDto: updateFeedbackDto) {
+        try{
+            const feedback = await this.prismaService.feedback.findFirst({
+                where: {
+                    customerId: customerId,
+                },
+            });
+            
+            if (feedback.customerId !== customerId) {
+                return {
+                    status: 404,
+                    message: 'Feedback not found',
+                }
+            }
+            console.log(customerId);
+        
+            const response = await this.prismaService.feedback.update({
+                where: {
+                    feedbackId: feedback.feedbackId,
+                },
+                data: {
+                    rating: updateFeedbackDto.rating? updateFeedbackDto.rating : feedback.rating,
+                    contentByCustomer: updateFeedbackDto.contentBySPSO? updateFeedbackDto.contentBySPSO : feedback.contentByCustomer,
+                },
+            });
 
+            return {
+                status: 200,
+                message: 'Feedback updated',
+                data: response,
+            }
+        }
+        catch(error){
+            return {
+                status: 500,
+                message: 'Internal server error ' + error.message,
+            }
+        }
+    }
     async updateFeedback(feedbackId: number, updateFeedbackDto: updateFeedbackDto) {
         try{
             const feedback = await this.getFeedbackById(feedbackId)

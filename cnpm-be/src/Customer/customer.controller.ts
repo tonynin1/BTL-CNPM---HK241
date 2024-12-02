@@ -15,7 +15,10 @@ export class CustomerController {
     getAllCustomers(){
         return this.customerService.getAllCustomers(); 
     }
-
+    @Get('sum')
+    getSumOfAllCustomers(){
+        return this.customerService.getSumOfAllCustomers();
+    }
     @Get('user')
     getAllCustomersWithUser(){
         return this.customerService.getAllCustomersWithUser();

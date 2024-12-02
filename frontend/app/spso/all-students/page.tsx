@@ -7,6 +7,7 @@ import { redirect } from "next/navigation"; // Để điều hướng
 import { useUserSessionForSPSO } from "@/app/API/getMe";
 import { getAllStudents } from "@/app/API/spso-allStudents/spso-allStudents";
 import LoadingPage from "@/app/ui/LoadingPage";
+import PaymentHistory from "@/app/ui/PaymentHistory";
 
 export default function Page() {
 
@@ -45,7 +46,7 @@ export default function Page() {
   const { userInfo, loggedIn } = useUserSessionForSPSO();
   const [allStudents , setAllStudents] = useState<any>(null);
   const [isShowPrintHis, setIsShowPrintHis] = useState(false);
-
+  const [customerId, setCustomerId] = useState(0);
   const fetching = async () => {
     let data = await getAllStudents();
     setAllStudents(data);
@@ -54,7 +55,6 @@ export default function Page() {
   useEffect(() => {
     fetching();
   }, []);
-  console.log(allStudents);
   
 
   if (!userInfo || !allStudents) {
@@ -67,13 +67,16 @@ export default function Page() {
   }
 
   function handlePrintHistory(customerId: number) {
-    console.log(customerId);
-    // setIsShowPrintHis(!isShowPrintHis);
+    setCustomerId(customerId);
+    setIsShowPrintHis(!isShowPrintHis);
   }
 
   return (
     <div className="h-screen relative">
-      {isShowPrintHis && <PrintHistory onClick={handlePrintHistory}/>}
+      {isShowPrintHis 
+      && <PrintHistory onClick={handlePrintHistory}/>
+      && <PaymentHistory onClick={handlePaymentHistory}/>}
+      {isShowPrintHis && <PrintHistory onClick={handlePrintHistory} customerId={customerId}/>}
 
       <SPSOHeader header = {userInfo as SPSOHeaderProps}/>
       <div className="h-full p-4">
@@ -84,23 +87,34 @@ export default function Page() {
                 <th scope="col" className='px-6 py-3'>Tên</th>
                 <th scope="col" className='px-6 py-3'>MSSV</th>
                 <th scope="col" className='px-6 py-3'>Lần sử dụng gần nhất</th>
-                <th scope="col" className='px-6 py-3'>Hành động</th>
+                <th scope="col" className='px-6 py-3'>Lịch sử in</th>
+                <th scope="col" className='px-6 py-3'>Lịch sử mua trang</th>
               </tr>
             </thead>
             <tbody>
-              {allStudents.map((student : any) => (
-                <tr key={student.userId} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
-                  <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.fname + ' ' + student.lname}</td>
-                  <td className='px-6 py-4'>{student.userId}</td>
-                  <td className='px-6 py-4'>{student.usageHistory? student.usageHistory : student.createAt}</td>
+              {allStudents.map((student : any, index : number) => (
+                <tr key={index} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
+                  <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.user.fname + ' ' + student.user.lname}</td>
+                  <td className='px-6 py-4'>{student.customer.customerId}</td>
+                  <td className='px-6 py-4'>{student.user.usageHistory? student.user.usageHistory : student.createAt}</td>
+                  <td className='px-6 py-4'>
+                    <button 
+                      className='font-medium text-blue-600 dark:text-blue-500 hover:underline w-full text-center'
+                      onClick={() => {
+                        handlePrintHistory(student.customer.customerId);
+                      }}  
+                    >
+                      Xem lịch sử in
+                    </button>
+                  </td>
                   <td className='px-6 py-4'>
                     <button 
                       className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
                       onClick={() => {
-                        handlePrintHistory(student.userId);
+                        handlePrintHistory(student.customer.customerId);
                       }}  
                     >
-                      Xem lịch sử in
+                      Xem lịch sử mua trang
                     </button>
                   </td>
                 </tr>

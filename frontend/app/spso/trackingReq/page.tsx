@@ -14,13 +14,7 @@ export default function Home() {
     const { userInfo } = useUserSessionForSPSO();
     const [buttonStates, setButtonStates] = useState([false, false, false, false, false]); 
     const [allPendingReq, setAllPendingReq] = useState<any>([]);
-    const tableData = [
-        { id: 1, attributes: 'Red', startTime: '2023-10-19 12:00:00', endTime: '2023-10-19 12:30:00', status: 'Pending', copies: 1 },
-        { id: 2, attributes: 'Blue', startTime: '2023-10-19 12:10:00', endTime: '2023-10-19 12:40:00', status: 'Completed', copies: 2 },
-        { id: 3, attributes: 'Green', startTime: '2023-10-19 12:20:00', endTime: '2023-10-19 12:50:00', status: 'Pending', copies: 3 },
-        { id: 4, attributes: 'Yellow', startTime: '2023-10-19 12:30:00', endTime: '2023-10-19 13:00:00', status: 'Pending', copies: 4 },
-        { id: 5, attributes: 'Purple', startTime: '2023-10-19 12:40:00', endTime: '2023-10-19 13:10:00', status: 'Completed', copies: 5 },
-    ];
+   
     const fetching = async () => {
         if (!userInfo) return;
         try {
@@ -53,7 +47,6 @@ export default function Home() {
         }
     }
     const toggleButton = (index : any, printOrderId: number) => {
-        console.log(printOrderId);
         if (confirm("Do you sure you want to change the status of this print order?")) {
             triggerPending(printOrderId);
             setButtonStates(prevStates => {
@@ -78,7 +71,6 @@ export default function Home() {
     if (userInfo.role === "STUDENT") {
         redirect("/student");
     }
-
     return (
         <main className="bg-[#353535] pb-[500px]">
             <SPSOHeader header={userInfo as SPSOHeaderProps} />
@@ -88,13 +80,13 @@ export default function Home() {
                     <table className="table table-dark table-striped">
                         <thead>
                             <tr>
-                                <th>Print Order Id</th>
-                                <th>Attributes</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>PO Status</th>
-                                <th>Num Copies</th>
-                                <th>Chose</th>
+                                <th>ID đơn in</th>
+                                <th>Thông số in</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Trạng thái đơn in</th>
+                                <th>Số bản sao</th>
+                                <th>Chọn</th>
                             </tr>
                         </thead>
                         <tbody>

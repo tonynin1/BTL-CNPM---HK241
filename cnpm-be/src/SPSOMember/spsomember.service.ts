@@ -11,6 +11,11 @@ export class SpsomemberService {
         const spsoMember = await this.prismaService.sPSOMember.findMany();
         return spsoMember;
     }
+
+    // get sum of all spso members
+    async getSumOfAllSPSOMember() {
+        return await this.prismaService.sPSOMember.count();
+    }
     async findSPSOMemberBySPSOId(spsoId: number) {
         const spsoMember = await this.prismaService.sPSOMember.findUnique({
             where: {

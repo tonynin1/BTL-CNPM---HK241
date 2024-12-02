@@ -1,24 +1,27 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
-import { getUserInfo } from "@/app/API/userInfo";
+import api from "@/app/API/axiosInstance";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
+import { parseCookies } from "nookies";
+
+type Deposit = {
+  depositId: string;
+  depositTime: string;
+  amount: number;
+  depositStatus: string;
+};
 
 export default function Page() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
-  const [currType, setCurrType] = useState("null");
-  const [totalPages, setTotalPages] = useState(NaN);
-
-  // Step 1: Define state to hold form data
   const [formData, setFormData] = useState({
-    money: NaN,
+    money: 0,
   });
-
-  // Handle redirect logic with state
   const [shouldRedirect, setShouldRedirect] = useState(false);
-
+  const [depositHistory, setDepositHistory] = useState<Deposit[]>([]);
+  const [accountBalance, setAccountBalance] = useState<number | null>(null);
   useEffect(() => {
     if (!loggedIn) {
       setShouldRedirect(true);
@@ -27,18 +30,78 @@ export default function Page() {
     }
   }, [loggedIn, userInfo]);
 
-  // Handle redirect after state update
+  useEffect(() => {
+    if (userInfo) {
+      // alert("User info: " + JSON.stringify(userInfo));
+      const fetchAccountBalance = async () => {
+        try {
+          const cookies = parseCookies();
+          const accessToken = cookies.accessToken;
+
+          if (!accessToken) {
+            throw new Error("Access token not found.");
+          }
+          setAccountBalance(userInfo.accBalance);
+        } catch (error) {
+          console.error(`Error fetching account balance: ${error}`);
+        }
+      };
+
+      fetchAccountBalance();
+    }
+  }, [userInfo]);
+
+  useEffect(() => {
+    const fetchDepositHistory = async () => {
+      try {
+        const cookies = parseCookies();
+        const accessToken = cookies.accessToken;
+
+        if (!accessToken) {
+          throw new Error("Access token not found.");
+        }
+
+        const depositHistoryResponse = await api.get(
+          "onsite-account/deposit/history",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              customerId: userInfo ? +userInfo.customerId : undefined,
+            },
+          }
+        );
+        setDepositHistory(depositHistoryResponse.data);
+        localStorage.setItem(
+          "depositHistory",
+          JSON.stringify(depositHistoryResponse.data)
+        );
+      } catch (error) {
+        console.error(`Error fetching deposit history: ${error}`);
+      }
+    };
+
+    if (userInfo) {
+      fetchDepositHistory();
+    } else {
+      const savedHistory = localStorage.getItem("depositHistory");
+      if (savedHistory) {
+        setDepositHistory(JSON.parse(savedHistory));
+      }
+    }
+  }, [userInfo]);
+
   if (shouldRedirect) {
     if (!loggedIn) redirect("/");
     if (userInfo?.role === "SPSO") redirect("/spso");
-    return null; // Return null while redirecting
+    return null;
   }
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>;
   }
 
-  // Step 2: Handle input changes
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -47,15 +110,63 @@ export default function Page() {
     }));
   };
 
-  // Step 3: Handle form submission
   const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent default form submission behavior
-    console.log("Form data:", formData);
+    const depositTime = Date.now();
+
+    try {
+      const cookies = parseCookies();
+      const accessToken = cookies.accessToken;
+
+      if (!accessToken) {
+        throw new Error("Access token not found.");
+      }
+
+      const response = await api.post(
+        "onsite-account/deposit",
+        {
+          amount: +formData.money,
+          depositTime: depositTime,
+          customerId: userInfo.customerId,
+          depositStatus: "Success",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        const depositHistoryResponse = await api.get(
+          "onsite-account/deposit/history",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              customerId: userInfo.customerId,
+            },
+          }
+        );
+        setDepositHistory(depositHistoryResponse.data);
+        alert("Deposit successful!");
+      }
+    } catch (error) {
+      alert(`Error: ${error}`);
+    }
   };
 
   return (
     <div className="bg-[#353535] h-fit min-h-[100vh]">
       <StudentHeader header={userInfo as StudentHeaderProps} />
+      <div className="flex justify-between p-6">
+        <div className="flex-grow"></div>
+        <div className="text-white">
+          Số dư:{" "}
+          {accountBalance !== null ? `${accountBalance} VND` : "Loading..."}
+        </div>
+      </div>
       <div className="flex justify-center p-6 h-fit">
         <div className="w-1/2 bg-white h-fit rounded-lg p-4 shadow-gray-500 shadow-2xl">
           <div>
@@ -65,21 +176,21 @@ export default function Page() {
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
               <div className="flex justify-between items-center px-10 gap-10 ">
                 <label htmlFor="money" className="w-1/3">
-                  Amount of money
+                  Số tiền muốn nạp
                 </label>
                 <input
                   type="number"
                   name="money"
                   className="flex-auto text-center p-2"
                   onChange={handleInputChange}
-                  placeholder="vnd"
+                  placeholder="Nhập số tiền"
                 />
               </div>
               <button
                 type="submit"
                 className="bg-[#353535] text-white rounded-lg p-2"
               >
-                Confirm
+                Hoàn tất
               </button>
             </form>
           </div>
@@ -91,21 +202,23 @@ export default function Page() {
             <table className="table-auto w-full">
               <thead className="text-center">
                 <tr>
-                  <th className="w-[calc(100%-80%)]">Transaction Id</th>
-                  <th className="w-[calc(100%-80%)]">Transactions day</th>
-                  <th className="w-[calc(100%-80%)]">Total pages</th>
-                  <th className="w-[calc(100%-80%)]">Total money</th>
-                  <th className="w-[calc(100%-80%)]">payment method</th>
+                  <th className="w-[calc(100%-80%)]">ID đơn nạp tiền</th>
+                  <th className="w-[calc(100%-80%)]">Ngày nạp</th>
+                  <th className="w-[calc(100%-80%)]">Số lượng</th>
+                  <th className="w-[calc(100%-80%)]">Trạng thái</th>
                 </tr>
               </thead>
               <tbody className="text-center">
-                <tr>
-                  <td>1</td>
-                  <td>12/12/2222</td>
-                  <td>2</td>
-                  <td>4</td>
-                  <td>Malcolm Lockyer</td>
-                </tr>
+                {depositHistory.map((deposit, index) => (
+                  <tr key={index}>
+                    <td>{deposit.depositId}</td>
+                    <td>
+                      {new Date(deposit.depositTime).toLocaleDateString()}
+                    </td>
+                    <td>{deposit.amount} VND</td>
+                    <td>{deposit.depositStatus}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

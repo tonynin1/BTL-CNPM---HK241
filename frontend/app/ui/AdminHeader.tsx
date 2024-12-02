@@ -6,8 +6,11 @@ import { VscAccount } from "react-icons/vsc";
 import { FaAngleDown } from "react-icons/fa6";
 import '@/app/globals.css'
 
-
-export default function StudentHeader() {
+export interface ADMINHeaderProps {
+  fname: string;
+  role: string;
+}
+export default function StudentHeader({header}: {header: ADMINHeaderProps}) {
   const [time, setTime] = useState(900) 
   const [minute, setMinute] = useState(Math.floor(time/60))
   const [second, setSecond] = useState(Number(time%60))
@@ -38,7 +41,7 @@ export default function StudentHeader() {
           height={60}
           priority
         />
-        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SSPS</h1>
+        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>
 
       <div className="text-white w-[250px] ">
@@ -56,10 +59,6 @@ export default function StudentHeader() {
                 onClick={handleLogout}
               >
                 Đăng xuất
-              </li>
-              <li className="px-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm text-center"
-              >
-                Cài đặt
               </li>
             </ul>
           </div>

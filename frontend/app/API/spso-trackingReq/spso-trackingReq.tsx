@@ -68,8 +68,7 @@ export async function triggerPending(printOrderId: number) {
             }
         })
 
-        console.log(find.data.data.poStatus);
-        let Status = find.data.data.poStatus;
+        let Status = find.data.data.res.poStatus;
         if (Status === "Pending") {
             const response = await api.put(`print-history/request/${printOrderId}`,
                 {

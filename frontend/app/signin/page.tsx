@@ -8,6 +8,7 @@ import { getUserInfo } from "../API/userInfo";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { FaRegEye, FaRegEyeSlash  } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -15,13 +16,17 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSignIn(email: string, password: string) {
+      setIsLoading(true);
       let res = await login(email, password)   
       
+      setIsLoading(false);
       let user = null
       if (res){
         user = await getUserInfo();
+        toast.success("Đăng nhập thành công")
       }
       else {
         toast.error("Đăng nhập thất bại")
@@ -33,10 +38,19 @@ export default function Login() {
         // router.push('/student');
         redirect('/student')
       }
-      else {
+      else if(user.role === 'SPSO') {
         // router.push('/spso');
         redirect('/spso')
       }
+      else if(user.role === 'ADMIN') {
+        // router.push('/admin');
+        redirect('/admin')
+      }
+      else {
+        // router.push('/signin');
+        redirect('/signin')
+      }
+
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -89,14 +103,26 @@ export default function Login() {
               {errorMessage && (
                 <p className="text-red-500 mb-4">{errorMessage}</p>
               )}
-              <button type="submit" className="login-button">
+              <button type="submit" className="login-button disabled:opacity-75" disabled={isLoading}>
                 Đăng nhập
               </button>
-              <button type="button" className="signup-button text-white" onClick={() => {
-                window.location.href = "http://localhost:3000/signup";
-              }}>
+              <button 
+                type="button" 
+                className="signup-button text-white disabled:opacity-75"  
+                onClick={() => {
+                  window.location.href = "http://localhost:3000/signup";
+                }}
+                disabled={isLoading}
+              >
                 Đăng ký
               </button>
+              {
+                isLoading && (
+                  <div className="flex justify-center mt-4 text-2xl">
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                  </div>
+                )
+              }
             </form>
           </div>
         </div>

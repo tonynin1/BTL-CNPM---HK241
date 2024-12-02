@@ -9,6 +9,7 @@ import { getAllPrinters, OnOffPrinter } from "@/app/API/spso-managePrinters/spso
 
 export default function page() {
     const { userInfo, loggedIn } = useUserSessionForSPSO();
+
     const printers = [
         {
           model: "LaserJet Pro M404dn",
@@ -131,16 +132,16 @@ export default function page() {
       <SPSOHeader header={userInfo as SPSOHeaderProps} />
       <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400 mb-8'>
-            <thead className='text-xs text-gray-700 uppercase dark:text-black'>
+            <thead className='text-md text-gray-700 uppercase dark:text-black'>
                 <tr>
                     <th scope="col" className='px-6 py-3'>MODEL</th>
-                    <th scope="col" className='px-6 py-3'>BRAND</th>
-                    <th scope="col" className='px-6 py-3'>DESCRIPTION</th>
-                    <th scope="col" className='px-6 py-3'>FACILITY</th>
-                    <th scope="col" className='px-6 py-3'>BUILDING</th>
-                    <th scope="col" className='px-6 py-3'>ROOM</th>
-                    <th scope="col" className='px-6 py-3 text-center'>STATUS</th>
-                    <th scope="col" className='px-6 py-3 text-center'>ACTION</th>
+                    <th scope="col" className='px-6 py-3'>THƯƠNG HIỆU</th>
+                    <th scope="col" className='px-6 py-3'>MÔ TẢ</th>
+                    <th scope="col" className='px-6 py-3'>KHOA</th>
+                    <th scope="col" className='px-6 py-3'>TÒA</th>
+                    <th scope="col" className='px-6 py-3'>PHÒNG</th>
+                    <th scope="col" className='px-6 py-3 text-center'>TRẠNG THÁI</th>
+                    <th scope="col" className='px-6 py-3 text-center'>HOẠT ĐỘNG</th>
                 </tr>
             </thead>
             <tbody>

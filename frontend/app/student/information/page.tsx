@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 import { Edit } from "lucide-react";
+import { editUser } from "@/app/API/student-information/student-information";
 
 export default function Page() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
@@ -30,12 +31,11 @@ export default function Page() {
       lname: userInfo?.lname || "",
     });
   }, [loggedIn, userInfo]);
-  console.log("USERINFO", userInfo);
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
   });
-  console.log("FORMDATA", formData);
+  
   // Handle redirect after state update
   if (shouldRedirect) {
     if (!loggedIn) redirect("/");
@@ -50,6 +50,12 @@ export default function Page() {
   const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent default form submission behavior
     console.log("Form data:", formData);
+    const res = await editUser(formData.fname, formData.lname, "");
+
+    if (res){
+      setEditFamilyName(false);
+      setEditFName(false);
+    }
   };
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -58,7 +64,7 @@ export default function Page() {
       [name]: value,
     }));
 
-    console.log(name, value);
+    // console.log(name, value);
   };
 
   return (

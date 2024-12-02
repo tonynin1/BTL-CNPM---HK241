@@ -26,6 +26,10 @@ export default function page() {
   if (userInfo.role === 'STUDENT'){
     redirect('/student')
   }
+
+  if(userInfo.role === 'ADMIN'){
+    redirect('/admin')
+  }
   return (
     <div>
       <SPSOHeader header={userInfo as SPSOHeaderProps} />
@@ -34,7 +38,7 @@ export default function page() {
           <Image 
             src={tutorial_img}
             alt="Tutorial"
-            objectFit="contain"
+            style={{objectFit: "contain"}}
             className="w-1/2 max-h-[700px]"
           />
           <div className="w-1/2 text-center content-center font-mono">
@@ -54,7 +58,7 @@ export default function page() {
             <Image 
               src={buy_pages_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -73,7 +77,7 @@ export default function page() {
             <Image 
               src={error_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
@@ -92,7 +96,7 @@ export default function page() {
             <Image 
               src={new_system_img}
               alt="Tutorial"
-              objectFit="contain"
+              style={{objectFit: "contain"}}
               className="h-[325px]"
             />
             <div className="text-center content-center font-mono">
