@@ -1,17 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import StudentHeader, { StudentHeaderProps } from "@/app/ui/StudentHeader";
-import api from '@/app/API/axiosInstance';
+import api from "@/app/API/axiosInstance";
 import { redirect } from "next/navigation";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 import { parseCookies } from "nookies";
 
 type Deposit = {
-  depositId: string 
-  depositTime: string; 
-  amount: number; 
-  depositStatus: string; 
+  depositId: string;
+  depositTime: string;
+  amount: number;
+  depositStatus: string;
 };
 
 export default function Page() {
@@ -32,7 +32,7 @@ export default function Page() {
 
   useEffect(() => {
     if (userInfo) {
-        // alert("User info: " + JSON.stringify(userInfo));
+      // alert("User info: " + JSON.stringify(userInfo));
       const fetchAccountBalance = async () => {
         try {
           const cookies = parseCookies();
@@ -61,16 +61,22 @@ export default function Page() {
           throw new Error("Access token not found.");
         }
 
-        const depositHistoryResponse = await api.get('onsite-account/deposit/history', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          params: {
-            customerId: userInfo? +userInfo.customerId : undefined,
+        const depositHistoryResponse = await api.get(
+          "onsite-account/deposit/history",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              customerId: userInfo ? +userInfo.customerId : undefined,
+            },
           }
-        });
+        );
         setDepositHistory(depositHistoryResponse.data);
-        localStorage.setItem('depositHistory', JSON.stringify(depositHistoryResponse.data));
+        localStorage.setItem(
+          "depositHistory",
+          JSON.stringify(depositHistoryResponse.data)
+        );
       } catch (error) {
         console.error(`Error fetching deposit history: ${error}`);
       }
@@ -79,8 +85,7 @@ export default function Page() {
     if (userInfo) {
       fetchDepositHistory();
     } else {
-
-      const savedHistory = localStorage.getItem('depositHistory');
+      const savedHistory = localStorage.getItem("depositHistory");
       if (savedHistory) {
         setDepositHistory(JSON.parse(savedHistory));
       }
@@ -90,7 +95,7 @@ export default function Page() {
   if (shouldRedirect) {
     if (!loggedIn) redirect("/");
     if (userInfo?.role === "SPSO") redirect("/spso");
-    return null; 
+    return null;
   }
 
   if (!userInfo) {
@@ -115,35 +120,42 @@ export default function Page() {
 
       if (!accessToken) {
         throw new Error("Access token not found.");
-        }
+      }
 
-      const response = await api.post('onsite-account/deposit', {
-        amount: +formData.money,
-        depositTime: depositTime,
-        customerId: userInfo.customerId,
-        depositStatus: "Success",
-      }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const response = await api.post(
+        "onsite-account/deposit",
+        {
+          amount: +formData.money,
+          depositTime: depositTime,
+          customerId: userInfo.customerId,
+          depositStatus: "Success",
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       if (response.status === 201) {
-        const depositHistoryResponse = await api.get('onsite-account/deposit/history', {
+        const depositHistoryResponse = await api.get(
+          "onsite-account/deposit/history",
+          {
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${accessToken}`,
             },
             params: {
-                customerId: userInfo.customerId,
-            }
-        });
-        setDepositHistory(depositHistoryResponse.data); 
+              customerId: userInfo.customerId,
+            },
+          }
+        );
+        setDepositHistory(depositHistoryResponse.data);
         alert("Deposit successful!");
       }
     } catch (error) {
       alert(`Error: ${error}`);
     }
-};
+  };
 
   return (
     <div className="bg-[#353535] h-fit min-h-[100vh]">
@@ -151,7 +163,8 @@ export default function Page() {
       <div className="flex justify-between p-6">
         <div className="flex-grow"></div>
         <div className="text-white">
-          Số dư: {accountBalance !== null ? `${accountBalance} VND` : 'Loading...'}
+          Số dư:{" "}
+          {accountBalance !== null ? `${accountBalance} VND` : "Loading..."}
         </div>
       </div>
       <div className="flex justify-center p-6 h-fit">
@@ -196,10 +209,12 @@ export default function Page() {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {depositHistory.map((deposit, index) => ( 
+                {depositHistory.map((deposit, index) => (
                   <tr key={index}>
                     <td>{deposit.depositId}</td>
-                    <td>{new Date(deposit.depositTime).toLocaleDateString()}</td>
+                    <td>
+                      {new Date(deposit.depositTime).toLocaleDateString()}
+                    </td>
                     <td>{deposit.amount} VND</td>
                     <td>{deposit.depositStatus}</td>
                   </tr>
