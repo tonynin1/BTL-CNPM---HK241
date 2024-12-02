@@ -16,7 +16,6 @@ export default function page() {
   const [allPrinters, setAllPrinters] = useState([]);
 
   const updatePrinterStatus = async (printerId: number, updateData: any) => {
-    console.log(updateData);
 
     await updatePrinter(printerId, updateData);
     fetching();
@@ -116,7 +115,6 @@ export default function page() {
                 <td className='px-6 py-4'>{new Date(student.createAt).toLocaleDateString('en-GB')}</td>
                 <td className='px-6 py-4'>
                   <button onClick={async () => {
-                    console.log(student.userId)
                     const res = await deleteStudent(student.userId);
 
                     if (res.status === 200) {
@@ -137,7 +135,7 @@ export default function page() {
 
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 relative mb-8'>
           <caption className="caption-top text-center uppercase">
-            danh sách máy in
+            danh sách máy in 
           </caption>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
@@ -190,7 +188,6 @@ export default function page() {
                       }
                       <button onClick={async () => {
                         // console log this printerId
-                        console.log(printer.printerId);
                         if (confirm(`Bạn có chắc chắn muốn xóa máy in do SPSO có mã số ${printer.spsomemberId} quản lý không?`))
                        { 
                         const res = await deletePrinter(printer.printerId);

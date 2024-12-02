@@ -54,7 +54,6 @@ export async function getAllUsers() {
         throw new Error("Access token not found.");
       }
   
-
       const response = await api.patch(`printer/update/${printerID}`,{
         status: updateData.status
       }, {
@@ -125,7 +124,6 @@ export async function getAllUsers() {
 
   export async function deleteSPSO(userId: number) {
     try {
-      console.log(userId);
       const cookies = parseCookies();
       let accessToken = cookies.accessToken;
   

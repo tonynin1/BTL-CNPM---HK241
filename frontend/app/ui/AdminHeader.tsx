@@ -41,7 +41,7 @@ export default function StudentHeader({header}: {header: ADMINHeaderProps}) {
           height={60}
           priority
         />
-        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SSPS</h1>
+        <h1 className="text-xl text-white sm:text-2xl font-semibold">HCMUT SPSO</h1>
       </div>
 
       <div className="text-white w-[250px] ">
@@ -59,10 +59,6 @@ export default function StudentHeader({header}: {header: ADMINHeaderProps}) {
                 onClick={handleLogout}
               >
                 Đăng xuất
-              </li>
-              <li className="px-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm text-center"
-              >
-                Cài đặt
               </li>
             </ul>
           </div>
