@@ -12,7 +12,7 @@ import MyFooter from "@/app/ui/MyFooter";
 import UserFeedbackCard from "@/app/component/UserFeedbackCard";
 import DoughnutChart from "@/app/component/DoughnutChart";
 
-import { getSumStudents, getSumSpso, getSumPrintedPage, getAllFeedbacks, getStudentByID } from "@/app/API/spso-systemReport/spso-systemReport";
+import { getSumStudents, getSumSpso, getSumPrintedPage, getAllFeedbacks } from "@/app/API/spso-systemReport/spso-systemReport";
 import BarChart from "@/app/component/BarChart";
 
 export default function Home() {
@@ -41,7 +41,7 @@ export default function Home() {
     fetching();
   }, []);
 
-  console.log(studentCount, spsoCount, printedCount);
+  // console.log(studentCount, spsoCount, printedCount);
 
   if (!userInfo) {
     return <LoadingPage></LoadingPage>
@@ -94,13 +94,13 @@ export default function Home() {
       </div>
 
       <div className="container py-8 rounded shadow my-8">
-        <p className="text-center font-bold text-xl">Đánh giá người dùng</p>
+        <p className="text-center font-bold text-xl mb-4">Đánh giá người dùng</p>
         <div className="flex flex-wrap gap-2 justify-center">
           {
             feedbacks.map((feedback: any) => {
               return (
                 <div className="w-[23%]">
-                  <UserFeedbackCard name="Người dùng" key={feedback.feedbackId} rating={feedback.rating} content={feedback.contentByCustomer} time={feedback.feedTime} imgSrc={person1}/>
+                  <UserFeedbackCard name={`${feedback.user.fname} ${feedback.user.lname}`} key={feedback.feedbacks[0].feedbackId} rating={feedback.feedbacks[0].rating} content={feedback.feedbacks[0].contentByCustomer} time={feedback.feedTime} imgSrc={person1}/>
                 </div>
               )
             })

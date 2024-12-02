@@ -55,6 +55,7 @@ export async function getAllUsers() {
         throw new Error("Access token not found.");
       }
   
+
       const response = await api.patch(`printer/update/${printerID}`,{
         status: updateData.status
       }, {

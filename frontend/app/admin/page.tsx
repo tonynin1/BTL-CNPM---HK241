@@ -62,7 +62,7 @@ export default function page() {
 
       <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-8'>
-          <caption className="caption-top text-center uppercase">
+          <caption className="caption-top text-center uppercase text-xl">
             danh sách SPSO
           </caption>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -71,7 +71,7 @@ export default function page() {
               <th scope="col" className='px-6 py-3 uppercase'>Username</th>
               <th scope="col" className='px-6 py-3 uppercase'>Số điện thoại</th>
               <th scope="col" className='px-6 py-3 uppercase'>Ngày tham gia</th>
-              <th scope="col" className='px-6 py-3 uppercase'>Hành động</th>
+              <th scope="col" className='px-6 py-3 uppercase text-center'>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -81,8 +81,8 @@ export default function page() {
                 <td className='px-6 py-4'>{spso.email}</td>
                 <td className='px-6 py-4'>{spso.phone}</td>
                 <td className='px-6 py-4'>{spso.createAt}</td>
-                <td className='px-6 py-4'>
-                  <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
+                <td className='px-6 py-4 text-center'>
+                  <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded duration-300'>
                     Xóa spso
                   </button>
                 </td>
@@ -92,7 +92,7 @@ export default function page() {
         </table>
 
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-8'>
-          <caption className="caption-top text-center uppercase">
+          <caption className="caption-top text-center uppercase text-xl">
             danh sách student
           </caption>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -101,7 +101,7 @@ export default function page() {
               <th scope="col" className='px-6 py-3 uppercase'>Username</th>
               <th scope="col" className='px-6 py-3 uppercase'>Số điện thoại</th>
               <th scope="col" className='px-6 py-3 uppercase'>Ngày tham gia</th>
-              <th scope="col" className='px-6 py-3 uppercase'>Hành động</th>
+              <th scope="col" className='px-6 py-3 uppercase text-center'>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -111,8 +111,8 @@ export default function page() {
                 <td className='px-6 py-4'>{student.email}</td>
                 <td className='px-6 py-4'>{student.phone}</td>
                 <td className='px-6 py-4'>{student.createAt}</td>
-                <td className='px-6 py-4'>
-                  <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
+                <td className='px-6 py-4 text-center'>
+                  <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded duration-300'>
                     Xóa student
                   </button>
                 </td>
@@ -128,14 +128,14 @@ export default function page() {
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope="col" className='px-6 py-3 uppercase'>MODEL</th>
-              <th scope="col" className='px-6 py-3 uppercase'>BRAND</th>
-              <th scope="col" className='px-6 py-3 uppercase'>DESCRIPTION</th>
-              <th scope="col" className='px-6 py-3 uppercase'>FACILITY</th>
-              <th scope="col" className='px-6 py-3 uppercase'>BUILDING</th>
-              <th scope="col" className='px-6 py-3 uppercase'>ROOM</th>
+              <th scope="col" className='px-6 py-3 uppercase'>thương hiệu</th>
+              <th scope="col" className='px-6 py-3 uppercase'>mô tả</th>
+              <th scope="col" className='px-6 py-3 uppercase'>khoa</th>
+              <th scope="col" className='px-6 py-3 uppercase'>tòa</th>
+              <th scope="col" className='px-6 py-3 uppercase'>phòng</th>
               <th scope="col" className='px-6 py-3 uppercase'>SPSO ID</th>
-              <th scope="col" className='px-6 py-3 uppercase text-center'>STATUS</th>
-              <th scope="col" className='px-6 py-3 uppercase text-center'>ACTION</th>
+              <th scope="col" className='px-6 py-3 uppercase text-center'>trạng thái</th>
+              <th scope="col" className='px-6 py-3 uppercase text-center'>hành động</th>
             </tr>
           </thead>
           <tbody >
@@ -161,20 +161,20 @@ export default function page() {
                       {
                         printer.status === 'VALID' ? (
                             <button 
-                              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded duration-300'
                               onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'INVALID'})}}
                             >
                               Vô hiệu máy in
                             </button>
                           ) : (
-                            <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
+                            <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded duration-300'
                               onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'VALID'})}}
                             >
                               Mở máy in
                             </button>
                         )
                       }
-                      <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>Xóa máy in</button>
+                      <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded duration-300'>Xóa máy in</button>
                   </td>
               </tr>
               ))}
