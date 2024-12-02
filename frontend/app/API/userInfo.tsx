@@ -1,7 +1,6 @@
 
 import { refreshAccessToken } from "@/app/API/authService";
-import { useRouter} from 'next/navigation'
-import { setCookie, destroyCookie, parseCookies } from 'nookies';
+import { parseCookies } from 'nookies';
 import api from "./axiosInstance"
 
 export async function getUserInfo() {

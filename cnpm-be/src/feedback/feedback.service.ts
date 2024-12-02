@@ -9,7 +9,45 @@ export class FeedbackService {
     async getFeedbacks() {
         return this.prismaService.feedback.findMany();
     }
-
+    async getAllFeedBacksWithUserInfo(){
+        try {
+            
+            // first find all customer that has feedback
+            const feedbacks = await this.prismaService.customer.findMany({
+                where: {
+                    feedbacks: {
+                        some: {},
+                    },
+                },
+                include: {
+                    feedbacks: true,
+                },
+            })
+            .then(async (users) => {
+                const feedbacksWithUserInfo = [];
+                for (const user of users) {
+                    const thisUser = await this.prismaService.user.findUnique({
+                        where: {
+                            userId: user.userId,
+                        },
+                    });
+                    feedbacksWithUserInfo.push({
+                        user: thisUser,
+                        feedbacks: user.feedbacks,
+                    });
+                }
+                return feedbacksWithUserInfo;
+            });
+            
+            return feedbacks
+            
+        } catch (error) {
+            return {
+                status: 500,
+                message: 'Internal server error: ' + error.message,
+            }
+        }
+    }
     async getFeedbackById(feedbackId: number) {
         const feedback = await this.prismaService.feedback.findUnique({
             where: {
