@@ -10,42 +10,10 @@ import LoadingPage from "@/app/ui/LoadingPage";
 import PaymentHistory from "@/app/ui/PaymentHistory";
 
 export default function Page() {
-
-  const students = [
-    {
-      name: 'Nguyen Van A',
-      print_count: 'student1',
-      id: '2213982',
-    },
-    {
-      name: 'Le Thi B',
-      print_count: 'student2',
-      id: '2213983',
-    },
-    {
-      name: 'Tran Van C',
-      print_count: 'student3',
-      id: '2213984',
-    },
-    {
-      name: 'Pham Thi D',
-      print_count: 'student4',
-      id: '2213985',
-    },
-    {
-      name: 'Nguyen Van E',
-      print_count: 'student5',
-      id: '2213986',
-    },
-    {
-      name: 'Hoang Thi F',
-      print_count: 'student6',
-      id: '2213987',
-    },
-  ];
   const { userInfo, loggedIn } = useUserSessionForSPSO();
   const [allStudents , setAllStudents] = useState<any>(null);
   const [isShowPrintHis, setIsShowPrintHis] = useState(false);
+  const [isShowPagePayment, setIsShowPagePayment] = useState(false);
   const [customerId, setCustomerId] = useState(0);
   const fetching = async () => {
     let data = await getAllStudents();
@@ -71,13 +39,14 @@ export default function Page() {
     setIsShowPrintHis(!isShowPrintHis);
   }
 
+  function handlePaymentHistory() {
+    setIsShowPagePayment(!isShowPagePayment);
+  }
+
   return (
     <div className="h-screen relative">
-      {isShowPrintHis 
-      && <PrintHistory onClick={handlePrintHistory}/>
-      && <PaymentHistory onClick={handlePaymentHistory}/>}
       {isShowPrintHis && <PrintHistory onClick={handlePrintHistory} customerId={customerId}/>}
-
+      {isShowPagePayment && <PaymentHistory onClick={handlePaymentHistory} customerId={customerId}/>}
       <SPSOHeader header = {userInfo as SPSOHeaderProps}/>
       <div className="h-full p-4">
         <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
@@ -111,7 +80,8 @@ export default function Page() {
                     <button 
                       className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
                       onClick={() => {
-                        handlePrintHistory(student.customer.customerId);
+                        setCustomerId(student.customer.customerId);
+                        handlePaymentHistory();
                       }}  
                     >
                       Xem lịch sử mua trang

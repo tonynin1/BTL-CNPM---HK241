@@ -1,17 +1,17 @@
-import { useEffect } from "react";
-import { userInfo } from "../API/userInfo";
+import { useEffect, useState } from "react";
 import { parseCookies } from "nookies";
+import api from '@/app/API/axiosInstance';
 
 type Payment = {
-    TransactionId: number;
-    Date: string;
-    PageNum: number;
-    Price: number;
-    PaymentMethod: string;
-    Status: string;
+    ppoId: string;
+    purchaseTime: string; 
+    pageNum: number; 
+    price: number; 
+    paymentMethod: string; 
+    ppoStatus: string; 
 };
 
-export default function PaymentHistory(onClick: any) {
+export default function PaymentHistory({ onClick, customerId }: { onClick: () => void; customerId: number }) {
     const [paymentHistory, setPaymentHistory] = useState<Payment[]>([]);
 
     useEffect(() => {
@@ -24,206 +24,55 @@ export default function PaymentHistory(onClick: any) {
               throw new Error("Access token not found.");
             }
     
-            const depositHistoryResponse = await api.get('payment/history', {
+            const paymentHistoryResponse = await api.get('payment/history', {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
               params: {
-                customerId: userInfo?.customerId,
+                customerId: customerId
               }
             });
-            setDepositHistory(depositHistoryResponse.data);
-            // Save deposit history to local storage
-            localStorage.setItem('depositHistory', JSON.stringify(depositHistoryResponse.data));
+            setPaymentHistory(paymentHistoryResponse.data);
+            localStorage.setItem('paymentHistory', JSON.stringify(paymentHistoryResponse.data));
           } catch (error) {
-            console.error(`Error fetching deposit history: ${error}`);
+            console.error(`Error fetching payment history:`, error);
+            alert('Failed to load payment history. Please try again later.');
           }
         };
     
-        if (userInfo) {
-          fetchDepositHistory();
-        } else {
-    
-          const savedHistory = localStorage.getItem('depositHistory');
-          if (savedHistory) {
-            setDepositHistory(JSON.parse(savedHistory));
-          }
+        if (customerId) {
+          fetchPaymentHistory();
         }
-      }, [userInfo]);
-  const printOrders = [
-    {
-        printOrderId: "PO10001",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 08:00:00",
-        printedAt: "2024-12-01 08:15:00",
-        status: "Completed",
-        copies: 10,
-    },
-    {
-        printOrderId: "PO10002",
-        attribute: "A3, Black & White",
-        createdAt: "2024-12-01 09:00:00",
-        printedAt: "2024-12-01 09:20:00",
-        status: "Completed",
-        copies: 5,
-    },
-    {
-        printOrderId: "PO10003",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 10:30:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 3,
-    },
-    {
-        printOrderId: "PO10004",
-        attribute: "A5, Black & White",
-        createdAt: "2024-12-01 11:00:00",
-        printedAt: "2024-12-01 11:30:00",
-        status: "Completed",
-        copies: 15,
-    },
-    {
-        printOrderId: "PO10005",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 12:00:00",
-        printedAt: null, // Chưa in
-        status: "Queued",
-        copies: 7,
-    },
-    {
-        printOrderId: "PO10006",
-        attribute: "A3, Black & White",
-        createdAt: "2024-12-01 13:00:00",
-        printedAt: "2024-12-01 13:45:00",
-        status: "Completed",
-        copies: 12,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
+      }, [customerId]);
 
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
+      const handleStatusUpdate = async (ppoId: string, newStatus: string) => {
+        try {
+            const cookies = parseCookies();
+            const accessToken = cookies.accessToken;
 
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
+            if (!accessToken) {
+                throw new Error("Access token not found.");
+            }
 
-];
-      
+            await api.patch('payment/update-status/method/office', {
+                ppoId,
+                newStatus
+            }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+
+            setPaymentHistory(prevHistory => 
+                prevHistory.map(payment => 
+                    payment.ppoId === ppoId ? { ...payment, ppoStatus: newStatus } : payment
+                )
+            );
+        } catch (error) {
+            console.error('Error updating payment status:', error);
+            alert('Failed to update payment status. Please try again later.');
+        }
+    };
 
   return (
     <div 
@@ -250,25 +99,37 @@ export default function PaymentHistory(onClick: any) {
                         </tr>
                     </thead>
                     <tbody>
-                        {printOrders.map((item, index) => (
+                        {paymentHistory.map((item, index) => (
                             <tr key={index} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {item.printOrderId}
+                                    {item.ppoId}
                                 </th>
                                 <td className="px-6 py-4">
-                                    {item.attribute}
+                                    {item.purchaseTime}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {item.createdAt}
+                                    {item.pageNum}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {item.printedAt ? item.printedAt : 'Đang chờ xử lý'}
+                                    {item.price}
                                 </td>    
                                 <td className="px-6 py-4">
-                                    {item.status}
+                                    {item.paymentMethod}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {item.copies}
+                                    {item.paymentMethod === 'Office' ? (
+                                        <select
+                                            value={item.ppoStatus}
+                                            onChange={(e) => handleStatusUpdate(item.ppoId, e.target.value)}
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        >
+                                            <option value="PENDING">Pending</option>
+                                            <option value="COMPLETED">Success</option>
+                                            <option value="CANCELLED">Failed</option>
+                                        </select>
+                                    ) : (
+                                        <span className="px-2 py-1">{item.ppoStatus}</span>
+                                    )}
                                 </td>
                             </tr>
                         ))}
