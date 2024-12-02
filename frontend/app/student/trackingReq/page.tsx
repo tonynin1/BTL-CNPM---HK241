@@ -70,6 +70,9 @@ export default function Home() {
                                 <th>End Time</th>
                                 <th>PO Status</th>
                                 <th>Num Copies</th>
+                                <th>Building</th>
+                                <th>Room</th>
+                                <th>SPSO Id</th>
                             </tr>
                         </thead>
                         {allPendingReq? (<tbody>
@@ -82,6 +85,9 @@ export default function Home() {
                                     <td className="align-middle">{new Date(item.endTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
                                     <td className="align-middle">{item.poStatus}</td>
                                     <td className="align-middle">{item.numCopies}</td>
+                                    <td className="align-middle">{item.printer.building}</td>
+                                    <td className="align-middle">{item.printer.room}</td>
+                                    <td className="align-middle">{item.printer.spsomemberId}</td>
                                 </tr>
                             ))}
                         </tbody>) : null}

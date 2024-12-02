@@ -9,11 +9,34 @@ import { redirect } from "next/navigation";
 import { getUserInfo } from "@/app/API/userInfo";
 import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
+import { getAllPrinsAvailable } from "@/app/API/student-printDoc/student-printDoc";
+import { all } from "axios";
+
+const printers = [
+  { building: "Nhà A", room: "Phòng 101" },
+  { building: "Nhà B", room: "Phòng 202" },
+];
+
 
 export default function Home() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
-
-  if (!userInfo) {
+  const [AllPrinters, setAllPrinters] = useState<any[]>([]);
+  
+  const fetching = async () => {
+    if (!userInfo) return;
+    try {
+      let data = await getAllPrinsAvailable();
+      setAllPrinters(data.data);
+    } catch (error) {
+      console.log("Error fetching user info:", error);
+      
+    }
+  }
+  useEffect(() => {
+    fetching();
+  }, [userInfo]);
+  
+  if (!userInfo || !AllPrinters) {
     return <LoadingPage></LoadingPage>
   }
   if (userInfo.role === 'SPSO'){
@@ -57,7 +80,27 @@ export default function Home() {
         </div>
 
         <div className="section">
-          <div className="row align-items-start"> 
+            <div className="row align-items-start"> 
+              <div className="form-group col">
+                <p className="p">Chọn máy in</p>
+                <select
+                  className="form-control"
+                >
+                  <option value="">Chọn máy in</option>
+                  {AllPrinters.map((printer, index) => (
+                    <option key={index} value={JSON.stringify(printer)}>
+                      {`Địa điểm: ${printer.building} - ${printer.room}; Model: ${printer.model}; Brand: ${printer.brand}`} 
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="form-group col">
+                <p className="p">Margin</p>
+                <input type="number" className="form-control" id="so-ban" placeholder="Default"/>
+              </div>
+            </div>
+            <div className="row align-items-start"> 
               <div className="form-group col">
                 <p className="p">Số bản</p>
                 <input type="number" className="form-control" id="so-ban" placeholder="Nhập số bản"/>
@@ -72,7 +115,7 @@ export default function Home() {
                   <option value="a5">A5</option>
                 </select>
               </div>
-              </div>
+            </div>
             <br/>
             <div className="row align-items-start"> 
               <div className="form-group col">
@@ -96,7 +139,23 @@ export default function Home() {
             
             </div>
             <div className="inner_submit">
-              <button className="submit">SUBMIT</button>
+              <button className="submit" onClick={() => {
+                const selectedPrinter = (document.querySelector('.form-control') as HTMLSelectElement).value;
+                const margin = (document.getElementById('so-ban') as HTMLInputElement).value;
+                const copies = (document.getElementById('so-ban') as HTMLInputElement).value;
+                const paperSize = (document.getElementById('kho-giay') as HTMLSelectElement).value;
+                const printType = (document.getElementById('kieu-in') as HTMLSelectElement).value;
+                const paperOrientation = (document.getElementById('huong-giay') as HTMLSelectElement).value;
+
+                console.log({
+                  selectedPrinter,
+                  margin,
+                  copies,
+                  paperSize,
+                  printType,
+                  paperOrientation
+                });
+              }}>SUBMIT</button>
             </div>
             
           </div>

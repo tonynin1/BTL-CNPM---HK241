@@ -1,182 +1,34 @@
-export default function PrintHistory( {printOrder, onClick} : {
+'use client'
+
+import { useEffect, useState } from "react";
+import LoadingPage from "./LoadingPage";
+import { getPrintOrdersByCustomerId } from "../API/student-printHistory/student-printHistory";
+
+export default function PrintHistory( {printOrder, customerId, onClick} : {
     printOrder?: object,
-    onClick?: any
+    onClick?: any,
+    customerId?: number
 } ) {
-  const printOrders = [
-    {
-        printOrderId: "PO10001",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 08:00:00",
-        printedAt: "2024-12-01 08:15:00",
-        status: "Completed",
-        copies: 10,
-    },
-    {
-        printOrderId: "PO10002",
-        attribute: "A3, Black & White",
-        createdAt: "2024-12-01 09:00:00",
-        printedAt: "2024-12-01 09:20:00",
-        status: "Completed",
-        copies: 5,
-    },
-    {
-        printOrderId: "PO10003",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 10:30:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 3,
-    },
-    {
-        printOrderId: "PO10004",
-        attribute: "A5, Black & White",
-        createdAt: "2024-12-01 11:00:00",
-        printedAt: "2024-12-01 11:30:00",
-        status: "Completed",
-        copies: 15,
-    },
-    {
-        printOrderId: "PO10005",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 12:00:00",
-        printedAt: null, // Chưa in
-        status: "Queued",
-        copies: 7,
-    },
-    {
-        printOrderId: "PO10006",
-        attribute: "A3, Black & White",
-        createdAt: "2024-12-01 13:00:00",
-        printedAt: "2024-12-01 13:45:00",
-        status: "Completed",
-        copies: 12,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-
-];
+    const [printOrders, setPrintOrders] = useState<any[]>([]);
+    const fetching = async () => {
+        if (!customerId) return;
+        try {
+            let data = await getPrintOrdersByCustomerId(customerId);
+            console.log(data.data);
+            setPrintOrders(data.data);
+            
+        } catch (error) {
+            console.log("Error fetching print orders by customer id:", error);
+            
+        }
+    }
       
-
+    useEffect(() => {
+        fetching();
+    }, [customerId]);
+    if (!Array.isArray(printOrders)) {
+        return <LoadingPage></LoadingPage>
+    }
   return (
     <div 
         className={`absolute top-0 left-0 right-0 bottom-0 flex justify-center z-50 bg-black/[0.2] print_history_modal`}
@@ -208,19 +60,19 @@ export default function PrintHistory( {printOrder, onClick} : {
                                     {item.printOrderId}
                                 </th>
                                 <td className="px-6 py-4">
-                                    {item.attribute}
+                                    {item.attributes}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {item.createdAt}
+                                    {item.startTime}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {item.printedAt ? item.printedAt : 'Đang chờ xử lý'}
+                                    {item.endTime ? item.endTime : 'Đang chờ xử lý'}
                                 </td>    
                                 <td className="px-6 py-4">
-                                    {item.status}
+                                    {item.poStatus}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {item.copies}
+                                    {item.numCopies}
                                 </td>
                             </tr>
                         ))}
