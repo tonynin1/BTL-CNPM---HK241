@@ -145,3 +145,37 @@ export async function getAllUsers() {
       return null;
     }
   }
+
+  export async function createPrinter(model: string, brand: string, description: string, facility: string, building: string, room:string,  spsomemberId: string){
+    try {
+      const cookies = parseCookies();
+      let accessToken = cookies.accessToken;
+  
+      if (!accessToken) {
+        throw new Error("Access token not found.");
+      }
+      console.log(model, brand, description, facility, building, room, spsomemberId);
+      const response = await api.post(`printer/create`, {
+          model: model,
+          brand: brand,
+          description: description,
+          facility: facility,
+          building: building,
+          room: room,
+          spsomemberId: parseInt(spsomemberId, 10)
+        }, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+      })
+      .catch((error) => {
+        console.log("Error create printer:", error);
+      });
+      console.log(response);
+      return response.data;
+      
+    } catch (error) {
+      console.log("Error create printer:", error);
+      return null;
+    }
+  }

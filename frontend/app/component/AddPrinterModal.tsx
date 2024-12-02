@@ -2,10 +2,21 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { create } from "domain";
+import { createPrinter } from "../API/admin/admin";
 
 export default function AddPrinterModal( {onClick} : {onClick?: any} ) {
   const [isAddingPrinter, setIsAddingPrinter] = useState(false);
-  const [printerInfo, setPrinterInfo] = useState({status: 'valid'});
+  const [printerInfo, setPrinterInfo] = useState({
+    modal: '',
+    brand: '',
+    description: '',
+    facility: '',
+    building: '',
+    room: '',
+    spsoId: '',
+    status: 'valid'
+  });
 
   const handleValueChange = (event: any) => {
       const { name, value } = event.target;
@@ -14,13 +25,36 @@ export default function AddPrinterModal( {onClick} : {onClick?: any} ) {
   const handleSubmit = async (event: any) => {
       setIsAddingPrinter(true);
 
-      setTimeout(() => {
+      
+      const res = await createPrinter(printerInfo.modal, printerInfo.brand, printerInfo.description, printerInfo.facility, printerInfo.building, printerInfo.room, printerInfo.spsoId);
+      
+      if (res){
+        if(res.status === 200){
+          setIsAddingPrinter(false);
+          toast.success("Thành công!");
+        }
+        else{
+          setIsAddingPrinter(false);
+          toast.error("Thất bại!");
+        }
+        
+      }
+      else{
         setIsAddingPrinter(false);
-        toast.success("Thành công!");
-      }, 5000);
-
-      console.log(printerInfo);
-  }
+        toast.error("Thất bại!");
+      }
+    //   if (res?.data.status === 200){
+    //       setTimeout(() => {
+    //         setIsAddingPrinter(false);
+    //         toast.success("Thành công!");
+    //       }, 5000);
+          
+    //   }
+    //     else {
+    //         setIsAddingPrinter(false);
+    //         toast.error("Thất bại!");
+    //     }
+    }
 
 
   return (
