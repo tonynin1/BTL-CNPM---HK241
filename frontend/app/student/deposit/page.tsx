@@ -7,18 +7,17 @@ import { useUserSessionForCustomer } from "@/app/API/getMe";
 import LoadingPage from "@/app/ui/LoadingPage";
 import { parseCookies } from "nookies";
 
-// Define the type for a deposit
 type Deposit = {
-  depositId: string; // Adjust the type as necessary
-  depositTime: string; // Adjust the type as necessary
-  amount: number; // Adjust the type as necessary
-  depositStatus: string; // Adjust the type as necessary
+  depositId: string 
+  depositTime: string; 
+  amount: number; 
+  depositStatus: string; 
 };
 
 export default function Page() {
   const { userInfo, loggedIn } = useUserSessionForCustomer();
   const [formData, setFormData] = useState({
-    money: NaN,
+    money: 0,
   });
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [depositHistory, setDepositHistory] = useState<Deposit[]>([]);
@@ -67,9 +66,11 @@ export default function Page() {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+          params: {
+            customerId: userInfo? +userInfo.customerId : undefined,
+          }
         });
         setDepositHistory(depositHistoryResponse.data);
-        // Save deposit history to local storage
         localStorage.setItem('depositHistory', JSON.stringify(depositHistoryResponse.data));
       } catch (error) {
         console.error(`Error fetching deposit history: ${error}`);
@@ -79,7 +80,7 @@ export default function Page() {
     if (userInfo) {
       fetchDepositHistory();
     } else {
-      // Load deposit history from local storage if userInfo is not available
+
       const savedHistory = localStorage.getItem('depositHistory');
       if (savedHistory) {
         setDepositHistory(JSON.parse(savedHistory));
@@ -129,13 +130,16 @@ export default function Page() {
       });
 
       if (response.status === 201) {
-        alert("Deposit successful!");
         const depositHistoryResponse = await api.get('onsite-account/deposit/history', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                customerId: userInfo.customerId,
             }
         });
         setDepositHistory(depositHistoryResponse.data); 
+        alert("Deposit successful!");
       }
     } catch (error) {
       alert(`Error: ${error}`);

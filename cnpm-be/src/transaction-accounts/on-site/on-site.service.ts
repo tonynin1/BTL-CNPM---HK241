@@ -41,11 +41,12 @@ export class OnSiteAccountService extends PrismaClient {
                 customerId: customerId
             },
             select: {
+                depositId: true,
                 depositTime: true,
                 depositStatus: true,
                 amount: true
             }
-        })
+        });
     }
 
     async getAccountBalance(customerId: number) {

@@ -109,10 +109,10 @@ export class PaymentOrderService{
     }
     
     async display(customerId: number, purchaseTime?: Date) {
-        if (isNaN(purchaseTime.getTime())) {
+        if (!purchaseTime || isNaN(purchaseTime.getTime())) {
             return await prisma.pagePurchaseOrder.findMany({
                 where: {
-                    customerId: customerId
+                    customerId: +customerId
                 },
                 select: {
                     ppoId: true,
@@ -122,7 +122,7 @@ export class PaymentOrderService{
                     price: true,
                     paymentMethod: true
                 }
-            })
+            });
         } else {
             // Create start and end of the day in local timezone
             const startOfDay = new Date(purchaseTime);
@@ -133,7 +133,7 @@ export class PaymentOrderService{
 
             return await prisma.pagePurchaseOrder.findMany({
                 where: {
-                    customerId: customerId,
+                    customerId: +customerId,
                     purchaseTime: {
                         gte: startOfDay,
                         lte: endOfDay
@@ -147,7 +147,7 @@ export class PaymentOrderService{
                     price: true,
                     paymentMethod: true
                 }
-            })
+            });
         }
     }
 }
