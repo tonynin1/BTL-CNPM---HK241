@@ -72,7 +72,8 @@ export async function triggerPending(printOrderId: number) {
         if (Status === "Pending") {
             const response = await api.put(`print-history/request/${printOrderId}`,
                 {
-                    poStatus: "Completed"
+                    poStatus: "Completed",
+                    endTime: new Date(new Date().getTime() + 7 * 60 * 60 * 1000).toISOString()
                 },
                 {
                     headers: {

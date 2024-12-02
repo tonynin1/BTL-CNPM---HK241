@@ -57,18 +57,19 @@ export default function Home() {
     return (
         <main className="bg-[#353535] pb-[500px]">
             <StudentHeader header={userInfo as StudentHeaderProps} />
-            <div className="inner_wrap container">
+            <div className="inner_wrap">
                 <div className="container upload_container">
                     <h1 className="text-white">Bảng Dữ Liệu Khách Hàng</h1>
                     <table className="table table-dark table-striped">
                         <thead>
                             <tr>
                                 <th>Chọn</th>
-                                <th>ID đơn in</th>
+                                <th>ID</th>
+                                <th>Tên file</th>
                                 <th>Thông số in</th>
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
-                                <th>Trạng thái đơn</th>
+                                <th>Trạng thái</th>
                                 <th>Số bản sao</th>
                                 <th>Tòa</th>
                                 <th>Phòng</th>
@@ -80,6 +81,7 @@ export default function Home() {
                                 <tr key={item.printOrderId}>
                                     <td className="align-middle"><input type="checkbox" /></td>
                                     <td className="align-middle">{item.printOrderId}</td>
+                                    <td className="align-middle">{item.document.docName}</td>
                                     <td className="align-middle">{item.attributes}</td>
                                     <td className='align-middle'>{new Date(item.startTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
                                     <td className="align-middle">{new Date(item.endTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>

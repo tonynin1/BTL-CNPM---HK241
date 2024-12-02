@@ -75,7 +75,8 @@ export default function Page() {
     <div className="h-screen relative">
       {isShowPrintHis 
       && <PrintHistory onClick={handlePrintHistory}/>
-      && <PaymentHistory onClick={handlePaymentHistory}/>}
+      // && <PaymentHistory onClick={handlePaymentHistory}/>
+      }
       {isShowPrintHis && <PrintHistory onClick={handlePrintHistory} customerId={customerId}/>}
 
       <SPSOHeader header = {userInfo as SPSOHeaderProps}/>

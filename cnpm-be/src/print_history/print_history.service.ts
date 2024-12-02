@@ -82,28 +82,26 @@ export class PrintHistoryService {
     // get all Print Orders by Customer ID that is completed
     async getAllPrintOrdersByCustomerIdThatCompleted(customerId: number) {
         try {
-            const res = await this.prismaService.printOrder.findMany({
-                where: { customerId : customerId, poStatus: 'Completed' },
-                include: {
-                    contains: {
-                        include: {
-                            document: true,
-                        },
-                    },
+          const res = await this.prismaService.printOrder.findMany({
+            where: {
+                customerId: customerId,
+                poStatus: 'Completed',
+            },
+            include: {
+                document: {
+                    select: { docName: true }, // Fetch only the `docName`
                 },
-            });
+                printer: true, // Include printer details
+            },
+            orderBy: {
+                startTime: 'asc', // Sort by start time
+            },
+        });
 
-            // get information of printer
-            const resWithPrinter = await Promise.all(res.map(async (order) => {
-                const printer = await this.prismaService.printer.findUnique({
-                    where: { printerId: order.printerId },
-                });
-                return { ...order, printer };
-            }));
-            return {
-                status: 200,
-                data: resWithPrinter
-            }
+        return {
+            status: 200,
+            data: res, // Return the enriched result
+        };
             
         } catch (error) {
             return {
@@ -115,40 +113,35 @@ export class PrintHistoryService {
 
     // get all Print Orders by Customer ID that is pending
     async getAllPrintOrdersByCustomerIdThatPending(customerId: number) {
-        try {
-            const res = await this.prismaService.printOrder.findMany({
-              where: { customerId: customerId, poStatus: 'Pending' },
+      try {
+          const res = await this.prismaService.printOrder.findMany({
+              where: {
+                  customerId: customerId,
+                  poStatus: 'Pending',
+              },
               include: {
-                contains: {
-                  include: {
-                    document: true,
+                  document: {
+                      select: { docName: true }, // Fetch only the `docName`
                   },
-                },
+                  printer: true, // Include printer details
               },
               orderBy: {
-                startTime: 'asc',
+                  startTime: 'asc', // Sort by start time
               },
-            })
-
-            // get information of printer
-            const resWithPrinter = await Promise.all(res.map(async (order) => {
-                const printer = await this.prismaService.printer.findUnique({
-                    where: { printerId: order.printerId },
-                });
-                return { ...order, printer };
-            }));
-            return {
-                status: 200,
-                data: resWithPrinter
-
-            }
-        } catch (error) {
-            return {
-                message: 'Internal server error: ' + error.message,
-                status: 500
-            }
-        }
-    }
+          });
+  
+          return {
+              status: 200,
+              data: res, // Return the enriched result
+          };
+      } catch (error) {
+          return {
+              message: 'Internal server error: ' + error.message,
+              status: 500,
+          };
+      }
+  }
+  
     async getPrintOrdersByCustomerId(customerId: number) {
       try {
         
