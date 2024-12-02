@@ -27,14 +27,34 @@ export class FileUploadService {
     const fileUrls = [];
     const documents = [];
     try {
-      const cusID = Number(customerId)
+      customerId = Number(customerId);
+
+      // check if remaining pages of customer is enough
       const customer = await this.prisma.customer.findFirst({
-        where: { customerId:cusID },
+        where: { customerId: customerId },
       });
 
-    if (!customer) {
-      throw new NotFoundException('Customer not found for this user!');
-    }
+      if (!customer) {
+        return {
+          message: 'Customer not found',
+          status: 404,
+        }
+      }
+      if (customer && customer.remainPages < docQuantity) {
+        return {
+          message: 'Not enough pages to print',
+          status: 400,
+        }
+      }
+      else{
+        await this.prisma.customer.update({
+          where: { customerId: customerId },
+          data: {
+            remainPages: customer.remainPages - docQuantity,
+          },
+        });
+      }
+      const cusID = Number(customerId)
     for (let i = 0; i < 1; i++) {
       const file = files[0];
       const uploadResult = await this.uploadFileToS3(file);

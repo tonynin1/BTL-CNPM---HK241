@@ -12,6 +12,10 @@ export class FeedbackController {
         return this.feedbackService.getFeedbacks();
     }
 
+    @Get('all')
+    async getAllFeedBacksWithUserInfo(){
+        return this.feedbackService.getAllFeedBacksWithUserInfo();
+    }
     @Get(':feedbackId')
     async getFeedbackById(@Param('feedbackId', ParseIntPipe) feedbackId: number) {
         return this.feedbackService.getFeedbackById(feedbackId);
