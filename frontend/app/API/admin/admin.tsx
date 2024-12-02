@@ -54,7 +54,7 @@ export async function getAllUsers() {
         throw new Error("Access token not found.");
       }
   
-      const response = await api.get(`printer/update/${printerID}`, {
+      const response = await api.patch(`printer/update/${printerID}`, {
           headers: {
               Authorization: `Bearer ${accessToken}`,
           },

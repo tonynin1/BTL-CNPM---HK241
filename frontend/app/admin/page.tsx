@@ -254,7 +254,7 @@ export default function page() {
                         printer.status === 'VALID' ? (
                             <button 
                               className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-                              onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'VALID'})}}
+                              onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'INVALID'})}}
                             >
                               Vô hiệu máy in
                             </button>
