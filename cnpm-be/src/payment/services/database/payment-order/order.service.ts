@@ -36,7 +36,7 @@ export class PaymentOrderService{
                     data: {
                         purchaseTime: purchaseTimeISO,
                         customerId: customerId,
-                        ppoStatus: "failed",
+                        ppoStatus: "Failed",
                         pageNum: +order_data.pageNum,
                         price: order_data.price,
                         paymentMethod: order_data.paymentMethod,
@@ -44,7 +44,7 @@ export class PaymentOrderService{
                 });
 
                 return {
-                    status : "fail",
+                    status : "Failed",
                     message : "Balance not enough"
                 }
             }
@@ -64,7 +64,7 @@ export class PaymentOrderService{
                 data: {
                     purchaseTime: purchaseTimeISO,
                     customerId: customerId,
-                    ppoStatus: "success",
+                    ppoStatus: "Success",
                     pageNum: +order_data.pageNum,
                     price: order_data.price,
                     paymentMethod: order_data.paymentMethod,
@@ -72,7 +72,7 @@ export class PaymentOrderService{
             });
 
             return {
-                status : "success",
+                status : "Success",
                 message : "Successful purchase!"
             }
         }
