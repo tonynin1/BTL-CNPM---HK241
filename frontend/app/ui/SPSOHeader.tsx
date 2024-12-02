@@ -114,8 +114,8 @@ export default function SPSOHeader(
 
           <div className="student_dropdown w-[150px] absolute top-7 left-0 hidden"
           >
-            <ul className="text-black rounded bg-white overflow-hidden">
-              <li className="pl-4 py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm"
+            <ul className="pl-0 text-black rounded bg-white overflow-hidden text-center">
+              <li className="py-2 hover:bg-red-600 hover:cursor-pointer transition-all rounded-sm"
                 onClick={handleLogout}
               >
                 Đăng xuất

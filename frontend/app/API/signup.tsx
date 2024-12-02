@@ -102,6 +102,6 @@ export function getAccessTokenFromCookie(): string | null {
 export function logout() {
     destroyCookie(null, 'accessToken', { path: '/' });
     destroyCookie(null, 'refreshToken', { path: '/' });
-    toast.error('Logged out successfully');
+    toast.info('Bạn đã đăng xuất khỏi hệ thống');
     window.location.href = '/signin';
 }

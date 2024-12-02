@@ -1,6 +1,10 @@
-import React from 'react'
+'use client'
+
+import React, {useEffect, useState} from 'react'
 import AdminHeader from '@/app/ui/AdminHeader'
 import MyFooter from '../ui/MyFooter';
+import { getAllStudents } from '../API/admin/admin';
+import AddPrinterModal from '../component/AddPrinterModal';
 
 export default function page() {
   const spsos = [
@@ -156,12 +160,25 @@ export default function page() {
       status: 'INVALID'
     }
   ];
-  
-  
-  return (
-    <div>
-      <AdminHeader />
 
+  const [allStudents, setAllStudents] = React.useState([]);
+
+  const fetching = async () => {
+    let data = await getAllStudents();
+    // setAllStudents(data);
+  }
+
+  const [isShowAddPrinterModal, setIsShowAddPrinterModal] = useState(false);
+  
+  useEffect(() => {
+    fetching();
+  }, []);
+
+
+  return (
+    <div className='relative'>
+      <AdminHeader />
+      {isShowAddPrinterModal && <AddPrinterModal onClick={() => setIsShowAddPrinterModal(false)}/>}
 
       <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-8'>
@@ -230,6 +247,7 @@ export default function page() {
               <th scope="col" className='px-6 py-3 uppercase'>FACILITY</th>
               <th scope="col" className='px-6 py-3 uppercase'>BUILDING</th>
               <th scope="col" className='px-6 py-3 uppercase'>ROOM</th>
+              <th scope="col" className='px-6 py-3 uppercase'>SPSO ID</th>
               <th scope="col" className='px-6 py-3 uppercase text-center'>STATUS</th>
               <th scope="col" className='px-6 py-3 uppercase text-center'>ACTION</th>
             </tr>
@@ -243,6 +261,7 @@ export default function page() {
                   <td className='px-6 py-4'>{printer.facility}</td>
                   <td className='px-6 py-4'>{printer.building}</td>
                   <td className='px-6 py-4'>{printer.room}</td>
+                  <td className='px-6 py-4 text-center'>1</td>
                   <td className='px-6 py-4 text-center'>
                       {
                         printer.status === 'VALID' ? (
@@ -265,7 +284,12 @@ export default function page() {
               </tr>
               ))}
           </tbody>
-          <button className='bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 mt-2 rounded absolute right-0'>Thêm máy in</button>
+          <button 
+            className='bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 mt-2 rounded absolute right-0'
+            onClick={e => setIsShowAddPrinterModal(true)}
+          >
+            Thêm máy in
+          </button>
         </table>
 
         
