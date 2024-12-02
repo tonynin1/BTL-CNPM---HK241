@@ -7,12 +7,13 @@ import { redirect } from "next/navigation"; // Để điều hướng
 import { useUserSessionForSPSO } from "@/app/API/getMe";
 import { getAllStudents } from "@/app/API/spso-allStudents/spso-allStudents";
 import LoadingPage from "@/app/ui/LoadingPage";
+import PaymentHistory from "@/app/ui/PaymentHistory";
 
 export default function Page() {
-
   const { userInfo, loggedIn } = useUserSessionForSPSO();
   const [allStudents , setAllStudents] = useState<any>(null);
   const [isShowPrintHis, setIsShowPrintHis] = useState(false);
+  const [isShowPagePayment, setIsShowPagePayment] = useState(false);
   const [customerId, setCustomerId] = useState(0);
   const fetching = async () => {
     let data = await getAllStudents();
@@ -37,10 +38,15 @@ export default function Page() {
     setCustomerId(customerId);
     setIsShowPrintHis(!isShowPrintHis);
   }
+
+  function handlePaymentHistory() {
+    setIsShowPagePayment(!isShowPagePayment);
+  }
+
   return (
     <div className="h-screen relative">
       {isShowPrintHis && <PrintHistory onClick={handlePrintHistory} customerId={customerId}/>}
-
+      {isShowPagePayment && <PaymentHistory onClick={handlePaymentHistory} customerId={customerId}/>}
       <SPSOHeader header = {userInfo as SPSOHeaderProps}/>
       <div className="h-full p-4">
         <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
@@ -50,7 +56,8 @@ export default function Page() {
                 <th scope="col" className='px-6 py-3'>Tên</th>
                 <th scope="col" className='px-6 py-3'>MSSV</th>
                 <th scope="col" className='px-6 py-3'>Lần sử dụng gần nhất</th>
-                <th scope="col" className='px-6 py-3 text-center'>Hành động</th>
+                <th scope="col" className='px-6 py-3'>Lịch sử in</th>
+                <th scope="col" className='px-6 py-3'>Lịch sử mua trang</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +74,17 @@ export default function Page() {
                       }}  
                     >
                       Xem lịch sử in
+                    </button>
+                  </td>
+                  <td className='px-6 py-4'>
+                    <button 
+                      className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                      onClick={() => {
+                        setCustomerId(student.customer.customerId);
+                        handlePaymentHistory();
+                      }}  
+                    >
+                      Xem lịch sử mua trang
                     </button>
                   </td>
                 </tr>

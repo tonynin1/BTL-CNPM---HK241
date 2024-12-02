@@ -2,20 +2,30 @@ import Image from "next/image";
 
 import Rating from "./Rating";
 
-export default function UserFeedbackCard({ rating = 0, imgSrc } : { rating: number, imgSrc: any }) {
+export default function UserFeedbackCard({
+  name = "Người dùng",
+  time,
+  rating = 0,
+  content = "",
+  imgSrc,
+}: {
+  name: string;
+  time: string;
+  rating: number;
+  content: string;
+  imgSrc: any;
+}) {
   return (
-    <div className="rounded shadow p-2 mb-4">
-        <Image
-            className="rounded w-full"
-            alt="avatar" 
-            src={imgSrc}
-        />
-        <div>
-            <p className="text-lg font-semibold">Nguyễn Văn A</p>
-            <p className="text-md ">"Dịch vụ in ấn tại đây rất chất lượng, từ độ sắc nét của bản in đến tốc độ hoàn thành. Nhân viên nhiệt tình, hỗ trợ nhanh chóng, giá cả hợp lý. Rất hài lòng và sẽ tiếp tục sử dụng dịch vụ!"</p>
-            <p className="text-sm text-gray-500">2022-2023</p>
-        </div>
+    <div className="rounded shadow p-2 mb-4 h-full">
+      <Image className="rounded w-full p-8" alt="avatar" src={imgSrc} />
+      <div className="flex flex-col gap-4 justify-center items-center">
+        <p className="text-lg font-semibold text-center">{name}</p>
+        {content && (
+          <p className="text-sm text-gray-500 self-start">{content}</p>
+        )}
+        <p className="text-sm text-gray-500">{time}</p>
         <Rating currentRate={rating} />
+      </div>
     </div>
-  )
+  );
 }

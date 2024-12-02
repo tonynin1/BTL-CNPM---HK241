@@ -37,183 +37,9 @@ export default function page() {
     return <LoadingPage></LoadingPage>
   }
   if (userInfo.role === 'SPSO'){
-    // router.replace('http://localhost:8080')
     redirect('/spso')
   }
 
-  const printOrders = [
-    {
-        printOrderId: "PO10001",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 08:00:00",
-        printedAt: "2024-12-01 08:15:00",
-        status: "Completed",
-        copies: 10,
-    },
-    {
-        printOrderId: "PO10002",
-        attribute: "A3, Black & White",
-        createdAt: "2024-12-01 09:00:00",
-        printedAt: "2024-12-01 09:20:00",
-        status: "Completed",
-        copies: 5,
-    },
-    {
-        printOrderId: "PO10003",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 10:30:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 3,
-    },
-    {
-        printOrderId: "PO10004",
-        attribute: "A5, Black & White",
-        createdAt: "2024-12-01 11:00:00",
-        printedAt: "2024-12-01 11:30:00",
-        status: "Completed",
-        copies: 15,
-    },
-    {
-        printOrderId: "PO10005",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 12:00:00",
-        printedAt: null, // Chưa in
-        status: "Queued",
-        copies: 7,
-    },
-    {
-        printOrderId: "PO10006",
-        attribute: "A3, Black & White",
-        createdAt: "2024-12-01 13:00:00",
-        printedAt: "2024-12-01 13:45:00",
-        status: "Completed",
-        copies: 12,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-
-    {
-        printOrderId: "PO10007",
-        attribute: "A4, Color",
-        createdAt: "2024-12-01 14:00:00",
-        printedAt: null, // Chưa in
-        status: "Pending",
-        copies: 20,
-    },
-
-];
     
   return (
     <div className="bg-[#353535] pb-[500px]">
@@ -231,13 +57,12 @@ export default function page() {
                   </caption>
                   <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                       <tr>
-                      <th scope="col" className='px-6 py-3'>Print order ID</th>
-                      <th scope="col" className='px-6 py-3'>Thuộc tính</th>
+                      <th scope="col" className='px-6 py-3'>ID đơn in</th>
+                      <th scope="col" className='px-6 py-3'>Tên file</th>
                       <th scope="col" className='px-6 py-3'>Thời gian tạo</th>
                       <th scope="col" className='px-6 py-3'>Thời gian in</th>
                       <th scope="col" className='px-6 py-3'>Trạng thái</th>
                       <th scope="col" className='px-6 py-3'>Số lượng bản sao</th>
-
                       <th scope="col" className='px-6 py-3'>Tòa</th>
                       <th scope="col" className='px-6 py-3'>Phòng</th>
                       </tr>
@@ -249,13 +74,13 @@ export default function page() {
                                   {item.printOrderId}
                               </th>
                               <td className="px-6 py-4">
-                                  {item.attributes}
+                                  {item.document.docName}
                               </td>
                               <td className="px-6 py-4">
-                                  {item.startTime}
+                                  {new Date(item.startTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                               </td>
                               <td className={`px-6 py-4 ${item.printedAt ? 'text-green-500' : 'text-yellow-500'}`}>
-                                  {item.endTime ? item.endTime : 'Đang chờ xử lý'}
+                                  {item.endTime ? new Date(item.startTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Đang chờ xử lý'}
                               </td>    
                               <td className={`px-6 py-4 ${item.poStatus === 'Pending' ? 'text-yellow-500' : item.status === 'Queued' ? 'text-blue-500' : 'text-green-500'}`}>
                                   {item.poStatus}

@@ -5,6 +5,8 @@ import {
     Get,
     HttpCode,
     HttpStatus,
+    Param,
+    ParseIntPipe,
     Patch,
     Query,
   } from '@nestjs/common';
@@ -35,9 +37,9 @@ export class UserController {
     }
 
     // delete by admin
-    @Delete('delete')
+    @Delete('delete/:userId')
     deleteUser(
-      @Query('userId') userId: string
+      @Param('userId', ParseIntPipe) userId: string
     ){
       return this.userService.deleteUser(userId);
     }

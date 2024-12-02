@@ -57,22 +57,23 @@ export default function Home() {
     return (
         <main className="bg-[#353535] pb-[500px]">
             <StudentHeader header={userInfo as StudentHeaderProps} />
-            <div className="inner_wrap container">
+            <div className="inner_wrap">
                 <div className="container upload_container">
                     <h1 className="text-white">Bảng Dữ Liệu Khách Hàng</h1>
                     <table className="table table-dark table-striped">
                         <thead>
                             <tr>
                                 <th>Chọn</th>
-                                <th>Print Order Id</th>
-                                <th>Attributes</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>PO Status</th>
-                                <th>Num Copies</th>
-                                <th>Building</th>
-                                <th>Room</th>
-                                <th>SPSO Id</th>
+                                <th>ID</th>
+                                <th>Tên file</th>
+                                <th>Thông số in</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Trạng thái</th>
+                                <th>Số bản sao</th>
+                                <th>Tòa</th>
+                                <th>Phòng</th>
+                                <th>ID SPSO</th>
                             </tr>
                         </thead>
                         {allPendingReq? (<tbody>
@@ -80,6 +81,7 @@ export default function Home() {
                                 <tr key={item.printOrderId}>
                                     <td className="align-middle"><input type="checkbox" /></td>
                                     <td className="align-middle">{item.printOrderId}</td>
+                                    <td className="align-middle">{item.document.docName}</td>
                                     <td className="align-middle">{item.attributes}</td>
                                     <td className='align-middle'>{new Date(item.startTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
                                     <td className="align-middle">{new Date(item.endTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
@@ -93,7 +95,7 @@ export default function Home() {
                         </tbody>) : null}
                     </table>
                     <div className="Button">
-                        <button type="button" className="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">Edit</button>
+                        <button type="button" className="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">Sửa</button>
                         <button type="button" className="btn btn-outline-danger" onClick={() => {
                             // Retrieve all rows in the table
                             const tableRows = document.querySelectorAll("table tbody tr");
@@ -120,7 +122,7 @@ export default function Home() {
                             });
                             // // reload the page
                             window.location.reload();
-                        }}>Delete</button>
+                        }}>Xóa</button>
                     </div>
                     <div className="modal fade" id="exampleModalCenter" tabIndex={-1} role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-centered" role="document">

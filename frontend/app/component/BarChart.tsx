@@ -1,13 +1,13 @@
 "use client";
-import dynamic from 'next/dynamic';
-import 'chart.js/auto';
-const Bar = dynamic(() => import('react-chartjs-2').then((mod) => mod.Bar), {
+import dynamic from "next/dynamic";
+import "chart.js/auto";
+const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar), {
   ssr: false,
 });
 
-const BarChart = ({data, width = '100%', height = '100%'} : {data: any, width: string, height: string}) => {
+const BarChart = ({ data }: { data: any }) => {
   return (
-    <div style={{ width: `${width}`, height: `${height}` }}>
+    <div className="w-fit my-auto">
       <Bar data={data} />
     </div>
   );

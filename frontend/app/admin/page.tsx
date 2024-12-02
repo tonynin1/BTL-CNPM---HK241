@@ -1,188 +1,97 @@
-import React from 'react'
-import AdminHeader from '@/app/ui/AdminHeader'
+'use client'
+
+import React, {useEffect, useState} from 'react'
+import AdminHeader, { ADMINHeaderProps } from '@/app/ui/AdminHeader'
 import MyFooter from '../ui/MyFooter';
+import { getAllUsers, getAllPrinters, updatePrinter, deletePrinter, deleteStudent, deleteSPSO } from '../API/admin/admin';
+import AddPrinterModal from '../component/AddPrinterModal';
+import { useUserSessionForADMIN } from '../API/getMe';
+import { redirect } from 'next/navigation';
+import LoadingPage from '../ui/LoadingPage';
 
 export default function page() {
-  const spsos = [
-    {
-      name: 'SPSO 1',
-      username: 'spso1',
-    },
-    {
-      name: 'SPSO 2',
-      username: 'spso2',
-    },
-    {
-      name: 'SPSO 3',
-      username: 'spso3',
-    },
-    {
-      name: 'SPSO 4',
-      username: 'spso4',
-    },
-    {
-      name: 'SPSO 5',
-      username: 'spso5',
-    },
-    {
-      name: 'SPSO 6',
-      username: 'spso6',
-    },
-  ];
 
+  const [allStudents, setAllStudents] = useState([]);
+  const [allSpso, setAllSpso] = useState([]);
+  const [allPrinters, setAllPrinters] = useState([]);
+
+  const updatePrinterStatus = async (printerId: number, updateData: any, index: number) => {
+    console.log(updateData);
+
+    await updatePrinter(printerId, updateData);
+    // fetching();
+    const newAllPrinters = [...allPrinters];
+
+    newAllPrinters[index].status = updateData.status;
+
+    setAllPrinters(newAllPrinters);
+  }
+
+  const fetching = async () => {
+    let users = await getAllUsers();
+
+    setAllStudents(users.filter((item: any) => item.role === 'STUDENT'));
+
+    setAllSpso(users.filter((item: any) => item.role === 'SPSO'));
+
+    let printers = await getAllPrinters();
+
+    setAllPrinters(printers);
+
+  }
+
+
+
+  const [isShowAddPrinterModal, setIsShowAddPrinterModal] = useState(false);
   
-  const students = [
-    {
-      name: 'Nguyen Van A',
-      username: 'student1',
-      id: '2213982',
-    },
-    {
-      name: 'Le Thi B',
-      username: 'student2',
-      id: '2213983',
-    },
-    {
-      name: 'Tran Van C',
-      username: 'student3',
-      id: '2213984',
-    },
-    {
-      name: 'Pham Thi D',
-      username: 'student4',
-      id: '2213985',
-    },
-    {
-      name: 'Nguyen Van E',
-      username: 'student5',
-      id: '2213986',
-    },
-    {
-      name: 'Hoang Thi F',
-      username: 'student6',
-      id: '2213987',
-    },
-  ];
-  
-  const printers = [
-    {
-      model: "LaserJet Pro M404dn",
-      brand: "HP",
-      description: "Monochrome Laser Printer",
-      facility: "Main Office",
-      building: "Building A",
-      room: "Room 101",
-      status: 'INVALID'
-    },
-    {
-      model: "PIXMA G7020",
-      brand: "Canon",
-      description: "Color Inkjet All-in-One",
-      facility: "Admin Office",
-      building: "Building B",
-      room: "Room 202",
-      status: 'INVALID'
-    },
-    {
-      model: "EcoTank ET-2760",
-      brand: "Epson",
-      description: "Wireless Color All-in-One",
-      facility: "IT Department",
-      building: "Building C",
-      room: "Room 303",
-      status: 'VALID'
-    },
-    {
-      model: "VersaLink C405",
-      brand: "Xerox",
-      description: "Color Multifunction Printer",
-      facility: "Marketing",
-      building: "Building D",
-      room: "Room 404",
-      status: 'INVALID'
-    },
-    {
-      model: "DeskJet 3755",
-      brand: "HP",
-      description: "Compact Inkjet Printer",
-      facility: "HR Department",
-      building: "Building A",
-      room: "Room 105",
-      status: 'VALID'
-    },
-    {
-      model: "DCP-L2550DW",
-      brand: "Brother",
-      description: "Monochrome Laser All-in-One",
-      facility: "Finance Department",
-      building: "Building B",
-      room: "Room 206",
-      status: 'INVALID'
-    },
-    {
-      model: "OfficeJet Pro 9015",
-      brand: "HP",
-      description: "Smart Wireless All-in-One",
-      facility: "Sales Office",
-      building: "Building E",
-      room: "Room 502",
-      status: 'INVALID'
-    },
-    {
-      model: "WorkForce Pro WF-3820",
-      brand: "Epson",
-      description: "High-Speed Wireless Printer",
-      facility: "Production Floor",
-      building: "Building F",
-      room: "Room 601",
-      status: 'INVALID'
-    },
-    {
-      model: "ImageCLASS MF743Cdw",
-      brand: "Canon",
-      description: "Color Multifunction Laser",
-      facility: "Design Studio",
-      building: "Building G",
-      room: "Room 702",
-      status: 'INVALID'
-    },
-    {
-      model: "Phaser 6510",
-      brand: "Xerox",
-      description: "Color Laser Printer",
-      facility: "Executive Suite",
-      building: "Building H",
-      room: "Room 801",
-      status: 'INVALID'
-    }
-  ];
-  
-  
+  useEffect(() => {
+    fetching();
+  }, []);
+
+  const { userInfo, loggedIn } = useUserSessionForADMIN();
+
+  if (!userInfo) {
+    return <LoadingPage />
+  }
+
   return (
-    <div>
-      <AdminHeader />
-
+    <div className='relative'>
+      <AdminHeader header={userInfo as ADMINHeaderProps}/>
+      {isShowAddPrinterModal && <AddPrinterModal onClick={() => setIsShowAddPrinterModal(false)}/>}
 
       <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-8'>
-          <caption className="caption-top text-center uppercase">
+          <caption className="caption-top text-center uppercase text-xl">
             danh sách SPSO
           </caption>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
-              <th scope="col" className='px-6 py-3 uppercase'>Tên</th>
+            <th scope="col" className='px-6 py-3 uppercase'>Tên</th>
               <th scope="col" className='px-6 py-3 uppercase'>Username</th>
-              <th scope="col" className='px-6 py-3 uppercase'>Hành động</th>
+              <th scope="col" className='px-6 py-3 uppercase'>Số điện thoại</th>
+              <th scope="col" className='px-6 py-3 uppercase'>Ngày tham gia</th>
+              <th scope="col" className='px-6 py-3 uppercase text-center'>Hành động</th>
             </tr>
           </thead>
           <tbody>
-            {spsos.map((spso) => (
-              <tr key={spso.username} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
-                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{spso.name}</td>
-                <td className='px-6 py-4'>{spso.username}</td>
+            {allSpso.map((spso:any) => (
+              <tr key={spso.userId} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{spso.fname} {spso.lname}</td>
+                <td className='px-6 py-4'>{spso.email}</td>
+                <td className='px-6 py-4'>{spso.phone}</td>
+                <td className='px-6 py-4'>{new Date(spso.createAt).toLocaleDateString('en-GB')}</td>
                 <td className='px-6 py-4'>
-                  <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
-                    Xóa spso
+                  <button onClick={async () => {{
+                    const res = await deleteSPSO(spso.userId);
+                    if (res) {
+                      alert('Xóa SPSO thành công');
+                      window.location.reload();
+                    }
+                    else {
+                      alert('SPSO này đang bận xủ lí đơn hàng, không thể xóa');
+                    }
+                  }}} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
+                    Xóa SPSO
                   </button>
                 </td>
               </tr>
@@ -191,26 +100,38 @@ export default function page() {
         </table>
 
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-8'>
-          <caption className="caption-top text-center uppercase">
+          <caption className="caption-top text-center uppercase text-xl">
             danh sách student
           </caption>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope="col" className='px-6 py-3 uppercase'>Tên</th>
               <th scope="col" className='px-6 py-3 uppercase'>Username</th>
-              <th scope="col" className='px-6 py-3 uppercase'>MSSV</th>
-              <th scope="col" className='px-6 py-3 uppercase'>Hành động</th>
+              <th scope="col" className='px-6 py-3 uppercase'>Số điện thoại</th>
+              <th scope="col" className='px-6 py-3 uppercase'>Ngày tham gia</th>
+              <th scope="col" className='px-6 py-3 uppercase text-center'>Hành động</th>
             </tr>
           </thead>
           <tbody>
-            {students.map((student) => (
-              <tr key={student.username} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
-                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.name}</td>
-                <td className='px-6 py-4'>{student.username}</td>
-                <td className='px-6 py-4'>{student.id}</td>
+            {allStudents.map((student : any) => (
+              <tr key={student.userId} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.fname} {student.lname}</td>
+                <td className='px-6 py-4'>{student.email}</td>
+                <td className='px-6 py-4'>{student.phone}</td>
+                <td className='px-6 py-4'>{new Date(student.createAt).toLocaleDateString('en-GB')}</td>
                 <td className='px-6 py-4'>
-                  <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
-                    Xóa student
+                  <button onClick={async () => {
+                    const res = await deleteStudent(student.userId);
+
+                    if (res.status === 200) {
+                      alert('Xóa sinh viên thành công');
+                      window.location.reload();
+                    }
+                    else {
+                      alert('Sinh viên này đang bận xủ lí đơn hàng, không thể xóa');
+                    }
+                  }} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
+                    Xóa sinh viên
                   </button>
                 </td>
               </tr>
@@ -220,29 +141,31 @@ export default function page() {
 
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 relative mb-8'>
           <caption className="caption-top text-center uppercase">
-            danh sách máy in
+            danh sách máy in 
           </caption>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope="col" className='px-6 py-3 uppercase'>MODEL</th>
-              <th scope="col" className='px-6 py-3 uppercase'>BRAND</th>
-              <th scope="col" className='px-6 py-3 uppercase'>DESCRIPTION</th>
-              <th scope="col" className='px-6 py-3 uppercase'>FACILITY</th>
-              <th scope="col" className='px-6 py-3 uppercase'>BUILDING</th>
-              <th scope="col" className='px-6 py-3 uppercase'>ROOM</th>
-              <th scope="col" className='px-6 py-3 uppercase text-center'>STATUS</th>
-              <th scope="col" className='px-6 py-3 uppercase text-center'>ACTION</th>
+              <th scope="col" className='px-6 py-3 uppercase'>thương hiệu</th>
+              <th scope="col" className='px-6 py-3 uppercase'>mô tả</th>
+              <th scope="col" className='px-6 py-3 uppercase'>khoa</th>
+              <th scope="col" className='px-6 py-3 uppercase'>tòa</th>
+              <th scope="col" className='px-6 py-3 uppercase'>phòng</th>
+              <th scope="col" className='px-6 py-3 uppercase'>SPSO ID</th>
+              <th scope="col" className='px-6 py-3 uppercase text-center'>trạng thái</th>
+              <th scope="col" className='px-6 py-3 uppercase text-center'>hành động</th>
             </tr>
           </thead>
           <tbody >
-            {printers.map((printer, index) => (
+            {allPrinters.map((printer:any, index) => (
               <tr key={index} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
                   <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{printer.model}</td>
                   <td className='px-6 py-4'>{printer.brand}</td>
-                  <td className='px-6 py-4'>{printer.description}</td>
+                  <td className='px-6 py-4'>{printer.description? printer.description : 'Không có'}</td>
                   <td className='px-6 py-4'>{printer.facility}</td>
                   <td className='px-6 py-4'>{printer.building}</td>
                   <td className='px-6 py-4'>{printer.room}</td>
+                  <td className='px-6 py-4 text-center'>{printer.spsomemberId}</td>
                   <td className='px-6 py-4 text-center'>
                       {
                         printer.status === 'VALID' ? (
@@ -255,18 +178,48 @@ export default function page() {
                   <td className='px-6 py-4 text-center flex justify-center gap-2'>
                       {
                         printer.status === 'VALID' ? (
-                            <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>Vô hiệu máy in</button>
+                            <button 
+                              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded duration-300'
+                              onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'INVALID'}, index)}}
+                            >
+                              Vô hiệu máy in
+                            </button>
                           ) : (
-                            <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'>Mở máy in</button>
+                            <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded duration-300'
+                              onClick={e => {updatePrinterStatus(printer.printerId, {...printer, status: 'VALID'}, index)}}
+                            >
+                              Mở máy in
+                            </button>
                         )
                       }
-                      <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>Xóa máy in</button>
+                      <button onClick={async () => {
+                        // console log this printerId
+                        if (confirm(`Bạn có chắc chắn muốn xóa máy in do SPSO có mã số ${printer.spsomemberId} quản lý không?`))
+                       { 
+                        const res = await deletePrinter(printer.printerId);
+                        if (res.status === 200){
+                          alert('Xóa máy in thành công');
+                          window.location.reload();
+                        }
+                        else{
+                          alert('Máy in này đang bận xủ lí đơn hàng, không thể xóa');
+                        }
+                      }
+
+                      }}className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>Xóa máy in</button>
                   </td>
               </tr>
               ))}
           </tbody>
-          <button className='bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 mt-2 rounded absolute right-0'>Thêm máy in</button>
         </table>
+        <div className='w-fit ml-auto'>
+          <button 
+            className='bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded'
+            onClick={e => setIsShowAddPrinterModal(true)}
+          >
+            Thêm máy in
+          </button>
+        </div>
 
         
       </div>
