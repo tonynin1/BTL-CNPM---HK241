@@ -47,6 +47,7 @@ export async function getAllUsers() {
 
   export async function updatePrinter(printerID: number, updateData: any) {
     try {
+      console.log(updateData.status);
       const cookies = parseCookies();
       let accessToken = cookies.accessToken;
   
@@ -54,14 +55,14 @@ export async function getAllUsers() {
         throw new Error("Access token not found.");
       }
   
-      const response = await api.get(`printer/update/${printerID}`, {
+      const response = await api.patch(`printer/update/${printerID}`,{
+        status: updateData.status
+      }, {
           headers: {
               Authorization: `Bearer ${accessToken}`,
           },
-          data: {
-            ...updateData
-          }
       })
+      console.log(response.data); 
       return response.data;
       
     } catch (error) {
