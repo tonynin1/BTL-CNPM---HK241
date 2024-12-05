@@ -73,7 +73,7 @@ export default function Home() {
                                 <th>Số bản sao</th>
                                 <th>Tòa</th>
                                 <th>Phòng</th>
-                                <th>ID SPSO</th>
+                                <th>ID SSPS</th>
                             </tr>
                         </thead>
                         {allPendingReq? (<tbody>

@@ -69,7 +69,7 @@ export default function Home() {
   };
 
   const data4 = {
-    labels: ["Sinh viên", "SPSO"],
+    labels: ["Sinh viên", "SSPS"],
     datasets: [
       {
         label: "Số lượng người sử dụng",

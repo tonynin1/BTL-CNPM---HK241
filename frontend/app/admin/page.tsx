@@ -62,7 +62,7 @@ export default function page() {
       <div className='container mx-auto relative overflow-x-auto shadow-2xl sm:rounded-lg p-8 my-4' style={{boxShadow: '10px 10px 30px 10px rgba(0, 0, 0, 0.3)'}}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-8'>
           <caption className="caption-top text-center uppercase text-xl">
-            danh sách SPSO
+            danh sách SSPS
           </caption>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
@@ -84,14 +84,14 @@ export default function page() {
                   <button onClick={async () => {{
                     const res = await deleteSPSO(spso.userId);
                     if (res) {
-                      alert('Xóa SPSO thành công');
+                      alert('Xóa SSPS thành công');
                       window.location.reload();
                     }
                     else {
-                      alert('SPSO này đang bận xủ lí đơn hàng, không thể xóa');
+                      alert('SSPS này đang bận xủ lí đơn hàng, không thể xóa');
                     }
                   }}} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
-                    Xóa SPSO
+                    Xóa SSPS
                   </button>
                 </td>
               </tr>
@@ -151,7 +151,7 @@ export default function page() {
               <th scope="col" className='px-6 py-3 uppercase'>khoa</th>
               <th scope="col" className='px-6 py-3 uppercase'>tòa</th>
               <th scope="col" className='px-6 py-3 uppercase'>phòng</th>
-              <th scope="col" className='px-6 py-3 uppercase'>SPSO ID</th>
+              <th scope="col" className='px-6 py-3 uppercase'>SSPS ID</th>
               <th scope="col" className='px-6 py-3 uppercase text-center'>trạng thái</th>
               <th scope="col" className='px-6 py-3 uppercase text-center'>hành động</th>
             </tr>
@@ -194,7 +194,7 @@ export default function page() {
                       }
                       <button onClick={async () => {
                         // console log this printerId
-                        if (confirm(`Bạn có chắc chắn muốn xóa máy in do SPSO có mã số ${printer.spsomemberId} quản lý không?`))
+                        if (confirm(`Bạn có chắc chắn muốn xóa máy in do SSPS có mã số ${printer.spsomemberId} quản lý không?`))
                        { 
                         const res = await deletePrinter(printer.printerId);
                         if (res.status === 200){
