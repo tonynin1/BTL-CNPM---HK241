@@ -7,7 +7,7 @@ const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar), {
 
 const BarChart = ({ data }: { data: any }) => {
   return (
-    <div className="w-fit my-auto">
+    <div className="w-full my-auto">
       <Bar data={data} />
     </div>
   );

@@ -86,9 +86,9 @@ export default function ImageSlider(): JSX.Element {
             style={{objectFit: 'cover'}}
           />
           <div className={`absolute
-                           ${currentIndex === 0? 'top-56 text-xl left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center': '' }
-                           ${currentIndex === 1? 'top-1/2 text-xl left-48 transform text-center text-white': '' }
-                           ${currentIndex === 2? 'top-1/2 text-xl right-48 transform text-center text-black': '' }
+                           ${currentIndex === 0? 'top-56 text-2xl left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center': '' }
+                           ${currentIndex === 1? 'top-1/2 text-2xl left-48 transform text-center text-white': '' }
+                           ${currentIndex === 2? 'top-1/2 text-2xl right-48 transform text-center text-black': '' }
                 `}
                 style={currentIndex === 0? {left: '50.5%'} : {}}
           >
