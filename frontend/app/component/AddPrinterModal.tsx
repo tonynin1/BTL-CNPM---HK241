@@ -43,17 +43,6 @@ export default function AddPrinterModal( {onClick} : {onClick?: any} ) {
         setIsAddingPrinter(false);
         toast.error("Thất bại!");
       }
-    //   if (res?.data.status === 200){
-    //       setTimeout(() => {
-    //         setIsAddingPrinter(false);
-    //         toast.success("Thành công!");
-    //       }, 5000);
-          
-    //   }
-    //     else {
-    //         setIsAddingPrinter(false);
-    //         toast.error("Thất bại!");
-    //     }
     }
 
 

@@ -172,7 +172,7 @@ export async function getAllUsers() {
         console.log("Error create printer:", error);
       });
       console.log(response);
-      return response.data;
+      return response;
       
     } catch (error) {
       console.log("Error create printer:", error);
